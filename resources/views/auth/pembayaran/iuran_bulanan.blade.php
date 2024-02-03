@@ -205,97 +205,186 @@
 @section('content')
     <!-- Page Content  -->
     <div id="content-page" class="content-page">
+        <!-- Alert -->
+        <div class="container-fluid">
+            @if (session('success'))
+                <div id="success-alert" class="alert text-white bg-success" role="alert">
+                    <div class="iq-alert-icon">
+                        <i class="ri-checkbox-circle-line"></i>
+                    </div>
+                    <div class="iq-alert-text"><b>Berhasil !</b> {{ session('success') }}</div>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <i class="ri-close-line"></i>
+                    </button>
+                </div>
+            @endif
+            @if ($errors->any())
+                @foreach ($errors->all() as $err)
+                    <div id="error-alert" class="alert text-white bg-danger" role="alert">
+                        <div class="iq-alert-icon">
+                            <i class="ri-information-line"></i>
+                        </div>
+                        <div class="iq-alert-text"><b>Gagal ! </b> {{ $err }}</div>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <i class="ri-close-line"></i>
+                        </button>
+                    </div>
+                @endforeach
+            @endif
+        </div>
+        {{-- Tabel --}}
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-12">
                     <div class="iq-card">
                         <div class="iq-card-header d-flex justify-content-between">
                             <div class="iq-header-title">
-                                <h4 class="card-title">User List</h4>
+                                <h4 class="card-title">Pembayaran Iuran Bulanan</h4>
+                            </div>
+                            <div class="text-right">
+                                <button type="button" class="btn btn-primary mt-1" data-toggle="modal"
+                                    data-target="#exampleModalCenter">
+                                    Tambah Pembayaran
+                                </button>
                             </div>
                         </div>
                         <div class="iq-card-body">
-                            <div class="table-responsive">
-                                <div class="row d-flex">
-                                    <div class="col-sm-6 col-md-6">
-                                        <div id="user_list_datatable_info" class="dataTables_filter">
-                                            <form class="mr-3 position-relative">
-                                                <div class="form-group mb-0">
-                                                    <input type="search" class="form-control" id="exampleInputSearch"
-                                                        placeholder="Search" aria-controls="user-list-table">
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6 col-md-6 text-right">
-                                        <button type="button" class="btn btn-primary" data-toggle="modal"
-                                            data-target="#exampleModalCenter">
-                                            Tambah Pembayaran
-                                        </button>
+                            <div class="d-flex justify-content-between">
+                                <div class="text-left d-flex">
+                                    <p class="align-self-center mr-2">Show</p>
+                                    <form action="{{ route('iuran_bulanan') }}" method="get">
+                                        @csrf
+                                        <select name="perPage_iuran" id="perPage_iuran"
+                                            class="form-control form-control-sm mb-3" onchange="this.form.submit()">
+                                            <option value="10" {{ $perPage_iuran == 10 ? 'selected' : '' }}>10
+                                            </option>
+                                            <option value="50" {{ $perPage_iuran == 50 ? 'selected' : '' }}>50
+                                            </option>
+                                            <option value="100" {{ $perPage_iuran == 100 ? 'selected' : '' }}>100
+                                            </option>
+                                            <option value="{{ $iuran_bulanans->total() }}"
+                                                {{ $perPage_iuran == $iuran_bulanans->total() ? 'selected' : '' }}>Semua
+                                            </option>
+                                        </select>
+                                    </form>
+                                    <p class="align-self-center ml-2">data</p>
+                                </div>
+                                <div class="text-right">
+                                    <div id="user_list_datatable_info" class="dataTables_filter">
+                                        <form class="position-relative d-flex" method="GET"
+                                            action="{{ route('iuran_bulanan') }}">
+                                            <div class="form-group mb-0 mr-3">
+                                                <input type="date" name="search_tanggal" class="form-control"
+                                                    id="iuran_bulanan_search" onchange="this.form.submit()"
+                                                    value="{{ request('search_tanggal') }}">
+                                            </div>
+                                            <div class="form-group mb-0">
+                                                <input type="search" name="search_all" class="form-control"
+                                                    id="iuran_bulanan_search" placeholder="Search"
+                                                    aria-controls="user-list-table" value="{{ request('search_all') }}">
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
-                                <table id="user-list-table" class="table table-striped table-bordered mt-4"
-                                    role="grid" aria-describedby="user-list-page-info">
-                                    <thead>
+                            </div>
+                            <div class="table-responsive mb-3" style="min-height: 380px; max-height: 380px;">
+                                <table id="user-list-table" class="table" role="grid"
+                                    aria-describedby="user-list-page-info">
+                                    <thead class="sticky-top bg-white z-index-1">
                                         <tr>
-                                            <th>Profile</th>
-                                            <th>Name</th>
-                                            <th>Contact</th>
-                                            <th>Email</th>
-                                            <th>Country</th>
-                                            <th>Status</th>
-                                            <th>Company</th>
-                                            <th>Join Date</th>
-                                            <th>Action</th>
+                                            <th>#</th>
+                                            <th>Tanggal Pembayaran</th>
+                                            <th>Nama Santri</th>
+                                            <th>Jumlah Pembayaran</th>
+                                            <th>Diterima Oleh</th>
+                                            <th>Status Pembayaran</th>
+                                            <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td class="text-center"><img class="rounded-circle img-fluid avatar-40"
-                                                    src="{{ asset('images/user/01.jpg') }}" alt="profile"></td>
-                                            <td>Anna Sthesia</td>
-                                            <td>(760) 756 7568</td>
-                                            <td>annasthesia@gmail.com</td>
-                                            <td>USA</td>
-                                            <td><span class="badge iq-bg-primary">Active</span></td>
-                                            <td>Acme Corporation</td>
-                                            <td>2019/12/01</td>
-                                            <td>
-                                                <div class="flex align-items-center list-user-action">
-                                                    <a data-toggle="tooltip" data-placement="top" title=""
-                                                        data-original-title="Add" href="#"><i
-                                                            class="ri-user-add-line"></i></a>
-                                                    <a data-toggle="tooltip" data-placement="top" title=""
-                                                        data-original-title="Edit" href="#"><i
-                                                            class="ri-pencil-line"></i></a>
-                                                    <a data-toggle="tooltip" data-placement="top" title=""
-                                                        data-original-title="Delete" href="#"><i
-                                                            class="ri-delete-bin-line"></i></a>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                        @forelse ($iuran_bulanans as $iuran_bulanan)
+                                            <tr>
+                                                <td>{{ ($iuran_bulanans->currentPage() - 1) * $iuran_bulanans->perPage() + $loop->index + 1 }}
+                                                </td>
+                                                <td>
+                                                    <p class="mb-0">
+                                                        {{ date('d/M/Y', strtotime($iuran_bulanan->tanggal_pembayaran)) }}
+                                                    </p>
+                                                    <p class="mb-0">Jam :
+                                                        {{ date('H:i:s', strtotime($iuran_bulanan->tanggal_pembayaran)) }}
+                                                    </p>
+                                                </td>
+                                                <td>{{ $iuran_bulanan->santri->nama_santri }}</td>
+                                                <td>
+                                                    Rp. {{ number_format($iuran_bulanan->jumlah_pembayaran, 0, ',', '.') }}
+                                                </td>
+                                                <td>{{ $iuran_bulanan->admin->nama }}</td>
+                                                <td class="text-center">
+                                                    @if ($iuran_bulanan->status_pembayaran === 'sudah_bayar')
+                                                        <span class="badge iq-bg-success">Sudah Bayar</span>
+                                                    @else
+                                                        <span class="badge iq-bg-danger">Belum Bayar</span>
+                                                    @endif
+                                                </td>
+                                                <td class="text-center">
+                                                    <div class="flex align-items-center list-user-action">
+                                                        <a data-toggle="tooltip" data-placement="top" title=""
+                                                            data-original-title="Edit" href="#"><i
+                                                                class="ri-pencil-line"></i></a>
+                                                        <a data-toggle="tooltip" data-placement="top" title=""
+                                                            data-original-title="Delete" href="#"><i
+                                                                class="ri-delete-bin-line"></i></a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        @empty
+                                            <tr>
+                                                <td colspan="7" class="text-center">
+                                                    <p class="mt-3">Tidak ada pembayaran</p>
+                                                </td>
+                                            </tr>
+                                        @endforelse
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="row justify-content-between mt-3">
-                                <div id="user-list-page-info" class="col-md-6">
-                                    <span>Menampilkan 1 sampai 5 dari 5 dari</span>
+                            {{-- Pagination --}}
+                            <div class="row justify-content-between">
+                                <div id="user-list-page-info" class="col-md-6 d-flex">
+                                    <p>Show {{ $iuran_bulanans->firstItem() }} to {{ $iuran_bulanans->lastItem() }} of
+                                        {{ $iuran_bulanans->total() }} data</p>
                                 </div>
-                                <div class="col-md-6">
-                                    <nav aria-label="Page navigation example">
-                                        <ul class="pagination justify-content-end mb-0">
+                                <div class="col text-right">
+                                    <ul class="pagination pagination-primary justify-content-end">
+                                        @if ($iuran_bulanans->onFirstPage())
                                             <li class="page-item disabled">
-                                                <a class="page-link" href="#" tabindex="-1"
-                                                    aria-disabled="true">Previous</a>
+                                                <span class="page-link" tabindex="-1"
+                                                    aria-label="Previous">Previous</span>
                                             </li>
-                                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                        @else
                                             <li class="page-item">
-                                                <a class="page-link" href="#">Next</a>
+                                                <a class="page-link" href="{{ $iuran_bulanans->previousPageUrl() }}"
+                                                    aria-label="Previous">Previous</a>
                                             </li>
-                                        </ul>
-                                    </nav>
+                                        @endif
+
+                                        @foreach ($iuran_bulanans->getUrlRange(1, $iuran_bulanans->lastPage()) as $page => $url)
+                                            <li
+                                                class="page-item {{ $page == $iuran_bulanans->currentPage() ? 'active' : '' }}">
+                                                <a class="page-link" href="{{ $url }}">{{ $page }}</a>
+                                            </li>
+                                        @endforeach
+
+                                        @if ($iuran_bulanans->hasMorePages())
+                                            <li class="page-item">
+                                                <a class="page-link" href="{{ $iuran_bulanans->nextPageUrl() }}"
+                                                    aria-label="Next">Next</a>
+                                            </li>
+                                        @else
+                                            <li class="page-item disabled">
+                                                <span class="page-link" tabindex="-1" aria-label="Next">Next</span>
+                                            </li>
+                                        @endif
+                                    </ul>
                                 </div>
                             </div>
                         </div>
@@ -311,19 +400,48 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalCenterTitle">Modal title</h5>
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Tambah Data Pembayaran</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    ...
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
+                <form action="{{ url('/pembayaran/iuran_bulanan/create') }}" method="post">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="nama_santri">Nama Santri</label>
+                            <select class="form-control" name="nama_santri" id="nama_santri">
+                                <option>Nama Santri</option>
+                                @foreach ($santris as $santri)
+                                    <option value="{{ $santri->nama_santri }}">{{ $santri->nama_santri }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="jumlah_pembayaran">Jumlah Pembayaran</label>
+                            <input type="number" name="jumlah_pembayaran" class="form-control"
+                                id="jumlah_pembayaran">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
+@endsection
+@section('js')
+    <script>
+        // Autoclose success alert after 3000 milliseconds (3 seconds)
+        setTimeout(function(){
+            $("#success-alert").alert('close');
+        }, 3000);
+
+        // Autoclose error alert after 5000 milliseconds (5 seconds)
+        setTimeout(function(){
+            $("#error-alert").alert('close');
+        }, 5000);
+    </script>
 @endsection

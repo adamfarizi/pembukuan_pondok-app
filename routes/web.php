@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BerandaController;
 use App\Http\Controllers\DaftarUlangController;
+use App\Http\Controllers\IuranBulananController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,7 +29,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/pembayaran/daftar_ulang', [DaftarUlangController::class, 'index'])->name('daftar_ulang');
     Route::post('/pembayaran/daftar_ulang/create', [DaftarUlangController::class, 'create_data']);
 
-    Route::get('/pembayaran/iuran_bulanan', function () { return view('auth/pembayaran/iuran_bulanan', ['title' => 'Daftar Ulang']); })->name('iuran_bulanan');
+    Route::get('/pembayaran/iuran_bulanan', [IuranBulananController::class, 'index'])->name('iuran_bulanan');
+    Route::post('/pembayaran/iuran_bulanan/create', [IuranBulananController::class, 'create_data']);
 
     Route::get('/pembayaran/tamrin', function () { return view('auth/pembayaran/tamrin', ['title' => 'Daftar Ulang']); })->name('tamrin');
 

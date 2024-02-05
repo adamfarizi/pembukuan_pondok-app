@@ -421,7 +421,7 @@
                                 value="" required>
                         </div>
                         <div class="form-group">
-                            <label for="deskripsi_pengeluaran">Example textarea</label>
+                            <label for="deskripsi_pengeluaran">Deskripsi Pengeluaran</label>
                             <textarea class="form-control" id="deskripsi_pengeluaran" name="deskripsi_pengeluaran" rows="4" required></textarea>
                         </div>
                     </div>

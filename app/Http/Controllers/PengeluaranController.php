@@ -109,7 +109,7 @@ class PengeluaranController extends Controller
     
             return redirect()->route('pengeluaran')->with('success', 'Pengeluaran berhasil diubah.');
         } catch (\Exception $e) {
-            return redirect()->route('pengeluaran')->withErrors(['error' => 'Error: ' . $e->getMessage()]);
+            return redirect()->back()->withErrors(['error' => 'Error: ' . $e->getMessage()]);
         }
     }
 

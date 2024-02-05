@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BerandaController;
 use App\Http\Controllers\DaftarUlangController;
 use App\Http\Controllers\IuranBulananController;
+use App\Http\Controllers\TamrinController;
 use App\Http\Controllers\PengeluaranController;
 use App\Http\Controllers\SantriController;
 use Illuminate\Support\Facades\Route;
@@ -36,8 +37,15 @@ Route::middleware(['auth'])->group(function () {
     
     Route::get('/pembayaran/iuran_bulanan', [IuranBulananController::class, 'index'])->name('iuran_bulanan');
     Route::post('/pembayaran/iuran_bulanan/create', [IuranBulananController::class, 'create_data']);
+    Route::get('/pembayaran/iuran_bulanan/{id}', [IuranBulananController::class, 'get_edit_data']);
+    Route::put('/pembayaran/iuran_bulanan/edit/{id}', [IuranBulananController::class, 'edit_data']);
+    Route::delete('/pembayaran/iuran_bulanan/delete/{id}', [IuranBulananController::class, 'delete_data']);
     
-    Route::get('/pembayaran/tamrin', function () { return view('auth/pembayaran/tamrin', ['title' => 'Daftar Ulang']); })->name('tamrin');
+    Route::get('/pembayaran/tamrin', [TamrinController::class, 'index'])->name('tamrin');
+    Route::post('/pembayaran/tamrin/create', [TamrinController::class, 'create_data']);
+    Route::get('/pembayaran/tamrin/{id}', [TamrinController::class, 'get_edit_data']);
+    Route::put('/pembayaran/tamrin/edit/{id}', [TamrinController::class, 'edit_data']);
+    Route::delete('/pembayaran/tamrin/delete/{id}', [TamrinController::class, 'delete_data']);
     
     Route::get('/pengeluaran', [PengeluaranController::class, 'index'])->name('pengeluaran');
     Route::post('/pengeluaran/create', [PengeluaranController::class, 'create_data']);

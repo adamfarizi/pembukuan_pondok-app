@@ -143,7 +143,7 @@ class DaftarUlangController extends Controller
     
             return redirect()->route('daftar_ulang')->with('success', 'Pembayaran berhasil diubah.');
         } catch (\Exception $e) {
-            return redirect()->route('daftar_ulang')->withErrors(['error' => 'Error: ' . $e->getMessage()]);
+            return redirect()->back()->withErrors(['error' => 'Error: ' . $e->getMessage()]);
         }
     }
     

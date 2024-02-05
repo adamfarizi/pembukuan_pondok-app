@@ -327,16 +327,19 @@
                                                     @endif
                                                 </td>
                                                 <td class="text-center">
-                                                    <div class="flex align-items-center list-user-action">
-                                                        <a data-toggle="tooltip" data-placement="top" title=""
-                                                            data-original-title="Edit" href="#"><i
-                                                                class="ri-pencil-line"></i></a>
-                                                        <a data-toggle="tooltip" data-placement="top" title=""
-                                                            data-original-title="Delete" href="#"><i
-                                                                class="ri-delete-bin-line"></i></a>
-                                                    </div>
-                                                </td>
-                                            </tr>
+                                                    <div class="d-flex align-items-center list-user-action">
+                                                        <a data-placement="top" title="" data-original-title="Edit"
+                                                            href="{{ url('/pembayaran/iuran_bulanan/' . $iuran_bulanan->id_pembayaran) }}"><i
+                                                                class="ri-pencil-line"></i>
+                                                        </a>
+                                                        <a data-placement="top" title="Delete" href="#"
+                                                            data-target="#deleteModal" data-toggle="modal"
+                                                            data-id="{{ $iuran_bulanan->id_pembayaran }}">
+                                                            <i class="ri-delete-bin-line"></i>
+                                                    </a>
+                                                 </div>
+                                             </td>
+                                          </tr>
                                         @empty
                                             <tr>
                                                 <td colspan="7" class="text-center">
@@ -409,23 +412,46 @@
                     @csrf
                     <div class="modal-body">
                         <div class="form-group">
-                            <label for="nama_santri">Nama Santri</label>
+                            <label for="nama_santri">Nama Santri <span class="text-danger">*</span></label>
                             <select class="form-control" name="nama_santri" id="nama_santri">
-                                <option>Nama Santri</option>
+                                <option value="Nama Santri">Nama Santri</option>
                                 @foreach ($santris as $santri)
                                     <option value="{{ $santri->nama_santri }}">{{ $santri->nama_santri }}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="jumlah_pembayaran">Jumlah Pembayaran</label>
-                            <input type="number" name="jumlah_pembayaran" class="form-control"
-                                id="jumlah_pembayaran">
-                        </div>
+                                <label for="jumlah_pembayaran">Jumlah Pembayaran</label>
+                                <input type="number" name="jumlah_pembayaran" class="form-control"
+                                    id="jumlah_pembayaran">
+                            </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
                         <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Delete -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                </div>
+                <form id="deleteForm" method="post">
+                    @csrf
+                    @method('DELETE')
+                    <div class="modal-body text-center">
+                        <img src="{{ asset('images/local/danger.png') }}" width="80px" alt="">                        
+                        <h3 class="mt-4">Anda yakin ingin hapus data ini?</h3>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                        <button type="submit" class="btn btn-danger">Hapus</button>
                     </div>
                 </form>
             </div>
@@ -443,5 +469,16 @@
         setTimeout(function(){
             $("#error-alert").alert('close');
         }, 5000);
+    </script>
+
+     {{-- Script Modal Delete --}}
+     <script>
+        $(document).ready(function() {
+            // Menangani klik pada tombol Delete
+            $('a[data-toggle="modal"]').on('click', function() {
+                var id_pembayaran = $(this).data('id');
+                $('#deleteForm').attr('action', '/pembayaran/iuran_bulanan/delete/' + id_pembayaran);
+            });
+        });
     </script>
 @endsection

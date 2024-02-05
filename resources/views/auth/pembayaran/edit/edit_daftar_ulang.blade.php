@@ -282,8 +282,11 @@
                                 @endforeach
                             </select>
                         </div>
-                        <button type="submit" class="btn btn-primary">Simpan</button>
-                        <a type="button" href="{{ route('daftar_ulang') }}" class="btn iq-bg-danger">cancle</a>
+                        <hr>
+                        <div class="mt-2">
+                            <button type="submit" class="btn btn-primary">Simpan</button>
+                            <a type="button" href="{{ route('daftar_ulang') }}" class="btn iq-bg-secondary">Kembali</a>
+                        </div>
                     </form>
                 </div>
             </div>

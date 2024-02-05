@@ -18,18 +18,18 @@
                             <i class="ri-home-4-line"></i><span>Beranda</span>
                         </a>
                     </li>
-                    <li >
+                    <li class="active">
                         <a href="#pembayaran" class="iq-waves-effect collapsed" data-toggle="collapse"
                             aria-expanded="false"><i class="ri-chat-check-line"></i><span>Pembayaran</span>
                             <i class="ri-arrow-right-s-line iq-arrow-right"></i>
                         </a>
-                        <ul class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                            <li class="active"><a href="{{ route('pengeluaran') }}">Daftar Ulang</a></li>
-                            <li><a href="{{ route('iuran_bulanan') }}">Iuran Bulanan</a></li>
+                        <ul id="pembayaran" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                            <li ><a href="{{ route('daftar_ulang') }}">Daftar Ulang</a></li>
+                            <li class="active"><a href="{{ route('iuran_bulanan') }}">Iuran Bulanan</a></li>
                             <li><a href="{{ route('tamrin') }}">Tamrin</a></li>
                         </ul>
                     </li>
-                    <li class="active">
+                    <li>
                         <a href="{{ route('pengeluaran') }}" class="iq-waves-effect"><i
                                 class="ri-message-line"></i><span>Pengeluaran</span>
                         </a>
@@ -64,12 +64,13 @@
             </div>
             {{-- Halaman --}}
             <div class="navbar-breadcrumb">
-                <h5 class="mb-0">Edit Pengeluaran</h5>
+                <h5 class="mb-0">Iuran Bulanan</h5>
                 <nav aria-label="breadcrumb">
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ route('beranda') }}">Main</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Pengeluaran</li>
-                        <li class="breadcrumb-item active" aria-current="page">Edit Pengeluaran</li>
+                        <li class="breadcrumb-item active" aria-current="page">Pembayaran</li>
+                        <li class="breadcrumb-item active" aria-current="page">Iuran Bulanan</li>
+                        <li class="breadcrumb-item active" aria-current="page">Edit Pembayaran</li>
                     </ul>
                 </nav>
             </div>
@@ -240,44 +241,52 @@
             <div class="iq-card">
                 <div class="iq-card-header d-flex justify-content-between">
                     <div class="iq-header-title">
-                        <h4 class="card-title">Edit Data Pengeluaran</h4>
+                        <h4 class="card-title">Edit Data Pembayaran</h4>
                     </div>
                 </div>
                 <div class="iq-card-body">
                     <p>Lengkapi dan ubah form dibawah untuk mengubah data.</p>
-                    <form action="{{ url('/pengeluaran/edit/'. $pengeluaran->id_pengeluaran) }}"
+                    <form action="{{ url('/pembayaran/iuran_bulanan/edit/' . $iuran_bulanan->id_pembayaran) }}"
                         method="post">
                         @csrf
                         @method('PUT')
                         <div class="form-group">
-                            <label for="exampleInputDisabled1">Tanggal Pengeluaran</label>
+                            <label for="exampleInputDisabled1">Tanggal Pembayaran</label>
                             <input type="text" class="form-control" id="exampleInputDisabled1" readonly=""
-                                value="{{ date('d/M/Y', strtotime($pengeluaran->tanggal_pengeluaran)) }}">
+                                value="{{ date('d/M/Y', strtotime($iuran_bulanan->tanggal_pembayaran)) }}">
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputDisabled1">Jam Pengeluaran</label>
+                            <label for="exampleInputDisabled1">Jam Pembayaran</label>
                             <input type="text" class="form-control" id="exampleInputDisabled1" readonly=""
-                                value="{{ date('H:i:s', strtotime($pengeluaran->tanggal_pengeluaran)) }}">
+                                value="{{ date('H:i:s', strtotime($iuran_bulanan->tanggal_pembayaran)) }}">
                         </div>
                         <div class="form-group">
-                            <label for="nama_pengeluar">Nama Pengeluar <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="nama_pengeluar" name="nama_pengeluar"
-                                value="{{ $pengeluaran->nama_pengeluar }}" required>
+                            <label for="exampleFormControlSelect1">Nama Santri</label>
+                            <select class="form-control" name="nama_santri" id="nama_santri">
+                                <option selected="" value="{{ $santri->nama_santri }}">{{ $santri->nama_santri }}
+                                </option>
+                                @foreach ($santris as $s)
+                                    <option value="{{ $s->nama_santri }}"
+                                        {{ $s->nama_santri == $santri->nama_santri ? 'selected' : '' }}>
+                                        {{ $s->nama_santri }}
+                                    </option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="form-group">
-                            <label for="jumlah_pengeluaran">Jumlah Pengeluaran <span class="text-danger">*</span></label>
-                            <input type="number" class="form-control" id="jumlah_pengeluaran" name="jumlah_pengeluaran"
-                                value="{{ $pengeluaran->jumlah_pengeluaran }}" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="deskripsi_pengeluaran">Example textarea</label>
-                            <textarea class="form-control" id="deskripsi_pengeluaran" name="deskripsi_pengeluaran" rows="4" required>{{ $pengeluaran->deskripsi_pengeluaran }}</textarea>
+                            <label for="exampleFormControlSelect1">Diterima Oleh</label>
+                            <select class="form-control" name="nama_admin" id="nama_admin">
+                                <option selected="" value="{{ $admin->nama }}">{{ $admin->nama }}</option>
+                                @foreach ($admins as $a)
+                                    <option value="{{ $a->nama }}">{{ $a->nama }}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <hr>
-                        <div class="mt-2">
-                            <button type="submit" class="btn btn-primary">Simpan</button>
-                            <a type="button" href="{{ route('pengeluaran') }}" class="btn iq-bg-secondary">Kembali</a>
-                        </div>
+                            <div class="mt-2">
+                                <button type="submit" class="btn btn-primary">Simpan</button>
+                                <a type="button" href="{{ route('iuran_bulanan') }}" class="btn iq-bg-secondary">Kembali</a>
+                            </div>
                     </form>
                 </div>
             </div>

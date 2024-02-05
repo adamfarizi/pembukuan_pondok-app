@@ -37,7 +37,7 @@ class IuranBulananController extends Controller
             $totalItems = $query->count();
             $iuran_bulanans = $query->paginate($totalItems, ['*'], 'jenis_pembayaran');
         } else {
-            $iuran_bulanans = $query->paginate($perPage_iuran, ['*'], 'jenis_pembayaran');
+            $iuran_bulanans = $query->paginate($perPage_iuran, ['*'], 'jenis_pembayaran')->appends(request()->query());
         }        
 
         $santris = Santri::all();

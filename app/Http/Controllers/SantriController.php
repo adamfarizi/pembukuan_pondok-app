@@ -26,7 +26,7 @@ class SantriController extends Controller
             $totalItems = $query->count();
             $santris = $query->paginate($totalItems, ['*'], 'santri');
         } else {
-            $santris = $query->paginate($perPage_santri, ['*'], 'santri');
+            $santris = $query->paginate($perPage_santri, ['*'], 'santri')->appends(request()->query());
         }
 
         return view('auth.santri.santri', [

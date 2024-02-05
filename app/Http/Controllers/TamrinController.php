@@ -37,7 +37,7 @@ class TamrinController extends Controller
             $totalItems = $query->count();
             $tamrins = $query->paginate($totalItems, ['*'], 'jenis_pembayaran');
         } else {
-            $tamrins = $query->paginate($perPage_tamrin, ['*'], 'jenis_pembayaran');
+            $tamrins = $query->paginate($perPage_tamrin, ['*'], 'jenis_pembayaran')->appends(request()->query());
         }        
 
         $santris = Santri::all();

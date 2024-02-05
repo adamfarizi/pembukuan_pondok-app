@@ -296,10 +296,9 @@
                                         <tr>
                                             <th>#</th>
                                             <th>Nama Santri</th>
-                                            <th>Tempat, Tanggal Lahir</th>
+                                            <th>TTL</th>
                                             <th>Alamat</th>
                                             <th>No. HP</th>
-                                            <th>Jenis Kelamin</th>
                                             <th>Status</th>
                                             <th></th>
                                         </tr>
@@ -313,7 +312,6 @@
                                                 <td>{{ $santri->tempat_tanggal_lahir_santri }}</td>
                                                 <td>{{ $santri->alamat_santri }}</td>
                                                 <td>{{ $santri->no_hp_santri }}</td>
-                                                <td>{{ $santri->jenis_kelamin_santri }}</td>
                                                 <td>
                                                     @if ($santri->status_santri === 'pulang')
                                                         <span class="badge badge-pill badge-primary">Pulang</span>

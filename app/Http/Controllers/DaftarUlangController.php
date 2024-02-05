@@ -37,7 +37,7 @@ class DaftarUlangController extends Controller
             $totalItems = $query->count();
             $daftar_ulangs = $query->paginate($totalItems, ['*'], 'jenis_pembayaran');
         } else {
-            $daftar_ulangs = $query->paginate($perPage_daftar, ['*'], 'jenis_pembayaran');
+            $daftar_ulangs = $query->paginate($perPage_daftar, ['*'], 'jenis_pembayaran')->appends(request()->query());
         }        
 
         $santris = Santri::all();

@@ -35,7 +35,7 @@ class PengeluaranController extends Controller
             $totalItems = $query->count();
             $pengeluarans = $query->paginate($totalItems, ['*'], 'pengeluaran');
         } else {
-            $pengeluarans = $query->paginate($perPage_pengeluaran, ['*'], 'pengeluaran');
+            $pengeluarans = $query->paginate($perPage_pengeluaran, ['*'], 'pengeluaran')->appends(request()->query());
         }        
         $admins = User::all();
 

@@ -30,16 +30,19 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="{{ route('pengeluaran') }}" class="iq-waves-effect"><i class="ri-message-line"></i><span>Pengeluaran</span>
+                        <a href="{{ route('pengeluaran') }}" class="iq-waves-effect"><i
+                                class="ri-message-line"></i><span>Pengeluaran</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('laporan_keuangan') }}" class="iq-waves-effect"><i class="ri-calendar-2-line"></i><span>Laporan
+                        <a href="{{ route('laporan_keuangan') }}" class="iq-waves-effect"><i
+                                class="ri-calendar-2-line"></i><span>Laporan
                                 Keuangan</span>
                         </a>
                     </li>
                     <li class="active">
-                        <a href="{{ route('santri') }}" class="iq-waves-effect"><i class="ri-user-line"></i><span>Santri</span>
+                        <a href="{{ route('santri') }}" class="iq-waves-effect"><i
+                                class="ri-user-line"></i><span>Santri</span>
                         </a>
                     </li>
                 </ul>
@@ -109,7 +112,8 @@
                                         <a href="#" class="iq-sub-card">
                                             <div class="media align-items-center">
                                                 <div class="">
-                                                    <img class="avatar-40 rounded" src="{{ asset('images/user/01.jpg') }}" alt="">
+                                                    <img class="avatar-40 rounded" src="{{ asset('images/user/01.jpg') }}"
+                                                        alt="">
                                                 </div>
                                                 <div class="media-body ml-3">
                                                     <h6 class="mb-0 ">Emma Watson Nik</h6>
@@ -134,7 +138,8 @@
                                         <a href="#" class="iq-sub-card">
                                             <div class="media align-items-center">
                                                 <div class="">
-                                                    <img class="avatar-40" src="{{ asset('images/small/jpg.svg') }}" alt="">
+                                                    <img class="avatar-40" src="{{ asset('images/small/jpg.svg') }}"
+                                                        alt="">
                                                 </div>
                                                 <div class="media-body ml-3">
                                                     <h6 class="mb-0 ">Updates Available</h6>
@@ -155,7 +160,8 @@
                 <ul class="navbar-list">
                     <li>
                         <a href="#" class="search-toggle iq-waves-effect bg-white text-white"><img
-                                src="{{ asset('images/local/user-1.png') }}" class="img-fluid rounded" alt="user"></a>
+                                src="{{ asset('images/local/user-1.png') }}" class="img-fluid rounded"
+                                alt="user"></a>
                         <div class="iq-sub-dropdown iq-user-dropdown">
                             <div class="iq-card iq-card-block iq-card-stretch iq-card-height shadow-none m-0">
                                 <div class="iq-card-body p-0 ">
@@ -186,8 +192,8 @@
                                         </div>
                                     </a>
                                     <div class="d-inline-block w-100 text-center p-3">
-                                        <a class="iq-bg-danger iq-sign-btn btn-block" href="{{ url('/logout') }}" role="button">Keluar<i
-                                                class="ri-login-box-line ml-2"></i></a>
+                                        <a class="iq-bg-danger iq-sign-btn btn-block" href="{{ url('/logout') }}"
+                                            role="button">Keluar<i class="ri-login-box-line ml-2"></i></a>
                                     </div>
                                 </div>
                             </div>
@@ -238,10 +244,9 @@
                                 <h4 class="card-title">Data Santri</h4>
                             </div>
                             <div class="text-right">
-                                <button type="button" class="btn btn-primary mt-1" data-toggle="modal"
-                                    data-target="#exampleModalCenter">
+                                <a type="button" class="btn btn-primary mt-1" href="{{ url('/santri/create/form') }}">
                                     Tambah Santri
-                                </button>
+                                </a>
                             </div>
                         </div>
                         <div class="iq-card-body">
@@ -302,23 +307,33 @@
                                     <tbody>
                                         @forelse ($santris as $santri)
                                             <tr>
-                                                <td>{{ ($santris->currentPage() - 1) * $santris->perPage() + $loop->index + 1 }}</td>
+                                                <td>{{ ($santris->currentPage() - 1) * $santris->perPage() + $loop->index + 1 }}
+                                                </td>
                                                 <td>{{ $santri->nama_santri }}</td>
                                                 <td>{{ $santri->tempat_tanggal_lahir_santri }}</td>
                                                 <td>{{ $santri->alamat_santri }}</td>
                                                 <td>{{ $santri->no_hp_santri }}</td>
                                                 <td>{{ $santri->jenis_kelamin_santri }}</td>
-                                                <td>{{ $santri->status_santri }}</td>
+                                                <td>
+                                                    @if ($santri->status_santri === 'pulang')
+                                                        <span class="badge badge-pill badge-primary">Pulang</span>
+                                                    @else
+                                                        <span class="badge badge-pill badge-success">Menetap</span>
+                                                    @endif
+                                                </td>
                                                 <td class="text-center">
                                                     <div class="d-flex align-items-center list-user-action">
-                                                        <a data-placement="top" title="Info" href="#" data-target="#infoModal" data-toggle="modal"
-                                                            data-id="{{ $santri->id_santri }}">
+                                                        <a data-placement="top" title="Info" href="#"
+                                                            data-target="#infoModal{{ $santri->id_santri }}"
+                                                            data-toggle="modal" data-id="{{ $santri->id_santri }}">
                                                             <i class="ri-information-line"></i>
                                                         </a>
-                                                        <a data-placement="top" title="Edit" href="{{ url('/santri/'. $santri->id_santri) }}">
+                                                        <a data-placement="top" title="Edit"
+                                                            href="{{ url('/santri/' . $santri->id_santri) }}">
                                                             <i class="ri-pencil-line"></i>
                                                         </a>
-                                                        <a data-placement="top" title="Delete" href="#" data-target="#deleteModal" data-toggle="modal"
+                                                        <a data-placement="top" title="Delete" href="#"
+                                                            data-target="#deleteModal" data-toggle="modal"
                                                             data-id="{{ $santri->id_santri }}">
                                                             <i class="ri-delete-bin-line"></i>
                                                         </a>
@@ -333,7 +348,6 @@
                                             </tr>
                                         @endforelse
                                     </tbody>
-                                    
                                 </table>
                             </div>
                             {{-- Pagination --}}
@@ -357,8 +371,7 @@
                                         @endif
 
                                         @foreach ($santris->getUrlRange(1, $santris->lastPage()) as $page => $url)
-                                            <li
-                                                class="page-item {{ $page == $santris->currentPage() ? 'active' : '' }}">
+                                            <li class="page-item {{ $page == $santris->currentPage() ? 'active' : '' }}">
                                                 <a class="page-link" href="{{ $url }}">{{ $page }}</a>
                                             </li>
                                         @endforeach
@@ -383,77 +396,105 @@
         </div>
     </div>
 
-    <!-- Modal -->
-    {{-- <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
-        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalCenterTitle">Tambah Data Pembayaran</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <form action="{{ url('/santri/create') }}" method="post">
-                    @csrf
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label for="nama_pengeluar">Nama Pengeluar <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="nama_pengeluar" name="nama_pengeluar"
-                                value="" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="jumlah_santri">Jumlah Santri <span class="text-danger">*</span></label>
-                            <input type="number" class="form-control" id="jumlah_santri" name="jumlah_santri"
-                                value="" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="deskripsi_santri">Example textarea</label>
-                            <textarea class="form-control" id="deskripsi_santri" name="deskripsi_santri" rows="4" required></textarea>
-                        </div>
+    <!-- Info Modal -->
+    @foreach ($santris as $santri)
+        <div class="modal fade" id="infoModal{{ $santri->id_santri }}" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenterTitle{{ $santri->id_santri }}" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalCenterTitle">Data Santri</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body text-dark" id="dynamicContent">
+                        <div class="px-3 py-2">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="mt-2">
+                                        <h6>Nama Santri:</h6>
+                                        <p>{{ $santri->nama_santri }}</p>
+                                    </div>
+                                    <div class="mt-2">
+                                        <h6>Tempat, Tanggal Lahir:</h6>
+                                        <p>{{ $santri->tempat_tanggal_lahir_santri }}</p>
+                                    </div>
+                                    <div class="mt-2">
+                                        <h6>No Hp:</h6>
+                                        <p>{{ $santri->no_hp_santri }}</p>
+                                    </div>
+                                    <div class="mt-2">
+                                        <h6>Email:</h6>
+                                        <p>{{ $santri->email_santri }}</p>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="mt-2">
+                                        <h6>Jenis Kelami:</h6>
+                                        <p>{{ $santri->jenis_kelamin_santri }}</p>
+                                    </div>
+                                    <div class="mt-2">
+                                        <h6>Status Santri:</h6>
+                                        @if ($santri->status_santri === 'pulang')
+                                            <span class="badge badge-pill badge-primary">Pulang</span>
+                                        @else
+                                            <span class="badge badge-pill badge-success">Menetap</span>
+                                        @endif
+                                    </div>
+                                    <div class="mt-2">
+                                        <h6>Nama Wali Santri:</h6>
+                                        <p>{{ $santri->nama_wali_santri }}</p>
+                                    </div>
+                                    <div class="mt-2">
+                                        <h6>No Hp Wali Santri:</h6>
+                                        <p>{{ $santri->no_hp_wali_santri }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-2">
+                                <h6>Alamat:</h6>
+                                <p>{{ $santri->alamat_santri }}</p>
+                            </div>
+                            <h5 class="mt-4"><u>Berkas Santri</u></h5>
+                            <div class="mt-2">
+                                <h6 class="mb-2">KTP Santri:</h6>
+                                @if ($santri->ktp_santri === null)
+                                    <div class="bg-light" style="width: 440px; border-radius:20px;">
+                                        <p class="text-center text-secondary" style="padding-top: 100px; padding-bottom:100px;">Gambar tidak ada.</p>
+                                    </div>
+                                @else
+                                    <div class="text-center">
+                                        <img src="{{ asset('berkas_santri/ktp_santri/' . $santri->ktp_santri) }}" alt="" style="max-width: 440px; border-radius: 20px;">
+                                        <p class="mt-2"><a href="{{ asset('berkas_santri/ktp_santri/' . $santri->ktp_santri) }}" download>Download KTP</a></p>
+                                    </div>
+                                @endif
+                            </div>
+                            <div class="mt-4">
+                                <h6 class="mb-2">KK Santri:</h6>
+                                @if ($santri->kk_santri === null)
+                                    <div class="bg-light" style="width: 440px; border-radius:20px;">
+                                        <p class="text-center text-secondary" style="padding-top: 100px; padding-bottom:100px;">Gambar tidak ada.</p>
+                                    </div>
+                                @else
+                                    <div class="text-center">
+                                        <img src="{{ asset('berkas_santri/kk_santri/' . $santri->kk_santri) }}" alt="" style="max-width: 440px; border-radius: 20px;">
+                                        <p class="mt-2"><a href="{{ asset('berkas_santri/kk_santri/' . $santri->kk_santri) }}" download>Download KK</a></p>
+                                    </div>
+                                @endif
+                            </div> 
+                        </div>                                           
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-                        <button type="submit" class="btn btn-primary">Simpan</button>
                     </div>
-                </form>
-            </div>
-        </div>
-    </div> --}}
-
-    <!-- Info Modal -->
-    <div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalCenterTitle">Data Santri</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body text-dark" id="dynamicContent">
-                    <p><strong>Nama Santri : </strong>{{ $santri->nama_santri }}</p>
-                    <p><strong>Tempat, Tanggal Lahir : </strong>{{ $santri->tempat_tanggal_lahir_santri }}</p>
-                    <p><strong>Jenis Kelamin : </strong>{{ $santri->jenis_kelamin_santri }}</p>
-                    <p><strong>Alamat : </strong>{{ $santri->alamat_santri }}</p>
-                    <p><strong>No HP : </strong>{{ $santri->no_hp_santri }}</p>
-                    <p><strong>Email : </strong>{{ $santri->email_santri }}</p>
-                    <p><strong>Status Santri : </strong>{{ $santri->status_santri }}</p>
-                    <p><strong>Nama Wali Santri : </strong>{{ $santri->nama_wali_santri }}</p>
-                    <p><strong>No HP Wali Santri : </strong>{{ $santri->no_hp_wali_santri }}</p>
-                    <p><strong>KTP Santri : </strong>{{ $santri->ktp_santri }}</p>
-                    <p><strong>KK Santri : </strong>{{ $santri->kk_santri }}</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
                 </div>
             </div>
         </div>
-    </div>
-
+    @endforeach
 
     <!-- Modal Delete -->
-    {{-- <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -473,7 +514,7 @@
                 </form>
             </div>
         </div>
-    </div> --}}
+    </div>
 @endsection
 @section('js')
     <script>
@@ -487,29 +528,6 @@
             $("#error-alert").alert('close');
         }, 5000);
     </script>
-
-    {{-- Script Modal Info --}}
-    <script>
-        $(document).ready(function () {
-            // Menangani klik pada tombol Info
-            $('a[data-toggle="modal"]').on('click', function () {
-                var id_santri = $(this).data('id');
-                
-                // Assuming you have a route to fetch Santri data by ID
-                $.ajax({
-                    url: '/santri/' + id_santri + '/info',
-                    method: 'GET',
-                    success: function (data) {
-                        // Update the content of the modal with dynamic data
-                        $('#dynamicContent').html(data);
-                    },
-                    error: function (error) {
-                        console.log(error);
-                    }
-                });
-            });
-        });
-    </script>    
 
     {{-- Script Modal Delete --}}
     <script>

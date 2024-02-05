@@ -56,4 +56,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/laporan_keuangan', function () { return view('auth/laporan_keuangan/laporan_keuangan', ['title' => 'Daftar Ulang']); })->name('laporan_keuangan');
 
     Route::get('/santri', [SantriController::class, 'index'])->name('santri');
+    Route::get('/santri', [SantriController::class, 'index'])->name('santri');
+    Route::get('/santri/create/form', [SantriController::class, 'get_create_data']);
+    Route::post('/santri/create', [SantriController::class, 'create_data']);
+    Route::get('/santri/{id}', [SantriController::class, 'get_edit_data']);
+    Route::put('/santri/edit/{id}', [SantriController::class, 'edit_data']);
+    Route::delete('/santri/delete/{id}', [SantriController::class, 'delete_data']);
 });

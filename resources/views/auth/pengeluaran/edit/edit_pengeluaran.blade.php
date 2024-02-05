@@ -18,13 +18,13 @@
                             <i class="ri-home-4-line"></i><span>Beranda</span>
                         </a>
                     </li>
-                    <li>
+                    <li >
                         <a href="#pembayaran" class="iq-waves-effect collapsed" data-toggle="collapse"
                             aria-expanded="false"><i class="ri-chat-check-line"></i><span>Pembayaran</span>
                             <i class="ri-arrow-right-s-line iq-arrow-right"></i>
                         </a>
-                        <ul id="pembayaran" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                            <li><a href="{{ route('daftar_ulang') }}">Daftar Ulang</a></li>
+                        <ul class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                            <li class="active"><a href="{{ route('pengeluaran') }}">Daftar Ulang</a></li>
                             <li><a href="{{ route('iuran_bulanan') }}">Iuran Bulanan</a></li>
                             <li><a href="{{ route('tamrin') }}">Tamrin</a></li>
                         </ul>
@@ -64,11 +64,12 @@
             </div>
             {{-- Halaman --}}
             <div class="navbar-breadcrumb">
-                <h5 class="mb-0">Pengeluaran</h5>
+                <h5 class="mb-0">Daftar Ulang</h5>
                 <nav aria-label="breadcrumb">
                     <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{ url('beranda') }}">Main</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('beranda') }}">Main</a></li>
                         <li class="breadcrumb-item active" aria-current="page">Pengeluaran</li>
+                        <li class="breadcrumb-item active" aria-current="page">Edit Pengeluaran</li>
                     </ul>
                 </nav>
             </div>
@@ -234,225 +235,48 @@
                 @endforeach
             @endif
         </div>
-        {{-- Tabel --}}
+        {{-- Form Edit --}}
         <div class="container-fluid">
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="iq-card">
-                        <div class="iq-card-header d-flex justify-content-between">
-                            <div class="iq-header-title">
-                                <h4 class="card-title">Pengeluaran Pondok</h4>
-                            </div>
-                            <div class="text-right">
-                                <button type="button" class="btn btn-primary mt-1" data-toggle="modal"
-                                    data-target="#exampleModalCenter">
-                                    Tambah Pengeluaran
-                                </button>
-                            </div>
-                        </div>
-                        <div class="iq-card-body">
-                            <div class="d-flex justify-content-between">
-                                <div class="text-left d-flex">
-                                    <p class="align-self-center mr-2">Show</p>
-                                    <form action="{{ route('pengeluaran') }}" method="get">
-                                        @csrf
-                                        <select name="perPage_pengeluaran" id="perPage_pengeluaran"
-                                            class="form-control form-control-sm mb-3" onchange="this.form.submit()">
-                                            <option value="10" {{ $perPage_pengeluaran == 10 ? 'selected' : '' }}>10
-                                            </option>
-                                            <option value="50" {{ $perPage_pengeluaran == 50 ? 'selected' : '' }}>50
-                                            </option>
-                                            <option value="100" {{ $perPage_pengeluaran == 100 ? 'selected' : '' }}>100
-                                            </option>
-                                            <option value="{{ $pengeluarans->total() }}"
-                                                {{ $perPage_pengeluaran == $pengeluarans->total() ? 'selected' : '' }}>
-                                                Semua
-                                            </option>
-                                        </select>
-                                    </form>
-                                    <p class="align-self-center ml-2">data</p>
-                                </div>
-                                <div class="text-right">
-                                    <div id="user_list_datatable_info" class="dataTables_filter">
-                                        <form class="position-relative d-flex" method="GET"
-                                            action="{{ route('pengeluaran') }}">
-                                            <div class="form-group mb-0 mr-3">
-                                                <input type="date" name="search_tanggal" class="form-control"
-                                                    id="pengeluaran_search" onchange="this.form.submit()"
-                                                    value="{{ request('search_tanggal') }}">
-                                            </div>
-                                            <div class="form-group mb-0">
-                                                <input type="search" name="search_all" class="form-control"
-                                                    id="pengeluaran_search" placeholder="Search"
-                                                    aria-controls="user-list-table" value="{{ request('search_all') }}">
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="table-responsive mb-3" style="min-height: 380px; max-height: 380px;">
-                                <table id="user-list-table" class="table" role="grid"
-                                    aria-describedby="user-list-page-info">
-                                    <thead class="sticky-top bg-white z-index-1">
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Tanggal Pengeluaran</th>
-                                            <th>Jumlah Pengeluaran</th>
-                                            <th>Deskripsi Pengeluaran</th>
-                                            <th>Nama Pengeluar</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @forelse ($pengeluarans as $pengeluaran)
-                                            <tr>
-                                                <td>{{ ($pengeluarans->currentPage() - 1) * $pengeluarans->perPage() + $loop->index + 1 }}
-                                                </td>
-                                                </td>
-                                                <td>
-                                                    <p class="mb-0">
-                                                        {{ date('d/M/Y', strtotime($pengeluaran->tanggal_pengeluaran)) }}
-                                                    </p>
-                                                    <p class="mb-0">Jam :
-                                                        {{ date('H:i:s', strtotime($pengeluaran->tanggal_pengeluaran)) }}
-                                                    </p>
-                                                </td>
-                                                <td>
-                                                    Rp. {{ number_format($pengeluaran->jumlah_pengeluaran, 0, ',', '.') }}
-                                                </td>
-                                                <td class="" style="max-width: 200px">
-                                                    {{ $pengeluaran->deskripsi_pengeluaran }}
-                                                </td>
-                                                <td>
-                                                    {{ $pengeluaran->nama_pengeluar }}
-                                                </td>
-                                                <td class="text-center">
-                                                    <div class="d-flex align-items-center list-user-action">
-                                                        <a data-placement="top" title="" data-original-title="Edit"
-                                                            href="{{ url('/pengeluaran/'. $pengeluaran->id_pengeluaran) }}"><i class="ri-pencil-line"></i>
-                                                        </a>
-                                                        <a data-placement="top" title="Delete" href="#"
-                                                            data-target="#deleteModal" data-toggle="modal"
-                                                            data-id="{{ $pengeluaran->id_pengeluaran }}">
-                                                            <i class="ri-delete-bin-line"></i>
-                                                        </a>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        @empty
-                                            <tr>
-                                                <td colspan="6" class="text-center">
-                                                    <p class="mt-3">Tidak ada pembayaran</p>
-                                                </td>
-                                            </tr>
-                                        @endforelse
-                                    </tbody>
-                                </table>
-                            </div>
-                            {{-- Pagination --}}
-                            <div class="row justify-content-between">
-                                <div id="user-list-page-info" class="col-md-6 d-flex">
-                                    <p>Show {{ $pengeluarans->firstItem() }} to {{ $pengeluarans->lastItem() }} of
-                                        {{ $pengeluarans->total() }} data</p>
-                                </div>
-                                <div class="col text-right">
-                                    <ul class="pagination pagination-primary justify-content-end">
-                                        @if ($pengeluarans->onFirstPage())
-                                            <li class="page-item disabled">
-                                                <span class="page-link" tabindex="-1"
-                                                    aria-label="Previous">Previous</span>
-                                            </li>
-                                        @else
-                                            <li class="page-item">
-                                                <a class="page-link" href="{{ $pengeluarans->previousPageUrl() }}"
-                                                    aria-label="Previous">Previous</a>
-                                            </li>
-                                        @endif
-
-                                        @foreach ($pengeluarans->getUrlRange(1, $pengeluarans->lastPage()) as $page => $url)
-                                            <li
-                                                class="page-item {{ $page == $pengeluarans->currentPage() ? 'active' : '' }}">
-                                                <a class="page-link" href="{{ $url }}">{{ $page }}</a>
-                                            </li>
-                                        @endforeach
-
-                                        @if ($pengeluarans->hasMorePages())
-                                            <li class="page-item">
-                                                <a class="page-link" href="{{ $pengeluarans->nextPageUrl() }}"
-                                                    aria-label="Next">Next</a>
-                                            </li>
-                                        @else
-                                            <li class="page-item disabled">
-                                                <span class="page-link" tabindex="-1" aria-label="Next">Next</span>
-                                            </li>
-                                        @endif
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
+            <div class="iq-card">
+                <div class="iq-card-header d-flex justify-content-between">
+                    <div class="iq-header-title">
+                        <h4 class="card-title">Edit Data Pengeluaran</h4>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
-        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalCenterTitle">Tambah Data Pembayaran</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <form action="{{ url('/pengeluaran/create') }}" method="post">
-                    @csrf
-                    <div class="modal-body">
+                <div class="iq-card-body">
+                    <p>Lengkapi dan ubah form dibawah untuk mengubah data.</p>
+                    <form action="{{ url('/pengeluaran/edit/'. $pengeluaran->id_pengeluaran) }}"
+                        method="post">
+                        @csrf
+                        @method('PUT')
+                        <div class="form-group">
+                            <label for="exampleInputDisabled1">Tanggal Pengeluaran</label>
+                            <input type="text" class="form-control" id="exampleInputDisabled1" readonly=""
+                                value="{{ date('d/M/Y', strtotime($pengeluaran->tanggal_pengeluaran)) }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputDisabled1">Jam Pengeluaran</label>
+                            <input type="text" class="form-control" id="exampleInputDisabled1" readonly=""
+                                value="{{ date('H:i:s', strtotime($pengeluaran->tanggal_pengeluaran)) }}">
+                        </div>
                         <div class="form-group">
                             <label for="nama_pengeluar">Nama Pengeluar <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="nama_pengeluar" name="nama_pengeluar"
-                                value="" required>
+                                value="{{ $pengeluaran->nama_pengeluar }}" required>
                         </div>
                         <div class="form-group">
                             <label for="jumlah_pengeluaran">Jumlah Pengeluaran <span class="text-danger">*</span></label>
                             <input type="number" class="form-control" id="jumlah_pengeluaran" name="jumlah_pengeluaran"
-                                value="" required>
+                                value="{{ $pengeluaran->jumlah_pengeluaran }}" required>
                         </div>
                         <div class="form-group">
                             <label for="deskripsi_pengeluaran">Example textarea</label>
-                            <textarea class="form-control" id="deskripsi_pengeluaran" name="deskripsi_pengeluaran" rows="4" required></textarea>
+                            <textarea class="form-control" id="deskripsi_pengeluaran" name="deskripsi_pengeluaran" rows="4" required>{{ $pengeluaran->deskripsi_pengeluaran }}</textarea>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
                         <button type="submit" class="btn btn-primary">Simpan</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal Delete -->
-    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
+                        <a type="button" href="{{ route('pengeluaran') }}" class="btn iq-bg-danger">cancle</a>
+                    </form>
                 </div>
-                <form id="deleteForm" method="post">
-                    @csrf
-                    @method('DELETE')
-                    <div class="modal-body text-center">
-                        <img src="{{ asset('images/local/danger.png') }}" width="80px" alt="">                        
-                        <h3 class="mt-4">Anda yakin ingin hapus data ini?</h3>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-                        <button type="submit" class="btn btn-danger">Hapus</button>
-                    </div>
-                </form>
             </div>
         </div>
     </div>
@@ -468,16 +292,5 @@
         setTimeout(function() {
             $("#error-alert").alert('close');
         }, 5000);
-    </script>
-
-    {{-- Script Modal Delete --}}
-    <script>
-        $(document).ready(function() {
-            // Menangani klik pada tombol Delete
-            $('a[data-toggle="modal"]').on('click', function() {
-                var id_pengeluaran = $(this).data('id');
-                $('#deleteForm').attr('action', '/pengeluaran/delete/' + id_pengeluaran);
-            });
-        });
     </script>
 @endsection

@@ -8,13 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Pengeluaran extends Model
 {
     use HasFactory;
-    protected $table = 'transaksi';
-    protected $primaryKey = 'id_transaksi';
+    protected $table = 'pengeluaran';
+    protected $primaryKey = 'id_pengeluaran';
     protected $fillable = [
         'tanggal_pengeluaran', 
         'jumlah_pengeluaran', 
-        'jenis_pengeluaran', 
-        'status_pengeluaran',
+        'deskripsi_pengeluaran', 
+        'nama_pengeluar',
         'id_admin',
     ];
 

@@ -21,7 +21,7 @@ class PembayaranFactory extends Factory
             'jenis_pembayaran' => $jenisPembayaran,
             'status_pembayaran' => 'sudah_bayar',
             'id_admin' => 1, // Sesuaikan dengan rentang yang diinginkan
-            'id_santri' => $this->faker->numberBetween(1, 20), // Sesuaikan dengan id_santri yang ada di database
+            'id_santri' => $this->faker->numberBetween(1, 60), // Sesuaikan dengan id_santri yang ada di database
             'created_at' => $this->faker->dateTimeBetween('-1 year', 'now'),
             'updated_at' => $this->faker->dateTimeBetween('-1 year', 'now'),
         ];

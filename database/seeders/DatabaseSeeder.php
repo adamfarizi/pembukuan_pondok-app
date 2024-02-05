@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Pembayaran;
+use App\Models\Pengeluaran;
 use App\Models\Santri;
 use Illuminate\Database\Seeder;
 
@@ -21,7 +22,8 @@ class DatabaseSeeder extends Seeder
             // PembayaranSeeder::class,
         ]);    
 
-        Santri::factory(20)->create();
-        Pembayaran::factory(50)->create();
+        Santri::factory(60)->create();
+        Pembayaran::factory(70)->create();
+        Pengeluaran::factory(70)->create();
     }
 }

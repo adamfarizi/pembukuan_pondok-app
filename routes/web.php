@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BerandaController;
 use App\Http\Controllers\DaftarUlangController;
 use App\Http\Controllers\IuranBulananController;
+use App\Http\Controllers\LaporanKeuanganController;
 use App\Http\Controllers\TamrinController;
 use App\Http\Controllers\PengeluaranController;
 use App\Http\Controllers\SantriController;
@@ -53,7 +54,9 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/pengeluaran/edit/{id}', [PengeluaranController::class, 'edit_data']);
     Route::delete('/pengeluaran/delete/{id}', [PengeluaranController::class, 'delete_data']);
 
-    Route::get('/laporan_keuangan', function () { return view('auth/laporan_keuangan/laporan_keuangan', ['title' => 'Daftar Ulang']); })->name('laporan_keuangan');
+    Route::get('/laporan_keuangan', [LaporanKeuanganController::class, 'index'])->name('laporan_keuangan');
+    Route::get('/laporan_keuangan/get_pemasukan', [LaporanKeuanganController::class, 'get_pemasukan'])->name('get_pemasukan');
+    Route::get('/laporan_keuangan/get_pengeluaran', [LaporanKeuanganController::class, 'get_pengeluaran'])->name('get_pengeluaran');
 
     Route::get('/santri', [SantriController::class, 'index'])->name('santri');
     Route::get('/santri', [SantriController::class, 'index'])->name('santri');

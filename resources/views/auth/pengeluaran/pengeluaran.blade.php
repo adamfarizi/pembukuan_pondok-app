@@ -251,49 +251,10 @@
                             </div>
                         </div>
                         <div class="iq-card-body">
-                            <div class="d-flex justify-content-between">
-                                <div class="text-left d-flex">
-                                    <p class="align-self-center mr-2">Show</p>
-                                    <form action="{{ route('pengeluaran') }}" method="get">
-                                        @csrf
-                                        <select name="perPage_pengeluaran" id="perPage_pengeluaran"
-                                            class="form-control form-control-sm mb-3" onchange="this.form.submit()">
-                                            <option value="10" {{ $perPage_pengeluaran == 10 ? 'selected' : '' }}>10
-                                            </option>
-                                            <option value="50" {{ $perPage_pengeluaran == 50 ? 'selected' : '' }}>50
-                                            </option>
-                                            <option value="100" {{ $perPage_pengeluaran == 100 ? 'selected' : '' }}>100
-                                            </option>
-                                            <option value="{{ $pengeluarans->total() }}"
-                                                {{ $perPage_pengeluaran == $pengeluarans->total() ? 'selected' : '' }}>
-                                                Semua
-                                            </option>
-                                        </select>
-                                    </form>
-                                    <p class="align-self-center ml-2">data</p>
-                                </div>
-                                <div class="text-right">
-                                    <div id="user_list_datatable_info" class="dataTables_filter">
-                                        <form class="position-relative d-flex" method="GET"
-                                            action="{{ route('pengeluaran') }}">
-                                            <div class="form-group mb-0 mr-3">
-                                                <input type="date" name="search_tanggal" class="form-control"
-                                                    id="pengeluaran_search" onchange="this.form.submit()"
-                                                    value="{{ request('search_tanggal') }}">
-                                            </div>
-                                            <div class="form-group mb-0">
-                                                <input type="search" name="search_all" class="form-control"
-                                                    id="pengeluaran_search" placeholder="Search"
-                                                    aria-controls="user-list-table" value="{{ request('search_all') }}">
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="table-responsive mb-3" style="min-height: 380px; max-height: 380px;">
-                                <table id="user-list-table" class="table" role="grid"
-                                    aria-describedby="user-list-page-info">
-                                    <thead class="sticky-top bg-white z-index-1">
+                            <div class="table-responsive pb-3 pt-2 px-3">
+                                <table id="tablePengeluaran" class="table" role="grid"
+                                    aria-describedby="user-list-page-info" style="width: 100%; min-height: 500px;">
+                                    <thead>
                                         <tr>
                                             <th>#</th>
                                             <th>Tanggal Pengeluaran</th>
@@ -304,90 +265,8 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @forelse ($pengeluarans as $pengeluaran)
-                                            <tr>
-                                                <td>{{ ($pengeluarans->currentPage() - 1) * $pengeluarans->perPage() + $loop->index + 1 }}
-                                                </td>
-                                                </td>
-                                                <td>
-                                                    <p class="mb-0">
-                                                        {{ date('d/M/Y', strtotime($pengeluaran->tanggal_pengeluaran)) }}
-                                                    </p>
-                                                    <p class="mb-0">Jam :
-                                                        {{ date('H:i:s', strtotime($pengeluaran->tanggal_pengeluaran)) }}
-                                                    </p>
-                                                </td>
-                                                <td>
-                                                    Rp. {{ number_format($pengeluaran->jumlah_pengeluaran, 0, ',', '.') }}
-                                                </td>
-                                                <td class="" style="max-width: 200px">
-                                                    {{ $pengeluaran->deskripsi_pengeluaran }}
-                                                </td>
-                                                <td>
-                                                    {{ $pengeluaran->nama_pengeluar }}
-                                                </td>
-                                                <td class="text-center">
-                                                    <div class="d-flex align-items-center list-user-action">
-                                                        <a data-placement="top" title="" data-original-title="Edit"
-                                                            href="{{ url('/pengeluaran/'. $pengeluaran->id_pengeluaran) }}"><i class="ri-pencil-line"></i>
-                                                        </a>
-                                                        <a data-placement="top" title="Delete" href="#"
-                                                            data-target="#deleteModal" data-toggle="modal"
-                                                            data-id="{{ $pengeluaran->id_pengeluaran }}">
-                                                            <i class="ri-delete-bin-line"></i>
-                                                        </a>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        @empty
-                                            <tr>
-                                                <td colspan="6" class="text-center">
-                                                    <p class="mt-3">Tidak ada pembayaran</p>
-                                                </td>
-                                            </tr>
-                                        @endforelse
                                     </tbody>
                                 </table>
-                            </div>
-                            {{-- Pagination --}}
-                            <div class="row justify-content-between">
-                                <div id="user-list-page-info" class="col-md-6 d-flex">
-                                    <p>Show {{ $pengeluarans->firstItem() }} to {{ $pengeluarans->lastItem() }} of
-                                        {{ $pengeluarans->total() }} data</p>
-                                </div>
-                                <div class="col text-right">
-                                    <ul class="pagination pagination-primary justify-content-end">
-                                        @if ($pengeluarans->onFirstPage())
-                                            <li class="page-item disabled">
-                                                <span class="page-link" tabindex="-1"
-                                                    aria-label="Previous">Previous</span>
-                                            </li>
-                                        @else
-                                            <li class="page-item">
-                                                <a class="page-link" href="{{ $pengeluarans->previousPageUrl() }}"
-                                                    aria-label="Previous">Previous</a>
-                                            </li>
-                                        @endif
-
-                                        @foreach ($pengeluarans->getUrlRange(1, $pengeluarans->lastPage()) as $page => $url)
-                                            <li
-                                                class="page-item {{ $page == $pengeluarans->currentPage() ? 'active' : '' }}">
-                                                <a class="page-link" href="{{ $url }}">{{ $page }}</a>
-                                            </li>
-                                        @endforeach
-
-                                        @if ($pengeluarans->hasMorePages())
-                                            <li class="page-item">
-                                                <a class="page-link" href="{{ $pengeluarans->nextPageUrl() }}"
-                                                    aria-label="Next">Next</a>
-                                            </li>
-                                        @else
-                                            <li class="page-item disabled">
-                                                <span class="page-link" tabindex="-1" aria-label="Next">Next</span>
-                                            </li>
-                                        @endif
-                                    </ul>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -435,29 +314,108 @@
     </div>
 
     <!-- Modal Delete -->
-    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
+    @foreach ($pengeluarans as $pengeluaran)
+        <div class="modal fade" id="deleteModal{{ $pengeluaran->id_pengeluaran }}" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenterTitle{{ $pengeluaran->id_pengeluaran }}" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    </div>
+                    <form id="deleteForm" method="post"
+                        action="{{ url('/pengeluaran/delete/' . $pengeluaran->id_pengeluaran) }}">
+                        @csrf
+                        @method('DELETE')
+                        <div class="modal-body text-center">
+                            <img src="{{ asset('images/local/danger.png') }}" width="80px" alt="">
+                            <h3 class="mt-4">Anda yakin ingin hapus data ini?</h3>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                            <button type="submit" class="btn btn-danger">Hapus</button>
+                        </div>
+                    </form>
                 </div>
-                <form id="deleteForm" method="post">
-                    @csrf
-                    @method('DELETE')
-                    <div class="modal-body text-center">
-                        <img src="{{ asset('images/local/danger.png') }}" width="80px" alt="">                        
-                        <h3 class="mt-4">Anda yakin ingin hapus data ini?</h3>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-                        <button type="submit" class="btn btn-danger">Hapus</button>
-                    </div>
-                </form>
             </div>
         </div>
-    </div>
+    @endforeach
 @endsection
 @section('js')
+    <script>
+        $(document).ready(function() {
+            $('#tablePengeluaran').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    url: "{{ route('pengeluaran') }}",
+                },
+                columns: [
+                    // Kolom nomor urut
+                    {
+                        data: null,
+                        searchable: false,
+                        orderable: false,
+                        render: function(data, type, row, meta) {
+                            return meta.row + meta.settings._iDisplayStart + 1;
+                        }
+                    },
+                    // Kolom tanggal dan jam pengeluaran
+                    {
+                        data: 'tanggal_pengeluaran',
+                        render: function(data, type, full, meta) {
+                            var tanggal_pengeluaran = full.tanggal_pengeluaran.split(' ');
+                            var tanggal = tanggal_pengeluaran[0];
+                            var jam = tanggal_pengeluaran[1];
+
+                            return '<p class="mb-0">' +
+                                tanggal +
+                                '</p>' +
+                                '<p class="mb-0">Jam: ' +
+                                jam +
+                                '</p>';
+                        }
+                    },
+                    // Kolom jumlah pengeluaran
+                    {
+                        data: 'jumlah_pengeluaran',
+                        render: function(data, type, full, meta) {
+                            return 'Rp. ' + data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                        }
+                    },
+                    // Kolom deskripsi pengeluaran
+                    {
+                        data: 'deskripsi_pengeluaran',
+                        name: 'deskripsi_pengeluaran'
+                    },
+                    // Kolom nama pengeluar
+                    {
+                        data: 'nama_pengeluar',
+                        name: 'nama_pengeluar'
+                    },
+                    // Kolom aksi (tombol Edit, Delete)
+                    {
+                        data: null,
+                        searchable: false,
+                        orderable: false,
+                        render: function(data, type, full, meta) {
+                            return '<div class="d-flex align-items-center list-user-action">' +
+                                '<a data-placement="top" title="Edit" href="' +
+                                '/pengeluaran/' + full.id_pengeluaran + '">' +
+                                '<i class="ri-pencil-line"></i>' +
+                                '</a>' +
+                                '<a data-placement="top" title="Delete" href="#" ' +
+                                'data-target="#deleteModal' + full.id_pengeluaran +
+                                '" data-toggle="modal" ' +
+                                'data-id="' + full.id_pengeluaran + '">' +
+                                '<i class="ri-delete-bin-line"></i>' +
+                                '</a>' +
+                                '</div>';
+                        }
+                    }
+                ]
+            });
+        });
+    </script>
+
     <script>
         // Autoclose success alert after 3000 milliseconds (3 seconds)
         setTimeout(function() {
@@ -468,16 +426,5 @@
         setTimeout(function() {
             $("#error-alert").alert('close');
         }, 5000);
-    </script>
-
-    {{-- Script Modal Delete --}}
-    <script>
-        $(document).ready(function() {
-            // Menangani klik pada tombol Delete
-            $('a[data-toggle="modal"]').on('click', function() {
-                var id_pengeluaran = $(this).data('id');
-                $('#deleteForm').attr('action', '/pengeluaran/delete/' + id_pengeluaran);
-            });
-        });
     </script>
 @endsection

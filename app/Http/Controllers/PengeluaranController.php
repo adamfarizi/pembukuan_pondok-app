@@ -6,6 +6,7 @@ use App\Models\Pengeluaran;
 use App\Models\Santri;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class PengeluaranController extends Controller
 {
@@ -13,34 +14,16 @@ class PengeluaranController extends Controller
     {
         $data['title'] = 'Pengeluaran';
 
-        $search_all = $request->input('search_all');
-        $search_tanggal = $request->input('search_tanggal');
-        $perPage_pengeluaran = $request->input('perPage_pengeluaran', 10);
-        $query = Pengeluaran::orderBy('tanggal_pengeluaran', 'desc')
-        ->when($search_all, function ($query) use ($search_all) {
-            $query->where(function ($query) use ($search_all) {
-                $query->whereHas('admin', function ($query) use ($search_all) {
-                    $query->where('nama', 'like', '%' . $search_all . '%');
-                });
-            })
-            ->orWhere('nama_pengeluar', 'like', '%' . $search_all . '%')
-            ->orWhere('deskripsi_pengeluaran', 'like', '%' . $search_all . '%')
-            ->orWhere('jumlah_pengeluaran', $search_all);
-        })    
-        ->when($search_tanggal, function ($query) use ($search_tanggal) {
-            $query->whereDate('tanggal_pengeluaran', '=', $search_tanggal);
-        })
-        ->with(['admin']);
-        if ($search_all || $search_tanggal) {
-            $totalItems = $query->count();
-            $pengeluarans = $query->paginate($totalItems, ['*'], 'pengeluaran');
-        } else {
-            $pengeluarans = $query->paginate($perPage_pengeluaran, ['*'], 'pengeluaran')->appends(request()->query());
-        }        
+        $pengeluarans = Pengeluaran::get();       
         $admins = User::all();
 
+        if ($request->ajax()) {
+            $data = Pengeluaran::orderBy('tanggal_pengeluaran', 'desc')->get();
+            return DataTables::of($data)
+                ->make(true);
+        }
+
         return view('auth.pengeluaran.pengeluaran', [
-            'perPage_pengeluaran' => $perPage_pengeluaran,
             'pengeluarans' => $pengeluarans,
             'admins' => $admins,
         ], $data);

@@ -250,49 +250,10 @@
                             </div>
                         </div>
                         <div class="iq-card-body">
-                            <div class="d-flex justify-content-between">
-                                <div class="text-left d-flex">
-                                    <p class="align-self-center mr-2">Show</p>
-                                    <form action="{{ route('santri') }}" method="get">
-                                        @csrf
-                                        <select name="perPage_santri" id="perPage_santri"
-                                            class="form-control form-control-sm mb-3" onchange="this.form.submit()">
-                                            <option value="10" {{ $perPage_santri == 10 ? 'selected' : '' }}>10
-                                            </option>
-                                            <option value="50" {{ $perPage_santri == 50 ? 'selected' : '' }}>50
-                                            </option>
-                                            <option value="100" {{ $perPage_santri == 100 ? 'selected' : '' }}>100
-                                            </option>
-                                            <option value="{{ $santris->total() }}"
-                                                {{ $perPage_santri == $santris->total() ? 'selected' : '' }}>
-                                                Semua
-                                            </option>
-                                        </select>
-                                    </form>
-                                    <p class="align-self-center ml-2">data</p>
-                                </div>
-                                <div class="text-right">
-                                    <div id="user_list_datatable_info" class="dataTables_filter">
-                                        <form class="position-relative d-flex" method="GET"
-                                            action="{{ route('santri') }}">
-                                            {{-- <div class="form-group mb-0 mr-3">
-                                                <input type="date" name="search_tanggal" class="form-control"
-                                                    id="santri_search" onchange="this.form.submit()"
-                                                    value="{{ request('search_tanggal') }}">
-                                            </div> --}}
-                                            <div class="form-group mb-0">
-                                                <input type="search" name="search_all" class="form-control"
-                                                    id="santri_search" placeholder="Search"
-                                                    aria-controls="user-list-table" value="{{ request('search_all') }}">
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="table-responsive mb-3" style="min-height: 380px; max-height: 380px;">
-                                <table id="user-list-table" class="table" role="grid"
-                                    aria-describedby="user-list-page-info">
-                                    <thead class="sticky-top bg-white z-index-1">
+                            <div class="table-responsive pb-3 pt-3 px-3">
+                                <table id="tableSantri" class="table" role="grid"
+                                    aria-describedby="user-list-page-info" style="width: 100%; min-height: 500px;">
+                                    <thead>
                                         <tr>
                                             <th>#</th>
                                             <th>Nama Santri</th>
@@ -304,88 +265,8 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @forelse ($santris as $santri)
-                                            <tr>
-                                                <td>{{ ($santris->currentPage() - 1) * $santris->perPage() + $loop->index + 1 }}
-                                                </td>
-                                                <td>{{ $santri->nama_santri }}</td>
-                                                <td>{{ $santri->tempat_tanggal_lahir_santri }}</td>
-                                                <td>{{ $santri->alamat_santri }}</td>
-                                                <td>{{ $santri->no_hp_santri }}</td>
-                                                <td>
-                                                    @if ($santri->status_santri === 'pulang')
-                                                        <span class="badge badge-pill badge-primary">Pulang</span>
-                                                    @else
-                                                        <span class="badge badge-pill badge-success">Menetap</span>
-                                                    @endif
-                                                </td>
-                                                <td class="text-center">
-                                                    <div class="d-flex align-items-center list-user-action">
-                                                        <a data-placement="top" title="Info" href="#"
-                                                            data-target="#infoModal{{ $santri->id_santri }}"
-                                                            data-toggle="modal" data-id="{{ $santri->id_santri }}">
-                                                            <i class="ri-information-line"></i>
-                                                        </a>
-                                                        <a data-placement="top" title="Edit"
-                                                            href="{{ url('/santri/' . $santri->id_santri) }}">
-                                                            <i class="ri-pencil-line"></i>
-                                                        </a>
-                                                        <a data-placement="top" title="Delete" href="#"
-                                                            data-target="#deleteModal" data-toggle="modal"
-                                                            data-id="{{ $santri->id_santri }}">
-                                                            <i class="ri-delete-bin-line"></i>
-                                                        </a>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        @empty
-                                            <tr>
-                                                <td colspan="8" class="text-center">
-                                                    <p class="mt-3">Tidak ada data Santri</p>
-                                                </td>
-                                            </tr>
-                                        @endforelse
                                     </tbody>
                                 </table>
-                            </div>
-                            {{-- Pagination --}}
-                            <div class="row justify-content-between">
-                                <div id="user-list-page-info" class="col-md-6 d-flex">
-                                    <p>Show {{ $santris->firstItem() }} to {{ $santris->lastItem() }} of
-                                        {{ $santris->total() }} data</p>
-                                </div>
-                                <div class="col text-right">
-                                    <ul class="pagination pagination-primary justify-content-end">
-                                        @if ($santris->onFirstPage())
-                                            <li class="page-item disabled">
-                                                <span class="page-link" tabindex="-1"
-                                                    aria-label="Previous">Previous</span>
-                                            </li>
-                                        @else
-                                            <li class="page-item">
-                                                <a class="page-link" href="{{ $santris->previousPageUrl() }}"
-                                                    aria-label="Previous">Previous</a>
-                                            </li>
-                                        @endif
-
-                                        @foreach ($santris->getUrlRange(1, $santris->lastPage()) as $page => $url)
-                                            <li class="page-item {{ $page == $santris->currentPage() ? 'active' : '' }}">
-                                                <a class="page-link" href="{{ $url }}">{{ $page }}</a>
-                                            </li>
-                                        @endforeach
-
-                                        @if ($santris->hasMorePages())
-                                            <li class="page-item">
-                                                <a class="page-link" href="{{ $santris->nextPageUrl() }}"
-                                                    aria-label="Next">Next</a>
-                                            </li>
-                                        @else
-                                            <li class="page-item disabled">
-                                                <span class="page-link" tabindex="-1" aria-label="Next">Next</span>
-                                            </li>
-                                        @endif
-                                    </ul>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -492,29 +373,109 @@
     @endforeach
 
     <!-- Modal Delete -->
-    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
+    @foreach ($santris as $santri)
+        <div class="modal fade" id="deleteModal{{ $santri->id_santri }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle{{ $santri->id_santri }}"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    </div>
+                    <form id="deleteForm" method="post" action="{{ url('/santri/delete/' . $santri->id_santri) }}">
+                        @csrf
+                        @method('DELETE')
+                        <div class="modal-body text-center">
+                            <img src="{{ asset('images/local/danger.png') }}" width="80px" alt="">
+                            <h3 class="mt-4">Anda yakin ingin hapus data ini ?</h3>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                            <button type="submit" class="btn btn-danger">Hapus</button>
+                        </div>
+                    </form>
                 </div>
-                <form id="deleteForm" method="post">
-                    @csrf
-                    @method('DELETE')
-                    <div class="modal-body text-center">
-                        <img src="{{ asset('images/local/danger.png') }}" width="80px" alt="">                        
-                        <h3 class="mt-4">Anda yakin ingin hapus data ini?</h3>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-                        <button type="submit" class="btn btn-danger">Hapus</button>
-                    </div>
-                </form>
             </div>
         </div>
-    </div>
+    @endforeach
 @endsection
 @section('js')
+    <script>
+        $(document).ready(function() {
+            $('#tableSantri').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('santri') }}",
+                columns: [
+                    // Kolom nomor urut
+                    {
+                        data: null,
+                        searchable: false,
+                        orderable: false,
+                        render: function(data, type, row, meta) {
+                            return meta.row + meta.settings._iDisplayStart + 1;
+                        }
+                    },
+                    // Kolom nama santri
+                    {
+                        data: 'nama_santri',
+                        name: 'nama_santri'
+                    },
+                    // Kolom tempat tanggal lahir santri
+                    {
+                        data: 'tempat_tanggal_lahir_santri',
+                        name: 'tempat_tanggal_lahir_santri'
+                    },
+                    // Kolom alamat santri
+                    {
+                        data: 'alamat_santri',
+                        name: 'alamat_santri'
+                    },
+                    // Kolom nomor HP santri
+                    {
+                        data: 'no_hp_santri',
+                        name: 'no_hp_santri'
+                    },
+                    // Kolom status santri
+                    {
+                        data: 'status_santri',
+                        name: 'status_santri',
+                        render: function(data, type, full, meta) {
+                            if (data === 'pulang') {
+                                return '<span class="badge badge-pill badge-primary">Pulang</span>';
+                            } else {
+                                return '<span class="badge badge-pill badge-success">Menetap</span>';
+                            }
+                        }
+                    },
+                    // Kolom aksi (tombol Info, Edit, Delete)
+                    {
+                        data: null,
+                        searchable: false,
+                        orderable: false,
+                        render: function(data, type, full, meta) {
+                            return '<td class="text-center">' +
+                                '<div class="d-flex align-items-center list-user-action">' +
+                                '<a data-placement="top" title="Info" href="#" data-target="#infoModal' +
+                                full.id_santri + '" data-toggle="modal" data-id="' + full
+                                .id_santri + '">' +
+                                '<i class="ri-information-line"></i>' +
+                                '</a>' +
+                                '<a data-placement="top" title="Edit" href="/santri/' + full.id_santri + '">' +
+                                '<i class="ri-pencil-line"></i>' +
+                                '</a>' +
+                                '<a data-placement="top" title="Delete" href="#" data-target="#deleteModal' + 
+                                full.id_santri + '" data-toggle="modal" data-id="' + full.id_santri + '">' +
+                                '<i class="ri-delete-bin-line"></i>' +
+                                '</a>' +
+                                '</div>' +
+                                '</td>';
+                        }
+                    }
+                ]
+            });
+
+        });
+    </script>
+
     <script>
         // Autoclose success alert after 3000 milliseconds (3 seconds)
         setTimeout(function() {
@@ -525,16 +486,5 @@
         setTimeout(function() {
             $("#error-alert").alert('close');
         }, 5000);
-    </script>
-
-    {{-- Script Modal Delete --}}
-    <script>
-        $(document).ready(function() {
-            // Menangani klik pada tombol Delete
-            $('a[data-target="#deleteModal"]').on('click', function() {
-                var id_santri = $(this).data('id');
-                $('#deleteForm').attr('action', '/santri/delete/' + id_santri);
-            });
-        });
     </script>
 @endsection

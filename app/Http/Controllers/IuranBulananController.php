@@ -6,6 +6,7 @@ use App\Models\Pembayaran;
 use App\Models\Santri;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class IuranBulananController extends Controller
 {
@@ -13,39 +14,23 @@ class IuranBulananController extends Controller
     {
         $data['title'] = 'Iuran Bulanan';
 
-        $search_all = $request->input('search_all');
-        $search_tanggal = $request->input('search_tanggal');
-        $perPage_iuran = $request->input('perPage_iuran', 10);
-        $query = Pembayaran::where('jenis_pembayaran', 'iuran_bulanan')
-        ->when($search_all, function ($query) use ($search_all) {
-            $query->where(function ($query) use ($search_all) {
-                $query->whereHas('santri', function ($query) use ($search_all) {
-                    $query->where('nama_santri', 'like', '%' . $search_all . '%');
-                })
-                ->orWhereHas('admin', function ($query) use ($search_all) {
-                    $query->where('nama', 'like', '%' . $search_all . '%');
-                });
-            })
-            ->orWhere('jumlah_pembayaran', $search_all);
-        })    
-        ->when($search_tanggal, function ($query) use ($search_tanggal) {
-            $query->whereDate('tanggal_pembayaran', '=', $search_tanggal);
-        })
-        ->orderBy('tanggal_pembayaran', 'desc')
-        ->with(['santri', 'admin']);
-        if ($search_all || $search_tanggal) {
-            $totalItems = $query->count();
-            $iuran_bulanans = $query->paginate($totalItems, ['*'], 'jenis_pembayaran');
-        } else {
-            $iuran_bulanans = $query->paginate($perPage_iuran, ['*'], 'jenis_pembayaran')->appends(request()->query());
-        }        
+       if ($request->ajax()){
+            $data = Pembayaran::where('jenis_pembayaran','iuran_bulanan')
+            ->orderBy('tanggal_pembayaran', 'desc')
+            ->with(['santri', 'admin'])            
+            ->get();
+            return DataTables::of($data)
+                ->make(true);
+        }
 
+        $iuran_bulanans = Pembayaran::where('jenis_pembayaran','iuran_bulanan')->get();
         $santris = Santri::all();
+        $admins = User::all();
 
         return view('auth.pembayaran.iuran_bulanan', [
-            'perPage_iuran' => $perPage_iuran,
             'iuran_bulanans' => $iuran_bulanans,
             'santris' => $santris,
+            'admins' => $admins,
         ], $data);
     }
 

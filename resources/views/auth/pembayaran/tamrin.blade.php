@@ -30,16 +30,19 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="{{ route('pengeluaran') }}" class="iq-waves-effect"><i class="ri-message-line"></i><span>Pengeluaran</span>
+                        <a href="{{ route('pengeluaran') }}" class="iq-waves-effect"><i
+                                class="ri-message-line"></i><span>Pengeluaran</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('laporan_keuangan') }}" class="iq-waves-effect"><i class="ri-calendar-2-line"></i><span>Laporan
+                        <a href="{{ route('laporan_keuangan') }}" class="iq-waves-effect"><i
+                                class="ri-calendar-2-line"></i><span>Laporan
                                 Keuangan</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('santri') }}" class="iq-waves-effect"><i class="ri-user-line"></i><span>Santri</span>
+                        <a href="{{ route('santri') }}" class="iq-waves-effect"><i
+                                class="ri-user-line"></i><span>Santri</span>
                         </a>
                     </li>
                 </ul>
@@ -249,47 +252,9 @@
                             </div>
                         </div>
                         <div class="iq-card-body">
-                            <div class="d-flex justify-content-between">
-                                <div class="text-left d-flex">
-                                    <p class="align-self-center mr-2">Show</p>
-                                    <form action="{{ route('tamrin') }}" method="get">
-                                        @csrf
-                                        <select name="perPage_tamrin" id="perPage_tamrin"
-                                            class="form-control form-control-sm mb-3" onchange="this.form.submit()">
-                                            <option value="10" {{ $perPage_tamrin == 10 ? 'selected' : '' }}>10
-                                            </option>
-                                            <option value="50" {{ $perPage_tamrin == 50 ? 'selected' : '' }}>50
-                                            </option>
-                                            <option value="100" {{ $perPage_tamrin == 100 ? 'selected' : '' }}>100
-                                            </option>
-                                            <option value="{{ $tamrins->total() }}"
-                                                {{ $perPage_tamrin == $tamrins->total() ? 'selected' : '' }}>Semua
-                                            </option>
-                                        </select>
-                                    </form>
-                                    <p class="align-self-center ml-2">data</p>
-                                </div>
-                                <div class="text-right">
-                                    <div id="user_list_datatable_info" class="dataTables_filter">
-                                        <form class="position-relative d-flex" method="GET"
-                                            action="{{ route('tamrin') }}">
-                                            <div class="form-group mb-0 mr-3">
-                                                <input type="date" name="search_tanggal" class="form-control"
-                                                    id="tamrin_search" onchange="this.form.submit()"
-                                                    value="{{ request('search_tanggal') }}">
-                                            </div>
-                                            <div class="form-group mb-0">
-                                                <input type="search" name="search_all" class="form-control"
-                                                    id="tamrin_search" placeholder="Search"
-                                                    aria-controls="user-list-table" value="{{ request('search_all') }}">
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="table-responsive mb-3" style="min-height: 380px; max-height: 380px;">
-                                <table id="user-list-table" class="table" role="grid"
-                                    aria-describedby="user-list-page-info">
+                            <div class="table-responsive mb-3">
+                                <table id="tableTamrin" class="table" role="grid"
+                                    aria-describedby="user-list-page-info" style="width: 100%; min-height: 500px;">
                                     <thead class="sticky-top bg-white z-index-1">
                                         <tr>
                                             <th>#</th>
@@ -302,93 +267,9 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @forelse ($tamrins as $tamrin)
-                                            <tr>
-                                                <td>{{ ($tamrins->currentPage() - 1) * $tamrins->perPage() + $loop->index + 1 }}
-                                                </td>
-                                                <td>
-                                                    <p class="mb-0">
-                                                        {{ date('d/M/Y', strtotime($tamrin->tanggal_pembayaran)) }}
-                                                    </p>
-                                                    <p class="mb-0">Jam :
-                                                        {{ date('H:i:s', strtotime($tamrin->tanggal_pembayaran)) }}
-                                                    </p>
-                                                </td>
-                                                <td>{{ $tamrin->santri->nama_santri }}</td>
-                                                <td>
-                                                    Rp. {{ number_format($tamrin->jumlah_pembayaran, 0, ',', '.') }}
-                                                </td>
-                                                <td>{{ $tamrin->admin->nama }}</td>
-                                                <td class="text-center">
-                                                    @if ($tamrin->status_pembayaran === 'sudah_bayar')
-                                                        <span class="badge iq-bg-success">Sudah Bayar</span>
-                                                    @else
-                                                        <span class="badge iq-bg-danger">Belum Bayar</span>
-                                                    @endif
-                                                </td>
-                                                <td class="text-center">
-                                                    <div class="d-flex align-items-center list-user-action">
-                                                        <a data-placement="top" title="" data-original-title="Edit"
-                                                            href="{{ url('/pembayaran/tamrin/' . $tamrin->id_pembayaran) }}"><i
-                                                                class="ri-pencil-line"></i>
-                                                        </a>
-                                                        <a data-placement="top" title="Delete" href="#"
-                                                            data-target="#deleteModal" data-toggle="modal"
-                                                            data-id="{{ $tamrin->id_pembayaran }}">
-                                                            <i class="ri-delete-bin-line"></i>
-                                                    </a>
-                                                 </div>
-                                             </td>
-                                          </tr>
-                                        @empty
-                                            <tr>
-                                                <td colspan="7" class="text-center">
-                                                    <p class="mt-3">Tidak ada pembayaran</p>
-                                                </td>
-                                            </tr>
-                                        @endforelse
+                                       
                                     </tbody>
                                 </table>
-                            </div>
-                            {{-- Pagination --}}
-                            <div class="row justify-content-between">
-                                <div id="user-list-page-info" class="col-md-6 d-flex">
-                                    <p>Show {{ $tamrins->firstItem() }} to {{ $tamrins->lastItem() }} of
-                                        {{ $tamrins->total() }} data</p>
-                                </div>
-                                <div class="col text-right">
-                                    <ul class="pagination pagination-primary justify-content-end">
-                                        @if ($tamrins->onFirstPage())
-                                            <li class="page-item disabled">
-                                                <span class="page-link" tabindex="-1"
-                                                    aria-label="Previous">Previous</span>
-                                            </li>
-                                        @else
-                                            <li class="page-item">
-                                                <a class="page-link" href="{{ $tamrins->previousPageUrl() }}"
-                                                    aria-label="Previous">Previous</a>
-                                            </li>
-                                        @endif
-
-                                        @foreach ($tamrins->getUrlRange(1, $tamrins->lastPage()) as $page => $url)
-                                            <li
-                                                class="page-item {{ $page == $tamrins->currentPage() ? 'active' : '' }}">
-                                                <a class="page-link" href="{{ $url }}">{{ $page }}</a>
-                                            </li>
-                                        @endforeach
-
-                                        @if ($tamrins->hasMorePages())
-                                            <li class="page-item">
-                                                <a class="page-link" href="{{ $tamrins->nextPageUrl() }}"
-                                                    aria-label="Next">Next</a>
-                                            </li>
-                                        @else
-                                            <li class="page-item disabled">
-                                                <span class="page-link" tabindex="-1" aria-label="Next">Next</span>
-                                            </li>
-                                        @endif
-                                    </ul>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -420,11 +301,6 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="form-group">
-                                <label for="jumlah_pembayaran">Jumlah Pembayaran</label>
-                                <input type="number" name="jumlah_pembayaran" class="form-control"
-                                    id="jumlah_pembayaran">
-                            </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
@@ -436,49 +312,129 @@
     </div>
 
     <!-- Modal Delete -->
-    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
+    @foreach ($tamrins as $tamrin)        
+        <div class="modal fade" id="deleteModal{{$tamrin->id_pembayaran}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle{{$tamrin->id_pembayaran}}"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    </div>
+                    <form action="{{url('/pembayaran/tamrin/delete/' . $tamrin->id_pembayaran)}}" id="deleteForm" method="post">
+                        @csrf
+                        @method('DELETE')
+                        <div class="modal-body text-center">
+                            <img src="{{ asset('images/local/danger.png') }}" width="80px" alt="">                        
+                            <h3 class="mt-4">Anda yakin ingin hapus data ini?</h3>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                            <button type="submit" class="btn btn-danger">Hapus</button>
+                        </div>
+                    </form>
                 </div>
-                <form id="deleteForm" method="post">
-                    @csrf
-                    @method('DELETE')
-                    <div class="modal-body text-center">
-                        <img src="{{ asset('images/local/danger.png') }}" width="80px" alt="">                        
-                        <h3 class="mt-4">Anda yakin ingin hapus data ini?</h3>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-                        <button type="submit" class="btn btn-danger">Hapus</button>
-                    </div>
-                </form>
             </div>
         </div>
-    </div>
+    @endforeach
 @endsection
 @section('js')
+<script>
+    $(document).ready(function() {
+        $('#tableTamrin').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: {
+                url: "{{ route('tamrin') }}",
+            },
+            columns: [
+                // Kolom nomor urut
+                {
+                    data: null,
+                    searchable: false,
+                    orderable: false,
+                    render: function(data, type, row, meta) {
+                        return meta.row + meta.settings._iDisplayStart + 1;
+                    }
+                },
+                // Kolom tanggal dan jam pembayaran
+                {
+                    data: 'tanggal_pembayaran',
+                    render: function(data, type, full, meta) {
+                        var tanggal_pembayaran = full.tanggal_pembayaran.split(' ');
+                        var tanggal = tanggal_pembayaran[0];
+                        var jam = tanggal_pembayaran[1];
+
+                        return '<p class="mb-0">' +
+                            tanggal +
+                            '</p>' +
+                            '<p class="mb-0">Jam: ' +
+                            jam +
+                            '</p>';
+                    }
+                },
+                 // Kolom nama santri
+                 {
+                    data: 'santri.nama_santri',
+                    name: 'santri.nama_santri'
+                },
+                // Kolom jumlah pembayaran
+                {
+                    data: 'jumlah_pembayaran',
+                    render: function(data, type, full, meta) {
+                        return 'Rp. ' + data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    }
+                },
+               
+                // Kolom nama penerima
+                {
+                    data: 'admin.nama',
+                    name: 'admin.nama'
+                },
+                // Kolom Status pembayaran
+                {
+                        data: 'status_pembayaran',
+                        name: 'status_pembayaran',
+                        render: function(data, type, full, meta) {
+                            if (data === 'sudah_bayar') {
+                                return '<span class="badge badge-pill badge-success">Lunas</span>';
+                            }  else {
+                                return '<span class="badge badge-pill badge-warning">Belum Lunas</span>';
+                            }
+                        }
+                    },
+                // Kolom aksi (tombol Edit, Delete)
+                {
+                    data: 'id_pembayaran',
+                    searchable: false,
+                    orderable: false,
+                    render: function(data, type, full, meta) {
+                        return '<div class="d-flex align-items-center list-user-action">' +
+                            '<a data-placement="top" title="Edit" href="' +
+                            '/pembayaran/tamrin/' + full.id_pembayaran + '">' +
+                            '<i class="ri-pencil-line"></i>' +
+                            '</a>' +
+                            '<a data-placement="top" title="Delete" href="#" ' +
+                            'data-target="#deleteModal' + full.id_pembayaran +
+                            '" data-toggle="modal" ' +
+                            'data-id="' + full.id_pembayaran + '">' +
+                            '<i class="ri-delete-bin-line"></i>' +
+                            '</a>' +
+                            '</div>';
+                    }
+                }
+            ]
+        });
+    });
+</script>
+
     <script>
         // Autoclose success alert after 3000 milliseconds (3 seconds)
-        setTimeout(function(){
+        setTimeout(function() {
             $("#success-alert").alert('close');
         }, 3000);
 
         // Autoclose error alert after 5000 milliseconds (5 seconds)
-        setTimeout(function(){
+        setTimeout(function() {
             $("#error-alert").alert('close');
         }, 5000);
-    </script>
-
-     {{-- Script Modal Delete --}}
-     <script>
-        $(document).ready(function() {
-            // Menangani klik pada tombol Delete
-            $('a[data-toggle="modal"]').on('click', function() {
-                var id_pembayaran = $(this).data('id');
-                $('#deleteForm').attr('action', '/pembayaran/tamrin/delete/' + id_pembayaran);
-            });
-        });
     </script>
 @endsection

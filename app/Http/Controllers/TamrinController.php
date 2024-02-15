@@ -6,6 +6,7 @@ use App\Models\Pembayaran;
 use App\Models\Santri;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class TamrinController extends Controller
 {
@@ -13,42 +14,26 @@ class TamrinController extends Controller
     {
         $data['title'] = 'Tamrin';
 
-        $search_all = $request->input('search_all');
-        $search_tanggal = $request->input('search_tanggal');
-        $perPage_tamrin = $request->input('perPage_tamrin', 10);
-        $query = Pembayaran::where('jenis_pembayaran', 'tamrin')
-        ->when($search_all, function ($query) use ($search_all) {
-            $query->where(function ($query) use ($search_all) {
-                $query->whereHas('santri', function ($query) use ($search_all) {
-                    $query->where('nama_santri', 'like', '%' . $search_all . '%');
-                })
-                ->orWhereHas('admin', function ($query) use ($search_all) {
-                    $query->where('nama', 'like', '%' . $search_all . '%');
-                });
-            })
-            ->orWhere('jumlah_pembayaran', $search_all);
-        })    
-        ->when($search_tanggal, function ($query) use ($search_tanggal) {
-            $query->whereDate('tanggal_pembayaran', '=', $search_tanggal);
-        })
-        ->orderBy('tanggal_pembayaran', 'desc')
-        ->with(['santri', 'admin']);
-        if ($search_all || $search_tanggal) {
-            $totalItems = $query->count();
-            $tamrins = $query->paginate($totalItems, ['*'], 'jenis_pembayaran');
-        } else {
-            $tamrins = $query->paginate($perPage_tamrin, ['*'], 'jenis_pembayaran')->appends(request()->query());
-        }        
+        
+        if ($request->ajax()) {
+            $data = Pembayaran::where('jenis_pembayaran','tamrin')
+            ->orderBy('tanggal_pembayaran', 'desc')
+            ->with(['santri', 'admin'])            
+            ->get();
+            return DataTables::of($data)
+                ->make(true);
+        }
 
+        $tamrins = Pembayaran::where('jenis_pembayaran','tamrin')->get();
         $santris = Santri::all();
+        $admins = User::all();
 
         return view('auth.pembayaran.tamrin', [
-            'perPage_tamrin' => $perPage_tamrin,
             'tamrins' => $tamrins,
             'santris' => $santris,
+            'admins' => $admins,
         ], $data);
     }
-
     public function create_data(Request $request)
     {
         try {
@@ -67,7 +52,7 @@ class TamrinController extends Controller
 
             // Pastikan santri ditemukan
             if (!$santri) {
-                throw new \Exception('Santri not found.');
+                throw new \Exception('Santri tidak ditemukan.');
             }
 
             // Buat data pembayaran

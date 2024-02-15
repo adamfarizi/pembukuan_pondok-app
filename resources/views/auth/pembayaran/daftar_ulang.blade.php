@@ -252,47 +252,9 @@
                             </div>
                         </div>
                         <div class="iq-card-body">
-                            <div class="d-flex justify-content-between">
-                                <div class="text-left d-flex">
-                                    <p class="align-self-center mr-2">Show</p>
-                                    <form action="{{ route('daftar_ulang') }}" method="get">
-                                        @csrf
-                                        <select name="perPage_daftar" id="perPage_daftar"
-                                            class="form-control form-control-sm mb-3" onchange="this.form.submit()">
-                                            <option value="10" {{ $perPage_daftar == 10 ? 'selected' : '' }}>10
-                                            </option>
-                                            <option value="50" {{ $perPage_daftar == 50 ? 'selected' : '' }}>50
-                                            </option>
-                                            <option value="100" {{ $perPage_daftar == 100 ? 'selected' : '' }}>100
-                                            </option>
-                                            <option value="{{ $daftar_ulangs->total() }}"
-                                                {{ $perPage_daftar == $daftar_ulangs->total() ? 'selected' : '' }}>Semua
-                                            </option>
-                                        </select>
-                                    </form>
-                                    <p class="align-self-center ml-2">data</p>
-                                </div>
-                                <div class="text-right">
-                                    <div id="user_list_datatable_info" class="dataTables_filter">
-                                        <form class="position-relative d-flex" method="GET"
-                                            action="{{ route('daftar_ulang') }}">
-                                            <div class="form-group mb-0 mr-3">
-                                                <input type="date" name="search_tanggal" class="form-control"
-                                                    id="daftar_ulang_search" onchange="this.form.submit()"
-                                                    value="{{ request('search_tanggal') }}">
-                                            </div>
-                                            <div class="form-group mb-0">
-                                                <input type="search" name="search_all" class="form-control"
-                                                    id="daftar_ulang_search" placeholder="Search"
-                                                    aria-controls="user-list-table" value="{{ request('search_all') }}">
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="table-responsive mb-3" style="min-height: 380px; max-height: 380px;">
-                                <table id="user-list-table" class="table" role="grid"
-                                    aria-describedby="user-list-page-info">
+                            <div class="table-responsive mb-3">
+                                <table id="tableDaftarUlang" class="table" role="grid"
+                                    aria-describedby="user-list-page-info" style="width: 100%; min-height: 500px;">
                                     <thead class="sticky-top bg-white z-index-1">
                                         <tr>
                                             <th>#</th>
@@ -305,93 +267,9 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @forelse ($daftar_ulangs as $daftar_ulang)
-                                            <tr>
-                                                <td>{{ ($daftar_ulangs->currentPage() - 1) * $daftar_ulangs->perPage() + $loop->index + 1 }}
-                                                </td>
-                                                <td>
-                                                    <p class="mb-0">
-                                                        {{ date('d/M/Y', strtotime($daftar_ulang->tanggal_pembayaran)) }}
-                                                    </p>
-                                                    <p class="mb-0">Jam :
-                                                        {{ date('H:i:s', strtotime($daftar_ulang->tanggal_pembayaran)) }}
-                                                    </p>
-                                                </td>
-                                                <td>{{ $daftar_ulang->santri->nama_santri }}</td>
-                                                <td>
-                                                    Rp. {{ number_format($daftar_ulang->jumlah_pembayaran, 0, ',', '.') }}
-                                                </td>
-                                                <td>{{ $daftar_ulang->admin->nama }}</td>
-                                                <td class="text-center">
-                                                    @if ($daftar_ulang->status_pembayaran === 'sudah_bayar')
-                                                        <span class="badge iq-bg-success">Sudah Bayar</span>
-                                                    @else
-                                                        <span class="badge iq-bg-danger">Belum Bayar</span>
-                                                    @endif
-                                                </td>
-                                                <td class="text-center">
-                                                    <div class="d-flex align-items-center list-user-action">
-                                                        <a data-placement="top" title="" data-original-title="Edit"
-                                                            href="{{ url('/pembayaran/daftar_ulang/' . $daftar_ulang->id_pembayaran) }}"><i
-                                                                class="ri-pencil-line"></i>
-                                                        </a>
-                                                        <a data-placement="top" title="Delete" href="#"
-                                                            data-target="#deleteModal" data-toggle="modal"
-                                                            data-id="{{ $daftar_ulang->id_pembayaran }}">
-                                                            <i class="ri-delete-bin-line"></i>
-                                                        </a>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        @empty
-                                            <tr>
-                                                <td colspan="7" class="text-center">
-                                                    <p class="mt-3">Tidak ada pembayaran</p>
-                                                </td>
-                                            </tr>
-                                        @endforelse
+                                       
                                     </tbody>
                                 </table>
-                            </div>
-                            {{-- Pagination --}}
-                            <div class="row justify-content-between">
-                                <div id="user-list-page-info" class="col-md-6 d-flex">
-                                    <p>Show {{ $daftar_ulangs->firstItem() }} to {{ $daftar_ulangs->lastItem() }} of
-                                        {{ $daftar_ulangs->total() }} data</p>
-                                </div>
-                                <div class="col text-right">
-                                    <ul class="pagination pagination-primary justify-content-end">
-                                        @if ($daftar_ulangs->onFirstPage())
-                                            <li class="page-item disabled">
-                                                <span class="page-link" tabindex="-1"
-                                                    aria-label="Previous">Previous</span>
-                                            </li>
-                                        @else
-                                            <li class="page-item">
-                                                <a class="page-link" href="{{ $daftar_ulangs->previousPageUrl() }}"
-                                                    aria-label="Previous">Previous</a>
-                                            </li>
-                                        @endif
-
-                                        @foreach ($daftar_ulangs->getUrlRange(1, $daftar_ulangs->lastPage()) as $page => $url)
-                                            <li
-                                                class="page-item {{ $page == $daftar_ulangs->currentPage() ? 'active' : '' }}">
-                                                <a class="page-link" href="{{ $url }}">{{ $page }}</a>
-                                            </li>
-                                        @endforeach
-
-                                        @if ($daftar_ulangs->hasMorePages())
-                                            <li class="page-item">
-                                                <a class="page-link" href="{{ $daftar_ulangs->nextPageUrl() }}"
-                                                    aria-label="Next">Next</a>
-                                            </li>
-                                        @else
-                                            <li class="page-item disabled">
-                                                <span class="page-link" tabindex="-1" aria-label="Next">Next</span>
-                                            </li>
-                                        @endif
-                                    </ul>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -434,29 +312,120 @@
     </div>
 
     <!-- Modal Delete -->
-    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
+    @foreach ($daftar_ulangs as $daftar_ulang)        
+        <div class="modal fade" id="deleteModal{{$daftar_ulang->id_pembayaran}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle{{$daftar_ulang->id_pembayaran}}"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    </div>
+                    <form action="{{url('/pembayaran/daftar_ulang/delete/' . $daftar_ulang->id_pembayaran)}}" id="deleteForm" method="post">
+                        @csrf
+                        @method('DELETE')
+                        <div class="modal-body text-center">
+                            <img src="{{ asset('images/local/danger.png') }}" width="80px" alt="">                        
+                            <h3 class="mt-4">Anda yakin ingin hapus data ini?</h3>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                            <button type="submit" class="btn btn-danger">Hapus</button>
+                        </div>
+                    </form>
                 </div>
-                <form id="deleteForm" method="post">
-                    @csrf
-                    @method('DELETE')
-                    <div class="modal-body text-center">
-                        <img src="{{ asset('images/local/danger.png') }}" width="80px" alt="">                        
-                        <h3 class="mt-4">Anda yakin ingin hapus data ini?</h3>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-                        <button type="submit" class="btn btn-danger">Hapus</button>
-                    </div>
-                </form>
             </div>
         </div>
-    </div>
+    @endforeach
 @endsection
 @section('js')
+<script>
+    $(document).ready(function() {
+        $('#tableDaftarUlang').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: {
+                url: "{{ route('daftar_ulang') }}",
+            },
+            columns: [
+                // Kolom nomor urut
+                {
+                    data: null,
+                    searchable: false,
+                    orderable: false,
+                    render: function(data, type, row, meta) {
+                        return meta.row + meta.settings._iDisplayStart + 1;
+                    }
+                },
+                // Kolom tanggal dan jam pembayaran
+                {
+                    data: 'tanggal_pembayaran',
+                    render: function(data, type, full, meta) {
+                        var tanggal_pembayaran = full.tanggal_pembayaran.split(' ');
+                        var tanggal = tanggal_pembayaran[0];
+                        var jam = tanggal_pembayaran[1];
+
+                        return '<p class="mb-0">' +
+                            tanggal +
+                            '</p>' +
+                            '<p class="mb-0">Jam: ' +
+                            jam +
+                            '</p>';
+                    }
+                },
+                 // Kolom nama santri
+                 {
+                    data: 'santri.nama_santri',
+                    name: 'santri.nama_santri'
+                },
+                // Kolom jumlah pembayaran
+                {
+                    data: 'jumlah_pembayaran',
+                    render: function(data, type, full, meta) {
+                        return 'Rp. ' + data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    }
+                },
+               
+                // Kolom nama penerima
+                {
+                    data: 'admin.nama',
+                    name: 'admin.nama'
+                },
+                // Kolom Status pembayaran
+                {
+                        data: 'status_pembayaran',
+                        name: 'status_pembayaran',
+                        render: function(data, type, full, meta) {
+                            if (data === 'sudah_bayar') {
+                                return '<span class="badge badge-pill badge-success">Lunas</span>';
+                            }  else {
+                                return '<span class="badge badge-pill badge-warning">Belum Lunas</span>';
+                            }
+                        }
+                    },
+                // Kolom aksi (tombol Edit, Delete)
+                {
+                    data: 'id_pembayaran',
+                    searchable: false,
+                    orderable: false,
+                    render: function(data, type, full, meta) {
+                        return '<div class="d-flex align-items-center list-user-action">' +
+                            '<a data-placement="top" title="Edit" href="' +
+                            '/pembayaran/daftar_ulang/' + full.id_pembayaran + '">' +
+                            '<i class="ri-pencil-line"></i>' +
+                            '</a>' +
+                            '<a data-placement="top" title="Delete" href="#" ' +
+                            'data-target="#deleteModal' + full.id_pembayaran +
+                            '" data-toggle="modal" ' +
+                            'data-id="' + full.id_pembayaran + '">' +
+                            '<i class="ri-delete-bin-line"></i>' +
+                            '</a>' +
+                            '</div>';
+                    }
+                }
+            ]
+        });
+    });
+</script>
+
     <script>
         // Autoclose success alert after 3000 milliseconds (3 seconds)
         setTimeout(function() {
@@ -467,16 +436,5 @@
         setTimeout(function() {
             $("#error-alert").alert('close');
         }, 5000);
-    </script>
-
-    {{-- Script Modal Delete --}}
-    <script>
-        $(document).ready(function() {
-            // Menangani klik pada tombol Delete
-            $('a[data-toggle="modal"]').on('click', function() {
-                var id_pembayaran = $(this).data('id');
-                $('#deleteForm').attr('action', '/pembayaran/daftar_ulang/delete/' + id_pembayaran);
-            });
-        });
     </script>
 @endsection

@@ -19,7 +19,7 @@ class PembayaranFactory extends Factory
             'tanggal_pembayaran' => $this->faker->dateTimeThisMonth,
             'jumlah_pembayaran' => ($jenisPembayaran == 'daftar_ulang') ? 50000 : $this->faker->numberBetween(1000, 99999),
             'jenis_pembayaran' => $jenisPembayaran,
-            'status_pembayaran' => 'sudah_bayar',
+            'status_pembayaran' => 'lunas',
             'id_admin' => 1, // Sesuaikan dengan rentang yang diinginkan
             'id_santri' => $this->faker->numberBetween(1, 60), // Sesuaikan dengan id_santri yang ada di database
             'created_at' => $this->faker->dateTimeBetween('-1 year', 'now'),

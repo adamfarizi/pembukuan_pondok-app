@@ -24,6 +24,6 @@ class DatabaseSeeder extends Seeder
 
         Santri::factory(1000)->create();
         Pembayaran::factory(100)->create();
-        Pengeluaran::factory(1000)->create();
+        Pengeluaran::factory(50)->create();
     }
 }

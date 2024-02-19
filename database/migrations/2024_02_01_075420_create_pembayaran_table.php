@@ -18,7 +18,7 @@ class CreatePembayaranTable extends Migration
             $table->dateTime('tanggal_pembayaran');
             $table->decimal('jumlah_pembayaran', 50, 0);
             $table->enum('jenis_pembayaran',['daftar_ulang', 'iuran_bulanan', 'tamrin']);
-            $table->enum('status_pembayaran', ['sudah_bayar', 'belum_bayar'])->default('belum_bayar');
+            $table->enum('status_pembayaran', ['lunas', 'belum_lunas'])->default('belum_lunas');
             $table->unsignedBigInteger('id_admin');
             $table->unsignedBigInteger('id_santri');
             $table->timestamps();

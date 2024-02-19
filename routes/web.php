@@ -29,6 +29,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/logout', [AuthController::class, 'logout']);
 
     Route::get('/beranda', [BerandaController::class,'index'])->name('beranda');
+    Route::get('/beranda/chart', [BerandaController::class, 'chart'])->name('beranda.chart');
 
     Route::get('/pembayaran/daftar_ulang', [DaftarUlangController::class, 'index'])->name('daftar_ulang');
     Route::post('/pembayaran/daftar_ulang/create', [DaftarUlangController::class, 'create_data']);
@@ -55,6 +56,7 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/pengeluaran/delete/{id}', [PengeluaranController::class, 'delete_data']);
 
     Route::get('/laporan_keuangan', [LaporanKeuanganController::class, 'index'])->name('laporan_keuangan');
+    Route::get('/laporan_keuangan/chart', [LaporanKeuanganController::class, 'chart'])->name('laporan_keuangan.chart');
     Route::get('/laporan_keuangan/get_pemasukan', [LaporanKeuanganController::class, 'get_pemasukan'])->name('get_pemasukan');
     Route::get('/laporan_keuangan/get_pengeluaran', [LaporanKeuanganController::class, 'get_pengeluaran'])->name('get_pengeluaran');
 

@@ -207,6 +207,52 @@
 @section('content')
     <!-- Page Content  -->
     <div id="content-page" class="content-page">
+        <!-- Card -->
+        <div class="container-fluid">
+            <div class="d-flex">
+                <div class="col iq-card iq-card-block iq-card-stretch iq-card-height-half me-2">
+                    <div class="iq-card-body">
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <img src="{{ asset('images/local/pemasukan.png') }}" width="50px" alt="">
+                            </div>
+                            <div class="col-lg">
+                                <span class="font-size-14">Pemasukan Pondok</span>
+                                <h3 class="fw-bold text-success">Rp. {{ number_format($totalPemasukan, 0, ',', '.') }}
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col iq-card iq-card-block iq-card-stretch iq-card-height-half ms-2 me-2">
+                    <div class="iq-card-body">
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <img src="{{ asset('images/local/pengeluaran.png') }}" width="50px" alt="">
+                            </div>
+                            <div class="col-lg">
+                                <span class="font-size-14">Pengeluaran Pondok</span>
+                                <h3 class="fw-bold text-danger">Rp. {{ number_format($totalPengeluaran, 0, ',', '.') }}
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col iq-card iq-card-block iq-card-stretch iq-card-height-half ms-2">
+                    <div class="iq-card-body">
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <img src="{{ asset('images/local/total_uang.png') }}" width="50px" alt="">
+                            </div>
+                            <div class="col-lg">
+                                <span class="font-size-14">Total Keuangan Pondok</span>
+                                <h3 class="fw-bold text-primary">Rp. {{ number_format($totalKeuangan, 0, ',', '.') }}</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- Alert -->
         <div class="container-fluid">
             @if (session('success'))
@@ -233,6 +279,23 @@
                     </div>
                 @endforeach
             @endif
+        </div>
+        {{-- Grafik Keuangan --}}
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col">
+                    <div class="iq-card iq-card-block iq-card-stretch iq-card-height fadeInUp p-2">
+                        <div class="iq-card-header d-flex justify-content-between">
+                            <div class="iq-header-title">
+                                <h4 class="card-title">Grafik Keuangan</h4>
+                            </div>
+                        </div>
+                        <div class="iq-card-body">
+                            <div id="chart_keuangan"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         {{-- Tabel Pemasukan --}}
         <div class="container-fluid">
@@ -472,6 +535,100 @@
             // Memanggil fungsi untuk tombol "Export to Excel" dengan parameter yang sesuai
             exportToExcel('exportPemasukanExcel', 'tablePemasukan', 'pemasukan.xlsx');
             exportToExcel('exportPengeluaranExcel', 'tablePengeluaran', 'pengeluaran.xlsx');
+        });
+    </script>
+
+    {{-- Chart --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Ambil data dari controller menggunakan AJAX
+            fetch('{{ route('laporan_keuangan.chart') }}')
+                .then(response => response.json())
+                .then(data => {
+                    // Data yang diterima dari controller
+                    const pemasukan = data.map(item => item.total_pemasukan);
+                    const pengeluaran = data.map(item => item.total_pengeluaran);
+                    const bulanTahun = data.map(item => {
+                        const namaBulan = new Date(item.tahun, item.bulan - 1, 1).toLocaleDateString(
+                            'id-ID', {
+                                month: 'long'
+                            });
+                        return `${namaBulan} ${item.tahun}`;
+                    });
+
+                    // Konfigurasi chart
+                    const chartKeuangan = {
+                        chart: {
+                            height: 407,
+                            type: 'line',
+                            zoom: {
+                                enabled: false
+                            },
+                            toolbar: {
+                                show: false
+                            },
+                        },
+                        dataLabels: {
+                            enabled: false
+                        },
+                        stroke: {
+                            width: [5, 7],
+                            curve: 'straight',
+                            dashArray: [0, 8, 5]
+                        },
+                        series: [{
+                                name: "Pemasukan",
+                                data: pemasukan
+                            },
+                            {
+                                name: "Pengeluaran",
+                                data: pengeluaran
+                            },
+                        ],
+                        legend: {
+                            show: false
+                        },
+                        markers: {
+                            size: 0,
+                            hover: {
+                                sizeOffset: 6
+                            }
+                        },
+                        xaxis: {
+                            categories: bulanTahun
+                        },
+                        yaxis: {
+                            labels: {
+                                show: false
+                            }
+                        },
+                        tooltip: {
+                            y: [{
+                                    title: {
+                                        formatter: function(val) {
+                                            return val + " (Rp)";
+                                        }
+                                    }
+                                },
+                                {
+                                    title: {
+                                        formatter: function(val) {
+                                            return val + " (Rp)";
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        grid: {
+                            borderColor: '#f1f1f1',
+                        }
+                    };
+
+                    // Render chart
+                    const chartKeuanganInstance = new ApexCharts(document.querySelector("#chart_keuangan"),
+                        chartKeuangan);
+                    chartKeuanganInstance.render();
+                });
         });
     </script>
 

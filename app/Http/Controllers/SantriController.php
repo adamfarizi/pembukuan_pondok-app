@@ -97,9 +97,12 @@ class SantriController extends Controller
             ]);
 
             return redirect()->route('santri')->with('success', 'Data santri berhasil ditambahkan.');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return redirect()->back()->withErrors($e->errors());
         } catch (\Exception $e) {
             return redirect()->back()->withErrors(['error' => 'Error: ' . $e->getMessage()]);
         }
+        
     }
     
     public function get_edit_data($id_santri)
@@ -182,9 +185,12 @@ class SantriController extends Controller
             ]);
 
             return redirect()->route('santri')->with('success', 'Data santri berhasil diubah.');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return redirect()->back()->withErrors($e->errors());
         } catch (\Exception $e) {
-            return redirect()->route('santri')->withErrors(['error' => 'Error: ' . $e->getMessage()]);
+            return redirect()->back()->withErrors(['error' => 'Error: ' . $e->getMessage()]);
         }
+        
     }   
 
     public function delete_data($id_santri)
@@ -202,6 +208,8 @@ class SantriController extends Controller
             $santri->delete();
 
             return redirect()->back()->with('success', 'Santri berhasil dihapus.');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return redirect()->back()->withErrors($e->errors());
         } catch (\Exception $e) {
             return redirect()->back()->withErrors(['error' => 'Error: ' . $e->getMessage()]);
         }

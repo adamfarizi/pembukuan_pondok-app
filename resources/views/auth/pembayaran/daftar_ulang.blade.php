@@ -262,7 +262,7 @@
                                             <th>Nama Santri</th>
                                             <th>Jumlah Pembayaran</th>
                                             <th>Diterima Oleh</th>
-                                            <th>Status Pembayaran</th>
+                                            <th>Status</th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -394,7 +394,7 @@
                         data: 'status_pembayaran',
                         name: 'status_pembayaran',
                         render: function(data, type, full, meta) {
-                            if (data === 'sudah_bayar') {
+                            if (data === 'lunas') {
                                 return '<span class="badge badge-pill badge-success">Lunas</span>';
                             }  else {
                                 return '<span class="badge badge-pill badge-warning">Belum Lunas</span>';

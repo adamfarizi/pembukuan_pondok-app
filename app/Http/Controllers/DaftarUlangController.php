@@ -60,15 +60,18 @@ class DaftarUlangController extends Controller
                 'tanggal_pembayaran' => now(),
                 'jumlah_pembayaran' => 50000,
                 'jenis_pembayaran' => 'daftar_ulang',
-                'status_pembayaran' => 'sudah_bayar',
+                'status_pembayaran' => 'lunas',
                 'id_admin' => auth()->user()->id_admin,
                 'id_santri' => $santri->id_santri,
             ]);
         
             return redirect()->back()->with('success', 'Pembayaran berhasil ditambahkan.');
+        }catch (\Illuminate\Validation\ValidationException $e) {
+            return redirect()->back()->withErrors($e->errors());
         } catch (\Exception $e) {
             return redirect()->back()->withErrors(['error' => 'Error: ' . $e->getMessage()]);
-        }        
+        }
+             
     }
 
     public function get_edit_data($id_pembayaran)

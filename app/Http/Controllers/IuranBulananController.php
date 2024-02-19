@@ -40,9 +40,11 @@ class IuranBulananController extends Controller
             // Validasi input
             $this->validate($request, [
                 'nama_santri' => 'required|not_in:Nama Santri', // Menyatakan bahwa nama_santri tidak boleh kosong atau memiliki nilai "Nama Santri"
+                'jumlah_pembayaran' => 'required',
             ], [
                 'nama_santri.required' => 'Pilih santri terlebih dahulu!',
                 'nama_santri.not_in' => 'Pilih santri terlebih dahulu!',
+                'jumlah_pembayaran.required' => 'Masukkan jumlah pembayaran terlebih dahulu!',
             ]);
 
             $nama_santri = $request->input('nama_santri');
@@ -60,15 +62,18 @@ class IuranBulananController extends Controller
                 'tanggal_pembayaran' => now(), // Sesuaikan dengan tanggal pembayaran yang diinginkan
                 'jumlah_pembayaran' => $request->input('jumlah_pembayaran'), // Sesuaikan dengan jumlah pembayaran yang diinginkan
                 'jenis_pembayaran' => 'iuran_bulanan', // Sesuaikan dengan jenis pembayaran yang diinginkan
-                'status_pembayaran' => 'sudah_bayar',
+                'status_pembayaran' => 'lunas',
                 'id_admin' => auth()->user()->id_admin, // Sesuaikan dengan id_admin yang sedang login
                 'id_santri' => $santri->id_santri,
             ]);
 
             return redirect()->back()->with('success', 'Pembayaran berhasil ditambahkan.');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return redirect()->back()->withErrors($e->errors());
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Error: ' . $e->getMessage());
+            return redirect()->back()->withErrors(['error' => 'Error: ' . $e->getMessage()]);
         }
+        
     }
     
     public function get_edit_data($id_pembayaran)

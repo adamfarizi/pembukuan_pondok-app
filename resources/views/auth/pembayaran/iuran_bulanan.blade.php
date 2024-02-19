@@ -262,7 +262,7 @@
                                             <th>Nama Santri</th>
                                             <th>Jumlah Pembayaran</th>
                                             <th>Diterima Oleh</th>
-                                            <th>Status Pembayaran</th>
+                                            <th>Status</th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -300,6 +300,11 @@
                                     <option value="{{ $santri->nama_santri }}">{{ $santri->nama_santri }}</option>
                                 @endforeach
                             </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="jumlah_pembayaran">Jumlah Pembayaran <span class="text-danger">*</span></label>
+                            <input type="number" class="form-control" id="jumlah_pembayaran" name="jumlah_pembayaran"
+                                value="" required>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -394,7 +399,7 @@
                         data: 'status_pembayaran',
                         name: 'status_pembayaran',
                         render: function(data, type, full, meta) {
-                            if (data === 'sudah_bayar') {
+                            if (data === 'lunas') {
                                 return '<span class="badge badge-pill badge-success">Lunas</span>';
                             }  else {
                                 return '<span class="badge badge-pill badge-warning">Belum Lunas</span>';

@@ -53,9 +53,12 @@ class PengeluaranController extends Controller
             ]);
         
             return redirect()->back()->with('success', 'Pengeluaran berhasil ditambahkan.');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return redirect()->back()->withErrors($e->errors());
         } catch (\Exception $e) {
             return redirect()->back()->withErrors(['error' => 'Error: ' . $e->getMessage()]);
-        }        
+        }
+                
     }
 
     public function get_edit_data($id_pengeluaran)
@@ -91,9 +94,12 @@ class PengeluaranController extends Controller
             ]);
     
             return redirect()->route('pengeluaran')->with('success', 'Pengeluaran berhasil diubah.');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return redirect()->back()->withErrors($e->errors());
         } catch (\Exception $e) {
             return redirect()->back()->withErrors(['error' => 'Error: ' . $e->getMessage()]);
         }
+        
     }
 
     public function delete_data($id_pengeluaran)
@@ -111,8 +117,11 @@ class PengeluaranController extends Controller
             $pengeluaran->delete();
 
             return redirect()->back()->with('success', 'Pengeluaran berhasil dihapus.');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return redirect()->back()->withErrors($e->errors());
         } catch (\Exception $e) {
             return redirect()->back()->withErrors(['error' => 'Error: ' . $e->getMessage()]);
         }
+        
     }
 }

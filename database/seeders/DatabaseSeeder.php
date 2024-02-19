@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             AdminSeeder::class,
+            MasterAdminSeeder::class,
             // SantriSeeder::class,
             // PembayaranSeeder::class,
         ]);    

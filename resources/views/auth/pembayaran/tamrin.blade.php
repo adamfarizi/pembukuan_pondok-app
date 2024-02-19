@@ -243,12 +243,42 @@
                         <div class="iq-card-header d-flex justify-content-between">
                             <div class="iq-header-title">
                                 <h4 class="card-title">Pembayaran Tamrin</h4>
+                                <h6 class="card-title">Belum Lunas</h6>
                             </div>
                             <div class="text-right">
                                 <button type="button" class="btn btn-primary mt-1" data-toggle="modal"
                                     data-target="#exampleModalCenter">
                                     Tambah Pembayaran
                                 </button>
+                            </div>
+                        </div>
+                        <div class="iq-card-body">
+                            <div class="table-responsive mb-3">
+                                <table id="tableTamrin_belum_lunas" class="table" role="grid"
+                                    aria-describedby="user-list-page-info" style="width: 100%; min-height: 100px;">
+                                    <thead class="sticky-top bg-white z-index-1">
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Tanggal Pembayaran</th>
+                                            <th>Nama Santri</th>
+                                            <th>Jumlah Pembayaran</th>
+                                            <th>Diterima Oleh</th>
+                                            <th>Status</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="iq-card">
+                        <div class="iq-card-header d-flex justify-content-between">
+                            <div class="iq-header-title">
+                                <h4 class="card-title">Pembayaran Tamrin</h4>
+                                <h6 class="card-title">Sudah Lunas</h6>
                             </div>
                         </div>
                         <div class="iq-card-body">
@@ -262,12 +292,12 @@
                                             <th>Nama Santri</th>
                                             <th>Jumlah Pembayaran</th>
                                             <th>Diterima Oleh</th>
-                                            <th>Status Pembayaran</th>
+                                            <th>Status</th>
                                             <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                       
+
                                     </tbody>
                                 </table>
                             </div>
@@ -301,6 +331,11 @@
                                 @endforeach
                             </select>
                         </div>
+                        <div class="form-group">
+                            <label for="jumlah_pembayaran">Jumlah Pembayaran <span class="text-danger">*</span></label>
+                            <input type="number" class="form-control" id="jumlah_pembayaran" name="jumlah_pembayaran"
+                                value="80000">
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
@@ -312,18 +347,19 @@
     </div>
 
     <!-- Modal Delete -->
-    @foreach ($tamrins as $tamrin)        
-        <div class="modal fade" id="deleteModal{{$tamrin->id_pembayaran}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle{{$tamrin->id_pembayaran}}"
-            aria-hidden="true">
+    @foreach ($tamrins as $tamrin)
+        <div class="modal fade" id="deleteModal{{ $tamrin->id_pembayaran }}" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenterTitle{{ $tamrin->id_pembayaran }}" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                     </div>
-                    <form action="{{url('/pembayaran/tamrin/delete/' . $tamrin->id_pembayaran)}}" id="deleteForm" method="post">
+                    <form action="{{ url('/pembayaran/tamrin/delete/' . $tamrin->id_pembayaran) }}" id="deleteForm"
+                        method="post">
                         @csrf
                         @method('DELETE')
                         <div class="modal-body text-center">
-                            <img src="{{ asset('images/local/danger.png') }}" width="80px" alt="">                        
+                            <img src="{{ asset('images/local/danger.png') }}" width="80px" alt="">
                             <h3 class="mt-4">Anda yakin ingin hapus data ini?</h3>
                         </div>
                         <div class="modal-footer">
@@ -337,94 +373,178 @@
     @endforeach
 @endsection
 @section('js')
-<script>
-    $(document).ready(function() {
-        $('#tableTamrin').DataTable({
-            processing: true,
-            serverSide: true,
-            ajax: {
-                url: "{{ route('tamrin') }}",
-            },
-            columns: [
-                // Kolom nomor urut
-                {
-                    data: null,
-                    searchable: false,
-                    orderable: false,
-                    render: function(data, type, row, meta) {
-                        return meta.row + meta.settings._iDisplayStart + 1;
-                    }
+    <script>
+        $(document).ready(function() {
+            $('#tableTamrin_belum_lunas').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    url: "{{ route('tamrin_belum_lunas') }}",
                 },
-                // Kolom tanggal dan jam pembayaran
-                {
-                    data: 'tanggal_pembayaran',
-                    render: function(data, type, full, meta) {
-                        var tanggal_pembayaran = full.tanggal_pembayaran.split(' ');
-                        var tanggal = tanggal_pembayaran[0];
-                        var jam = tanggal_pembayaran[1];
+                columns: [
+                    // Kolom nomor urut
+                    {
+                        data: null,
+                        searchable: false,
+                        orderable: false,
+                        render: function(data, type, row, meta) {
+                            return meta.row + meta.settings._iDisplayStart + 1;
+                        }
+                    },
+                    // Kolom tanggal dan jam pembayaran
+                    {
+                        data: 'tanggal_pembayaran',
+                        render: function(data, type, full, meta) {
+                            var tanggal_pembayaran = full.tanggal_pembayaran.split(' ');
+                            var tanggal = tanggal_pembayaran[0];
+                            var jam = tanggal_pembayaran[1];
 
-                        return '<p class="mb-0">' +
-                            tanggal +
-                            '</p>' +
-                            '<p class="mb-0">Jam: ' +
-                            jam +
-                            '</p>';
-                    }
-                },
-                 // Kolom nama santri
-                 {
-                    data: 'santri.nama_santri',
-                    name: 'santri.nama_santri'
-                },
-                // Kolom jumlah pembayaran
-                {
-                    data: 'jumlah_pembayaran',
-                    render: function(data, type, full, meta) {
-                        return 'Rp. ' + data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                    }
-                },
-               
-                // Kolom nama penerima
-                {
-                    data: 'admin.nama',
-                    name: 'admin.nama'
-                },
-                // Kolom Status pembayaran
-                {
+                            return '<p class="mb-0">' +
+                                tanggal +
+                                '</p>' +
+                                '<p class="mb-0">Jam: ' +
+                                jam +
+                                '</p>';
+                        }
+                    },
+                    // Kolom nama santri
+                    {
+                        data: 'santri.nama_santri',
+                        name: 'santri.nama_santri'
+                    },
+                    // Kolom jumlah pembayaran
+                    {
+                        data: 'jumlah_pembayaran',
+                        render: function(data, type, full, meta) {
+                            return 'Rp. ' + data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                        }
+                    },
+
+                    // Kolom nama penerima
+                    {
+                        data: 'admin.nama',
+                        name: 'admin.nama'
+                    },
+                    // Kolom Status pembayaran
+                    {
                         data: 'status_pembayaran',
                         name: 'status_pembayaran',
                         render: function(data, type, full, meta) {
-                            if (data === 'sudah_bayar') {
+                            if (data === 'lunas') {
                                 return '<span class="badge badge-pill badge-success">Lunas</span>';
-                            }  else {
+                            } else {
                                 return '<span class="badge badge-pill badge-warning">Belum Lunas</span>';
                             }
                         }
                     },
-                // Kolom aksi (tombol Edit, Delete)
-                {
-                    data: 'id_pembayaran',
-                    searchable: false,
-                    orderable: false,
-                    render: function(data, type, full, meta) {
-                        return '<div class="d-flex align-items-center list-user-action">' +
-                            '<a data-placement="top" title="Edit" href="' +
-                            '/pembayaran/tamrin/' + full.id_pembayaran + '">' +
-                            '<i class="ri-pencil-line"></i>' +
-                            '</a>' +
-                            '<a data-placement="top" title="Delete" href="#" ' +
-                            'data-target="#deleteModal' + full.id_pembayaran +
-                            '" data-toggle="modal" ' +
-                            'data-id="' + full.id_pembayaran + '">' +
-                            '<i class="ri-delete-bin-line"></i>' +
-                            '</a>' +
-                            '</div>';
+                    // Kolom aksi (tombol Edit, Delete)
+                    {
+                        data: 'id_pembayaran',
+                        searchable: false,
+                        orderable: false,
+                        render: function(data, type, full, meta) {
+                            return '<div class="d-flex align-items-center list-user-action">' +
+                                '<a data-placement="top" title="Edit" href="' +
+                                '/pembayaran/tamrin/' + full.id_pembayaran + '">' +
+                                '<i class="ri-pencil-line"></i>' +
+                                '</a>' +
+                                '<a data-placement="top" title="Delete" href="#" ' +
+                                'data-target="#deleteModal' + full.id_pembayaran +
+                                '" data-toggle="modal" ' +
+                                'data-id="' + full.id_pembayaran + '">' +
+                                '<i class="ri-delete-bin-line"></i>' +
+                                '</a>' +
+                                '</div>';
+                        }
                     }
-                }
-            ]
+                ]
+            });
+            $('#tableTamrin').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    url: "{{ route('tamrin') }}",
+                },
+                columns: [
+                    // Kolom nomor urut
+                    {
+                        data: null,
+                        searchable: false,
+                        orderable: false,
+                        render: function(data, type, row, meta) {
+                            return meta.row + meta.settings._iDisplayStart + 1;
+                        }
+                    },
+                    // Kolom tanggal dan jam pembayaran
+                    {
+                        data: 'tanggal_pembayaran',
+                        render: function(data, type, full, meta) {
+                            var tanggal_pembayaran = full.tanggal_pembayaran.split(' ');
+                            var tanggal = tanggal_pembayaran[0];
+                            var jam = tanggal_pembayaran[1];
+
+                            return '<p class="mb-0">' +
+                                tanggal +
+                                '</p>' +
+                                '<p class="mb-0">Jam: ' +
+                                jam +
+                                '</p>';
+                        }
+                    },
+                    // Kolom nama santri
+                    {
+                        data: 'santri.nama_santri',
+                        name: 'santri.nama_santri'
+                    },
+                    // Kolom jumlah pembayaran
+                    {
+                        data: 'jumlah_pembayaran',
+                        render: function(data, type, full, meta) {
+                            return 'Rp. ' + data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                        }
+                    },
+
+                    // Kolom nama penerima
+                    {
+                        data: 'admin.nama',
+                        name: 'admin.nama'
+                    },
+                    // Kolom Status pembayaran
+                    {
+                        data: 'status_pembayaran',
+                        name: 'status_pembayaran',
+                        render: function(data, type, full, meta) {
+                            if (data === 'lunas') {
+                                return '<span class="badge badge-pill badge-success">Lunas</span>';
+                            } else {
+                                return '<span class="badge badge-pill badge-warning">Belum Lunas</span>';
+                            }
+                        }
+                    },
+                    // Kolom aksi (tombol Edit, Delete)
+                    {
+                        data: 'id_pembayaran',
+                        searchable: false,
+                        orderable: false,
+                        render: function(data, type, full, meta) {
+                            return '<div class="d-flex align-items-center list-user-action">' +
+                                '<a data-placement="top" title="Edit" href="' +
+                                '/pembayaran/tamrin/' + full.id_pembayaran + '">' +
+                                '<i class="ri-pencil-line"></i>' +
+                                '</a>' +
+                                '<a data-placement="top" title="Delete" href="#" ' +
+                                'data-target="#deleteModal' + full.id_pembayaran +
+                                '" data-toggle="modal" ' +
+                                'data-id="' + full.id_pembayaran + '">' +
+                                '<i class="ri-delete-bin-line"></i>' +
+                                '</a>' +
+                                '</div>';
+                        }
+                    }
+                ]
+            });
         });
-    });
-</script>
+    </script>
 
     <script>
         // Autoclose success alert after 3000 milliseconds (3 seconds)

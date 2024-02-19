@@ -24,8 +24,8 @@
                             <i class="ri-arrow-right-s-line iq-arrow-right"></i>
                         </a>
                         <ul id="pembayaran" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                            <li ><a href="{{ route('daftar_ulang') }}">Daftar Ulang</a></li>
-                            <li ><a href="{{ route('iuran_bulanan') }}">Iuran Bulanan</a></li>
+                            <li><a href="{{ route('daftar_ulang') }}">Daftar Ulang</a></li>
+                            <li><a href="{{ route('iuran_bulanan') }}">Iuran Bulanan</a></li>
                             <li class="active"><a href="{{ route('tamrin') }}">Tamrin</a></li>
                         </ul>
                     </li>
@@ -246,8 +246,7 @@
                 </div>
                 <div class="iq-card-body">
                     <p>Lengkapi dan ubah form dibawah untuk mengubah data.</p>
-                    <form action="{{ url('/pembayaran/tamrin/edit/' . $tamrin->id_pembayaran) }}"
-                        method="post">
+                    <form action="{{ url('/pembayaran/tamrin/edit/' . $tamrin->id_pembayaran) }}" method="post">
                         @csrf
                         @method('PUT')
                         <div class="form-group">
@@ -274,6 +273,16 @@
                             </select>
                         </div>
                         <div class="form-group">
+                            <label for="jumlah_pembayaran">Jumlah Pembayaran <span class="text-danger">*</span></label>
+                            @if ($tamrin->jumlah_pembayaran == $jumlah_pembayaran_master)
+                                <input type="number" class="form-control" id="jumlah_pembayaran"
+                                    name="jumlah_pembayaran" value="{{ $tamrin->jumlah_pembayaran }}" readonly>
+                            @else
+                                <input type="number" class="form-control" id="jumlah_pembayaran"
+                                    name="jumlah_pembayaran" value="{{ $tamrin->jumlah_pembayaran }}">
+                            @endif
+                        </div>
+                        <div class="form-group">
                             <label for="exampleFormControlSelect1">Diterima Oleh</label>
                             <select class="form-control" name="nama_admin" id="nama_admin">
                                 <option selected="" value="{{ $admin->nama }}">{{ $admin->nama }}</option>
@@ -283,10 +292,10 @@
                             </select>
                         </div>
                         <hr>
-                            <div class="mt-2">
-                                <button type="submit" class="btn btn-primary">Simpan</button>
-                                <a type="button" href="{{ route('tamrin') }}" class="btn iq-bg-secondary">Kembali</a>
-                            </div>
+                        <div class="mt-2">
+                            <button type="submit" class="btn btn-primary">Simpan</button>
+                            <a type="button" href="{{ route('tamrin') }}" class="btn iq-bg-secondary">Kembali</a>
+                        </div>
                     </form>
                 </div>
             </div>

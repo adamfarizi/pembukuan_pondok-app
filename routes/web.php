@@ -44,6 +44,7 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/pembayaran/iuran_bulanan/delete/{id}', [IuranBulananController::class, 'delete_data']);
     
     Route::get('/pembayaran/tamrin', [TamrinController::class, 'index'])->name('tamrin');
+    Route::get('/pembayaran/tamrin/belum_lunas', [TamrinController::class, 'index_belum_lunas'])->name('tamrin_belum_lunas');
     Route::post('/pembayaran/tamrin/create', [TamrinController::class, 'create_data']);
     Route::get('/pembayaran/tamrin/{id}', [TamrinController::class, 'get_edit_data']);
     Route::put('/pembayaran/tamrin/edit/{id}', [TamrinController::class, 'edit_data']);

@@ -17,7 +17,7 @@ class PembayaranFactory extends Factory
 
         return [
             'tanggal_pembayaran' => $this->faker->dateTimeThisMonth,
-            'jumlah_pembayaran' => ($jenisPembayaran == 'daftar_ulang') ? 50000 : $this->faker->numberBetween(1000, 99999),
+            'jumlah_pembayaran' => ($jenisPembayaran == 'tamrin') ? 80000 : ($jenisPembayaran == 'daftar_ulang' ? 50000 : $this->faker->numberBetween(1000, 99999)),
             'jenis_pembayaran' => $jenisPembayaran,
             'status_pembayaran' => 'lunas',
             'id_admin' => 1, // Sesuaikan dengan rentang yang diinginkan

@@ -567,7 +567,12 @@
                             });
                         return `${namaBulan} ${item.tahun}`;
                     });
-
+    
+                    // Memutar array bulanTahun agar data terbaru berada di awal
+                    bulanTahun.reverse();
+                    pemasukan.reverse();
+                    pengeluaran.reverse();
+    
                     // Konfigurasi chart
                     const chartKeuangan = {
                         chart: {
@@ -607,7 +612,7 @@
                             }
                         },
                         xaxis: {
-                            categories: bulanTahun
+                            categories: bulanTahun,
                         },
                         yaxis: {
                             labels: {
@@ -635,7 +640,7 @@
                             borderColor: '#f1f1f1',
                         }
                     };
-
+    
                     // Render chart
                     const chartKeuanganInstance = new ApexCharts(document.querySelector("#chart_keuangan"),
                         chartKeuangan);
@@ -643,6 +648,7 @@
                 });
         });
     </script>
+        
 
     <script>
         // Autoclose success alert after 3000 milliseconds (3 seconds)

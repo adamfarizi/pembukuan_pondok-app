@@ -36,16 +36,16 @@ class BerandaController extends Controller
         // Mendapatkan data pemasukan per bulan
         $pemasukanPerBulan = Pembayaran::selectRaw('SUM(jumlah_pembayaran) as total_pemasukan, YEAR(tanggal_pembayaran) as tahun, MONTH(tanggal_pembayaran) as bulan')
             ->groupBy('tahun', 'bulan')
-            ->orderBy('tahun', 'asc')
-            ->orderBy('bulan', 'asc')
+            ->orderBy('tahun', 'desc')
+            ->orderBy('bulan', 'desc')
             ->limit(6)
             ->get();
 
         // Mendapatkan data pengeluaran per bulan
         $pengeluaranPerBulan = Pengeluaran::selectRaw('SUM(jumlah_pengeluaran) as total_pengeluaran, YEAR(tanggal_pengeluaran) as tahun, MONTH(tanggal_pengeluaran) as bulan')
             ->groupBy('tahun', 'bulan')
-            ->orderBy('tahun', 'asc')
-            ->orderBy('bulan', 'asc')
+            ->orderBy('tahun', 'desc')
+            ->orderBy('bulan', 'desc')
             ->limit(6)
             ->get();
 

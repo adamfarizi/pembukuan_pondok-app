@@ -326,6 +326,11 @@
                             });
                         return `${namaBulan} ${item.tahun}`;
                     });
+                    
+                    // Memutar array bulanTahun agar data terbaru berada di awal
+                    bulanTahun.reverse();
+                    pemasukan.reverse();
+                    pengeluaran.reverse();
 
                     // Konfigurasi chart
                     const chartKeuangan = {

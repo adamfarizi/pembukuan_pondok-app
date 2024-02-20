@@ -1,14 +1,16 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\SantriController;
+use App\Http\Controllers\TamrinController;
 use App\Http\Controllers\BerandaController;
 use App\Http\Controllers\DaftarUlangController;
+use App\Http\Controllers\MasterAdminController;
+use App\Http\Controllers\MasterGuestController;
+use App\Http\Controllers\PengeluaranController;
 use App\Http\Controllers\IuranBulananController;
 use App\Http\Controllers\LaporanKeuanganController;
-use App\Http\Controllers\TamrinController;
-use App\Http\Controllers\PengeluaranController;
-use App\Http\Controllers\SantriController;
-use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -68,4 +70,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/santri/{id}', [SantriController::class, 'get_edit_data']);
     Route::put('/santri/edit/{id}', [SantriController::class, 'edit_data']);
     Route::delete('/santri/delete/{id}', [SantriController::class, 'delete_data']);
+
+    Route::get('/master/master_admin', [MasterAdminController::class, 'index'])->name('master_admin');
+
+    Route::get('/master/master_guest', [MasterGuestController::class, 'index'])->name('master_guest');
+
 });

@@ -47,11 +47,11 @@
                         <i class="ri-separator"></i><span>Master</span>
                     </li>
                     <li>
-                        <a href="" class="iq-waves-effect"><i class="ri-profile-line"></i><span>Master Admin</span>
+                        <a href="{{ route('master_admin') }}" class="iq-waves-effect"><i class="ri-profile-line"></i><span>Master Admin</span>
                         </a>
                     </li>
                     <li>
-                        <a href="" class="iq-waves-effect"><i class="ri-pencil-ruler-line"></i><span>Master Guest</span>
+                        <a href="{{ route('master_guest') }}" class="iq-waves-effect"><i class="ri-pencil-ruler-line"></i><span>Master Guest</span>
                         </a>
                     </li>
                 </ul>

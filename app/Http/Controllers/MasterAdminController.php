@@ -10,8 +10,6 @@ class MasterAdminController extends Controller
     {
         $data['title'] = 'Master Admin';
         
-        return view('auth.master.master_admin',[
-
-        ], $data);
+        return view('auth.master.master_admin',$data);
     }
 }

@@ -30,30 +30,35 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="{{ route('pengeluaran') }}" class="iq-waves-effect"><i class="ri-message-line"></i><span>Pengeluaran</span>
+                        <a href="{{ route('pengeluaran') }}" class="iq-waves-effect"><i
+                                class="ri-message-line"></i><span>Pengeluaran</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('laporan_keuangan') }}" class="iq-waves-effect"><i class="ri-calendar-2-line"></i><span>Laporan
+                        <a href="{{ route('laporan_keuangan') }}" class="iq-waves-effect"><i
+                                class="ri-calendar-2-line"></i><span>Laporan
                                 Keuangan</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('santri') }}" class="iq-waves-effect"><i class="ri-user-line"></i><span>Santri</span>
+                        <a href="{{ route('santri') }}" class="iq-waves-effect"><i
+                                class="ri-user-line"></i><span>Santri</span>
                         </a>
                     </li>
-                  {{-- Tambahan Menu --}}
-                  <li class="iq-menu-title">
-                    <i class="ri-separator"></i><span>Master</span>
-                </li>
-                <li>
-                    <a href="{{ route('master_admin') }}" class="iq-waves-effect"><i class="ri-profile-line"></i><span>Master Admin</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ route('master_guest') }}" class="iq-waves-effect"><i class="ri-pencil-ruler-line"></i><span>Master Guest</span>
-                    </a>
-                </li>
+                    {{-- Tambahan Menu --}}
+                    <li class="iq-menu-title">
+                        <i class="ri-separator"></i><span>Master</span>
+                    </li>
+                    <li class="active">
+                        <a href="{{ route('master_admin') }}" class="iq-waves-effect"><i
+                                class="ri-profile-line"></i><span>Master Admin</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('master_guest') }}" class="iq-waves-effect"><i
+                                class="ri-pencil-ruler-line"></i><span>Master Guest</span>
+                        </a>
+                    </li>
                 </ul>
             </nav>
             <div class="p-3"></div>
@@ -121,7 +126,8 @@
                                         <a href="#" class="iq-sub-card">
                                             <div class="media align-items-center">
                                                 <div class="">
-                                                    <img class="avatar-40 rounded" src="{{ asset('images/user/01.jpg') }}" alt="">
+                                                    <img class="avatar-40 rounded" src="{{ asset('images/user/01.jpg') }}"
+                                                        alt="">
                                                 </div>
                                                 <div class="media-body ml-3">
                                                     <h6 class="mb-0 ">Emma Watson Nik</h6>
@@ -133,8 +139,8 @@
                                         <a href="#" class="iq-sub-card">
                                             <div class="media align-items-center">
                                                 <div class="">
-                                                    <img class="avatar-40 rounded" src="{{ asset('images/user/02.jpg') }}"
-                                                        alt="">
+                                                    <img class="avatar-40 rounded"
+                                                        src="{{ asset('images/user/02.jpg') }}" alt="">
                                                 </div>
                                                 <div class="media-body ml-3">
                                                     <h6 class="mb-0 ">New customer is join</h6>
@@ -146,7 +152,8 @@
                                         <a href="#" class="iq-sub-card">
                                             <div class="media align-items-center">
                                                 <div class="">
-                                                    <img class="avatar-40" src="{{ asset('images/small/jpg.svg') }}" alt="">
+                                                    <img class="avatar-40" src="{{ asset('images/small/jpg.svg') }}"
+                                                        alt="">
                                                 </div>
                                                 <div class="media-body ml-3">
                                                     <h6 class="mb-0 ">Updates Available</h6>
@@ -159,53 +166,58 @@
                                 </div>
                             </div>
                         </li>
-                         {{-- FullScreen --}}
-                         <li class="nav-item iq-full-screen"><a href="#" class="iq-waves-effect"
-                            id="btnFullscreen"><i class="ri-fullscreen-line"></i></a></li>
-                </ul>
-            </div>
-            <ul class="navbar-list">
-                <li>
-                    <a href="#" class="search-toggle iq-waves-effect bg-white text-white"><img
-                            src="{{ asset('images/local/user-1.png') }}" class="img-fluid rounded" alt="user"></a>
-                    <div class="iq-sub-dropdown iq-user-dropdown">
-                        <div class="iq-card iq-card-block iq-card-stretch iq-card-height shadow-none m-0">
-                            <div class="iq-card-body p-0 ">
-                                <div class="bg-primary p-3">
-                                    <h5 class="mb-0 text-white line-height">{{ Auth::user()->nama }}</h5>
-                                    <span class="text-white font-size-12">Online</span>
-                                </div>
-                                <a href="profile.html" class="iq-sub-card iq-bg-primary-hover">
-                                    <div class="media align-items-center">
-                                        <div class="rounded iq-card-icon iq-bg-primary">
-                                            <i class="ri-file-user-line"></i>
-                                        </div>
-                                        <div class="media-body ml-3">
-                                            <h6 class="mb-0 ">Profil Saya</h6>
-                                            <p class="mb-0 font-size-12">Tampilkan data pribadi saya.</p>
-                                        </div>
+                        {{-- FullScreen --}}
+                        <li class="nav-item iq-full-screen"><a href="#" class="iq-waves-effect"
+                                id="btnFullscreen"><i class="ri-fullscreen-line"></i></a></li>
+                    </ul>
+                </div>
+                <ul class="navbar-list">
+                    <li>
+                        <a href="#" class="search-toggle iq-waves-effect bg-white text-white"><img
+                                src="{{ asset('images/local/user-1.png') }}" class="img-fluid rounded"
+                                alt="user"></a>
+                        <div class="iq-sub-dropdown iq-user-dropdown">
+                            <div class="iq-card iq-card-block iq-card-stretch iq-card-height shadow-none m-0">
+                                <div class="iq-card-body p-0 ">
+                                    <div class="bg-primary p-3">
+                                        <h5 class="mb-0 text-white line-height">{{ Auth::user()->nama }}</h5>
+                                        <span class="text-white font-size-12">Online</span>
                                     </div>
-                                </a>
-                                <a href="privacy-setting.html" class="iq-sub-card iq-bg-primary-secondary-hover">
-                                    <div class="media align-items-center">
-                                        <div class="rounded iq-card-icon iq-bg-secondary">
-                                            <i class="ri-lock-line"></i>
+                                    <a href="profile.html" class="iq-sub-card iq-bg-primary-hover">
+                                        <div class="media align-items-center">
+                                            <div class="rounded iq-card-icon iq-bg-primary">
+                                                <i class="ri-file-user-line"></i>
+                                            </div>
+                                            <div class="media-body ml-3">
+                                                <h6 class="mb-0 ">Profil Saya</h6>
+                                                <p class="mb-0 font-size-12">Tampilkan data pribadi saya.</p>
+                                            </div>
                                         </div>
-                                        <div class="media-body ml-3">
-                                            <h6 class="mb-0 ">Setelan Privasi</h6>
-                                            <p class="mb-0 font-size-12">Kontrol parameter privasi Anda.</p>
+                                    </a>
+                                    <a href="privacy-setting.html" class="iq-sub-card iq-bg-primary-secondary-hover">
+                                        <div class="media align-items-center">
+                                            <div class="rounded iq-card-icon iq-bg-secondary">
+                                                <i class="ri-lock-line"></i>
+                                            </div>
+                                            <div class="media-body ml-3">
+                                                <h6 class="mb-0 ">Setelan Privasi</h6>
+                                                <p class="mb-0 font-size-12">Kontrol parameter privasi Anda.</p>
+                                            </div>
                                         </div>
+                                    </a>
+                                    <div class="d-inline-block w-100 text-center p-3">
+                                        <a class="iq-bg-danger iq-sign-btn btn-block" href="{{ url('/logout') }}"
+                                            role="button">Keluar<i class="ri-login-box-line ml-2"></i></a>
                                     </div>
-                                </a>
-                                <div class="d-inline-block w-100 text-center p-3">
-                                    <a class="iq-bg-danger iq-sign-btn btn-block" href="{{ url('/logout') }}" role="button">Keluar<i
-                                            class="ri-login-box-line ml-2"></i></a>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </li>
-            </ul>
-        </nav>
+                    </li>
+                </ul>
+            </nav>
+        </div>
     </div>
-</div>
+@endsection
+@section('content')
+    
+@endsection

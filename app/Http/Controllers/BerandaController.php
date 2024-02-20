@@ -22,8 +22,8 @@ class BerandaController extends Controller
         $totalKeuangan = $totalPemasukan - $totalPengeluaran;
 
         $totalsantri = Santri::count();
-        
-        return view('auth.beranda.beranda',[
+
+        return view('auth.beranda.beranda', [
             'totalPemasukan' => $totalPemasukan,
             'totalPengeluaran' => $totalPengeluaran,
             'totalKeuangan' => $totalKeuangan,
@@ -31,7 +31,7 @@ class BerandaController extends Controller
         ], $data);
     }
 
-    public function chart()
+    public function chartKeuangan()
     {
         // Mendapatkan data pemasukan per bulan
         $pemasukanPerBulan = Pembayaran::selectRaw('SUM(jumlah_pembayaran) as total_pemasukan, YEAR(tanggal_pembayaran) as tahun, MONTH(tanggal_pembayaran) as bulan')
@@ -52,7 +52,7 @@ class BerandaController extends Controller
         // Menggabungkan data pemasukan dan pengeluaran per bulan
         $data = [];
         foreach ($pemasukanPerBulan as $pemasukan) {
-            $index = $this->getChart($data, $pemasukan->tahun, $pemasukan->bulan);
+            $index = $this->getChartKeuangan($data, $pemasukan->tahun, $pemasukan->bulan);
             if ($index !== false) {
                 $data[$index]['total_pemasukan'] = $pemasukan->total_pemasukan;
             } else {
@@ -66,7 +66,7 @@ class BerandaController extends Controller
         }
 
         foreach ($pengeluaranPerBulan as $pengeluaran) {
-            $index = $this->getChart($data, $pengeluaran->tahun, $pengeluaran->bulan);
+            $index = $this->getChartKeuangan($data, $pengeluaran->tahun, $pengeluaran->bulan);
             if ($index !== false) {
                 $data[$index]['total_pengeluaran'] = $pengeluaran->total_pengeluaran;
             } else {
@@ -81,4 +81,26 @@ class BerandaController extends Controller
 
         return response()->json($data);
     }
+
+    public function getChartKeuangan($data, $tahun, $bulan)
+    {
+        foreach ($data as $index => $item) {
+            if ($item['tahun'] == $tahun && $item['bulan'] == $bulan) {
+                return $index;
+            }
+        }
+        return false;
+    }
+
+    public function chartSantri()
+    {
+        $totalMaleSantri = Santri::where('jenis_kelamin_santri', 'laki-laki')->count();
+        $totalFemaleSantri = Santri::where('jenis_kelamin_santri', 'perempuan')->count();
+
+        return response()->json([
+            'total_male_santri' => $totalMaleSantri,
+            'total_female_santri' => $totalFemaleSantri,
+        ]);
+    }
+
 }

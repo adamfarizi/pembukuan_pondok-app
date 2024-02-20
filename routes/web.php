@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Guest\GuestController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\SantriController;
@@ -23,6 +24,7 @@ use App\Http\Controllers\LaporanKeuanganController;
 |
 */
 Route::middleware(['guest'])->group(function () {
+    Route::get('/beranda/guest', [GuestController::class,'index']);
     Route::get('/', [AuthController::class,'index'])->name('login');
     Route::post('/login', [AuthController::class,'login_action']);
 
@@ -31,7 +33,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/logout', [AuthController::class, 'logout']);
 
     Route::get('/beranda', [BerandaController::class,'index'])->name('beranda');
-    Route::get('/beranda/chart', [BerandaController::class, 'chart'])->name('beranda.chart');
+    Route::get('/beranda/chartKeuangan', [BerandaController::class, 'chartKeuangan'])->name('beranda.chartKeuangan');
+    Route::get('/beranda/chartSantri', [BerandaController::class, 'chartSantri'])->name('beranda.chartSantri');
 
     Route::get('/pembayaran/daftar_ulang', [DaftarUlangController::class, 'index'])->name('daftar_ulang');
     Route::post('/pembayaran/daftar_ulang/create', [DaftarUlangController::class, 'create_data']);

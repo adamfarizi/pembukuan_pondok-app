@@ -45,16 +45,18 @@
                                 class="ri-user-line"></i><span>Santri</span>
                         </a>
                     </li>
-                     {{-- Tambahan Menu --}}
-                     <li class="iq-menu-title">
+                    {{-- Tambahan Menu --}}
+                    <li class="iq-menu-title">
                         <i class="ri-separator"></i><span>Master</span>
                     </li>
                     <li>
-                        <a href="{{ route('master_admin') }}" class="iq-waves-effect"><i class="ri-profile-line"></i><span>Master Admin</span>
+                        <a href="{{ route('master_admin') }}" class="iq-waves-effect"><i
+                                class="ri-profile-line"></i><span>Master Admin</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('master_guest') }}" class="iq-waves-effect"><i class="ri-pencil-ruler-line"></i><span>Master Guest</span>
+                        <a href="{{ route('master_guest') }}" class="iq-waves-effect"><i
+                                class="ri-pencil-ruler-line"></i><span>Master Guest</span>
                         </a>
                     </li>
                 </ul>
@@ -137,8 +139,8 @@
                                         <a href="#" class="iq-sub-card">
                                             <div class="media align-items-center">
                                                 <div class="">
-                                                    <img class="avatar-40 rounded" src="{{ asset('images/user/02.jpg') }}"
-                                                        alt="">
+                                                    <img class="avatar-40 rounded"
+                                                        src="{{ asset('images/user/02.jpg') }}" alt="">
                                                 </div>
                                                 <div class="media-body ml-3">
                                                     <h6 class="mb-0 ">New customer is join</h6>
@@ -222,43 +224,41 @@
         <!-- Card -->
         <div class="container-fluid">
             <div class="d-flex">
-                <div class="col iq-card iq-card-block iq-card-stretch iq-card-height-half me-2">
-                    <div class="iq-card-body">
-                        <div class="row">
-                            <div class="col-lg-3">
-                                <img src="{{ asset('images/local/pemasukan.png') }}" width="50px" alt="">
+                <div class="col-md-6 col-lg-4">
+                    <div class="iq-card iq-card-block iq-card-stretch iq-card-height overflow-hidden">
+                        <div class="iq-card-body pb-0">
+                            <div class="rounded-circle iq-card-icon iq-bg-primary"><i class="ri-exchange-dollar-fill"></i>
                             </div>
-                            <div class="col-lg">
-                                <span class="font-size-14">Pemasukan Pondok</span>
-                                <h3 class="fw-bold text-success">Rp. {{ number_format($totalPemasukan, 0, ',', '.') }}
-                                </h3>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col iq-card iq-card-block iq-card-stretch iq-card-height-half ms-2 me-2">
-                    <div class="iq-card-body">
-                        <div class="row">
-                            <div class="col-lg-3">
-                                <img src="{{ asset('images/local/pengeluaran.png') }}" width="50px" alt="">
-                            </div>
-                            <div class="col-lg">
-                                <span class="font-size-14">Pengeluaran Pondok</span>
-                                <h3 class="fw-bold text-danger">Rp. {{ number_format($totalPengeluaran, 0, ',', '.') }}
-                                </h3>
+                            <span class="float-right line-height-6">Pemasukan Pondok</span>
+                            <div class="text-center mt-3">
+                                <h2 class="mb-5"><span class="">Rp.
+                                        {{ number_format($totalPemasukan, 0, ',', '.') }}</span></h2>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col iq-card iq-card-block iq-card-stretch iq-card-height-half ms-2">
-                    <div class="iq-card-body">
-                        <div class="row">
-                            <div class="col-lg-3">
-                                <img src="{{ asset('images/local/total_uang.png') }}" width="50px" alt="">
+                <div class="col-md-6 col-lg-4">
+                    <div class="iq-card iq-card-block iq-card-stretch iq-card-height overflow-hidden">
+                        <div class="iq-card-body pb-0">
+                            <div class="rounded-circle iq-card-icon iq-bg-warning"><i class="ri-shopping-cart-line"></i>
                             </div>
-                            <div class="col-lg">
-                                <span class="font-size-14">Total Keuangan Pondok</span>
-                                <h3 class="fw-bold text-primary">Rp. {{ number_format($totalKeuangan, 0, ',', '.') }}</h3>
+                            <span class="float-right line-height-6">Total Pengeluaran</span>
+                            <div class="text-center mt-3">
+                                <h2 class="mb-5"><span class="">Rp.
+                                        {{ number_format($totalPengeluaran, 0, ',', '.') }}</span></h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="iq-card iq-card-block iq-card-stretch iq-card-height overflow-hidden">
+                        <div class="iq-card-body pb-0">
+                            <div class="rounded-circle iq-card-icon iq-bg-success"><i
+                                    class="ri-bar-chart-grouped-line"></i></div>
+                            <span class="float-right line-height-6">Total Keuangan</span>
+                            <div class="text-center mt-3">
+                                <h2 class="mb-5"><span class="">Rp.
+                                        {{ number_format($totalKeuangan, 0, ',', '.') }}</span></h2>
                             </div>
                         </div>
                     </div>
@@ -611,7 +611,7 @@
                         },
                         yaxis: {
                             labels: {
-                                show: false
+                                show: true
                             }
                         },
                         tooltip: {

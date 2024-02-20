@@ -14,7 +14,7 @@ class PengeluaranFactory extends Factory
     public function definition()
     {
         return [
-            'tanggal_pengeluaran' => $this->faker->dateTimeThisMonth,
+            'tanggal_pengeluaran' => $this->faker->dateTimeBetween('-6 months', 'now'),
             'jumlah_pengeluaran' => $this->faker->numberBetween(1000, 99999),
             'deskripsi_pengeluaran' => $this->faker->sentence,
             'nama_pengeluar' => $this->faker->name,

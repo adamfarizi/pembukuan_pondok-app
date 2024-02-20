@@ -16,7 +16,7 @@ class PembayaranFactory extends Factory
         $jenisPembayaran = $this->faker->randomElement(['daftar_ulang', 'iuran_bulanan', 'tamrin']);
 
         return [
-            'tanggal_pembayaran' => $this->faker->dateTimeThisMonth,
+            'tanggal_pembayaran' => $this->faker->dateTimeBetween('-6 months', 'now'),
             'jumlah_pembayaran' => ($jenisPembayaran == 'tamrin') ? 80000 : ($jenisPembayaran == 'daftar_ulang' ? 50000 : $this->faker->numberBetween(1000, 99999)),
             'jenis_pembayaran' => $jenisPembayaran,
             'status_pembayaran' => 'lunas',

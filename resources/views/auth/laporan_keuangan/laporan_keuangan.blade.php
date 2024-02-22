@@ -319,7 +319,7 @@
                                 <h4 class="card-title">Pemasukan Pondok</h4>
                             </div>
                             <div class="col text-right">
-                                <button id="exportPemasukanExcel" class="btn btn-success"><i
+                                <button id="exportPemasukanExcel" class="btn text-white" style="background-color: #209e62;"><i
                                         class="ri-file-excel-2-fill"></i> Export</button>
                             </div>
                         </div>
@@ -356,7 +356,7 @@
                                 <h4 class="card-title">Pengeluaran Pondok</h4>
                             </div>
                             <div class="col text-right">
-                                <button id="exportPengeluaranExcel" class="btn btn-success"><i
+                                <button id="exportPengeluaranExcel" class="btn text-white" style="background-color: #209e62"><i
                                         class="ri-file-excel-2-fill"></i> Export</button>
                             </div>
                         </div>

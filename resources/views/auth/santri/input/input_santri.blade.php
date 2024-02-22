@@ -1,4 +1,4 @@
-@extends('app')
+@extends('auth/app_auth')
 @section('sidebar')
     <!-- Sidebar  -->
     <div class="iq-sidebar">
@@ -45,16 +45,18 @@
                                 class="ri-user-line"></i><span>Santri</span>
                         </a>
                     </li>
-                     {{-- Tambahan Menu --}}
-                     <li class="iq-menu-title">
+                    {{-- Tambahan Menu --}}
+                    <li class="iq-menu-title">
                         <i class="ri-separator"></i><span>Master</span>
                     </li>
                     <li>
-                        <a href="{{ route('master_admin') }}" class="iq-waves-effect"><i class="ri-profile-line"></i><span>Master Admin</span>
+                        <a href="{{ route('master_admin') }}" class="iq-waves-effect"><i
+                                class="ri-profile-line"></i><span>Master Admin</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('master_guest') }}" class="iq-waves-effect"><i class="ri-pencil-ruler-line"></i><span>Master Guest</span>
+                        <a href="{{ route('master_guest') }}" class="iq-waves-effect"><i
+                                class="ri-pencil-ruler-line"></i><span>Master Guest</span>
                         </a>
                     </li>
                 </ul>
@@ -138,8 +140,8 @@
                                         <a href="#" class="iq-sub-card">
                                             <div class="media align-items-center">
                                                 <div class="">
-                                                    <img class="avatar-40 rounded" src="{{ asset('images/user/02.jpg') }}"
-                                                        alt="">
+                                                    <img class="avatar-40 rounded"
+                                                        src="{{ asset('images/user/02.jpg') }}" alt="">
                                                 </div>
                                                 <div class="media-body ml-3">
                                                     <h6 class="mb-0 ">New customer is join</h6>
@@ -262,42 +264,55 @@
                         <div class="modal-body">
                             <div class="form-group">
                                 <label for="nama_santri">Nama Santri <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="nama_santri" name="nama_santri" value="{{ old('nama_santri') }}" required>
+                                <input type="text" class="form-control" id="nama_santri" name="nama_santri"
+                                    value="{{ old('nama_santri') }}" required>
                             </div>
                             <div class="form-group">
-                                <label for="tempat_tanggal_lahir_santri">Tempat, Tanggal Lahir <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="tempat_tanggal_lahir_santri" name="tempat_tanggal_lahir_santri" value="{{ old('tempat_tanggal_lahir_santri') }}" required>
+                                <label for="tempat_tanggal_lahir_santri">Tempat, Tanggal Lahir <span
+                                        class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="tempat_tanggal_lahir_santri"
+                                    name="tempat_tanggal_lahir_santri" value="{{ old('tempat_tanggal_lahir_santri') }}"
+                                    required>
                             </div>
                             <div class="row">
                                 <div class="col">
                                     <div class="form-group">
                                         <label for="no_hp_santri">No Hp Santri <span class="text-danger">*</span></label>
-                                        <input type="number" class="form-control" id="no_hp_santri" name="no_hp_santri" value="{{ old('no_hp_santri') }}" required>
+                                        <input type="number" class="form-control" id="no_hp_santri" name="no_hp_santri"
+                                            value="{{ old('no_hp_santri') }}" required>
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="form-group">
                                         <label for="email_santri">Email Santri <span class="text-danger">*</span></label>
-                                        <input type="email" class="form-control" id="email_santri" name="email_santri" value="{{ old('email_santri') }}" required>
+                                        <input type="email" class="form-control" id="email_santri" name="email_santri"
+                                            value="{{ old('email_santri') }}" required>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col">
                                     <div class="form-group">
-                                        <label for="jenis_kelamin_santri">Jenis Kelamin Santri <span class="text-danger">*</span></label>
-                                        <select class="form-control" name="jenis_kelamin_santri" id="jenis_kelamin_santri" required>
-                                            <option value="laki-laki" @if(old('jenis_kelamin_santri') == 'laki-laki') selected @endif>Laki Laki</option>
-                                            <option value="perempuan" @if(old('jenis_kelamin_santri') == 'perempuan') selected @endif>Perempuan</option>
+                                        <label for="jenis_kelamin_santri">Jenis Kelamin Santri <span
+                                                class="text-danger">*</span></label>
+                                        <select class="form-control" name="jenis_kelamin_santri"
+                                            id="jenis_kelamin_santri" required>
+                                            <option value="laki-laki" @if (old('jenis_kelamin_santri') == 'laki-laki') selected @endif>
+                                                Laki Laki</option>
+                                            <option value="perempuan" @if (old('jenis_kelamin_santri') == 'perempuan') selected @endif>
+                                                Perempuan</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="form-group">
-                                        <label for="status_santri">Status Santri <span class="text-danger">*</span></label>
+                                        <label for="status_santri">Status Santri <span
+                                                class="text-danger">*</span></label>
                                         <select class="form-control" name="status_santri" id="status_santri" required>
-                                            <option value="menetap" @if(old('status_santri') == 'menetap') selected @endif>Menetap</option>
-                                            <option value="pulang" @if(old('status_santri') == 'pulang') selected @endif>Pulang Pergi</option>
+                                            <option value="menetap" @if (old('status_santri') == 'menetap') selected @endif>
+                                                Menetap</option>
+                                            <option value="pulang" @if (old('status_santri') == 'pulang') selected @endif>Pulang
+                                                Pergi</option>
                                         </select>
                                     </div>
                                 </div>
@@ -309,14 +324,18 @@
                             <div class="row">
                                 <div class="col">
                                     <div class="form-group">
-                                        <label for="nama_wali_santri">Nama Wali Santri <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" id="nama_wali_santri" name="nama_wali_santri" value="{{ old('nama_wali_santri') }}" required>
+                                        <label for="nama_wali_santri">Nama Wali Santri <span
+                                                class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="nama_wali_santri"
+                                            name="nama_wali_santri" value="{{ old('nama_wali_santri') }}" required>
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="form-group">
-                                        <label for="no_hp_wali_santri">No Hp Wali Santri <span class="text-danger">*</span></label>
-                                        <input type="number" class="form-control" id="no_hp_wali_santri" name="no_hp_wali_santri" value="{{ old('no_hp_wali_santri') }}" required>
+                                        <label for="no_hp_wali_santri">No Hp Wali Santri <span
+                                                class="text-danger">*</span></label>
+                                        <input type="number" class="form-control" id="no_hp_wali_santri"
+                                            name="no_hp_wali_santri" value="{{ old('no_hp_wali_santri') }}" required>
                                     </div>
                                 </div>
                             </div>
@@ -324,13 +343,15 @@
                                 <div class="col">
                                     <div class="form-group">
                                         <label for="ktp_santri">KTP Santri <span class="text-danger">*</span></label>
-                                        <input type="file" class="form-control-file" id="ktp_santri" name="ktp_santri" required>
+                                        <input type="file" class="form-control-file" id="ktp_santri"
+                                            name="ktp_santri" required>
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="form-group">
                                         <label for="kk_santri">KK Santri <span class="text-danger">*</span></label>
-                                        <input type="file" class="form-control-file" id="kk_santri" name="kk_santri" required>
+                                        <input type="file" class="form-control-file" id="kk_santri" name="kk_santri"
+                                            required>
                                     </div>
                                 </div>
                             </div>
@@ -340,7 +361,7 @@
                                 <a type="button" href="{{ route('santri') }}" class="btn iq-bg-secondary">Kembali</a>
                             </div>
                         </div>
-                    </form>                    
+                    </form>
                 </div>
             </div>
         </div>

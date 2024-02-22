@@ -1,4 +1,4 @@
-@extends('app')
+@extends('auth/app_auth')
 @section('sidebar')
     <!-- Sidebar  -->
     <div class="iq-sidebar">

@@ -1,4 +1,4 @@
-@extends('app')
+@extends('auth/app_auth')
 @section('sidebar')
     <!-- Sidebar  -->
     <div class="iq-sidebar">
@@ -24,7 +24,7 @@
                             <i class="ri-arrow-right-s-line iq-arrow-right"></i>
                         </a>
                         <ul id="pembayaran" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                            <li ><a href="{{ route('daftar_ulang') }}">Daftar Ulang</a></li>
+                            <li><a href="{{ route('daftar_ulang') }}">Daftar Ulang</a></li>
                             <li class="active"><a href="{{ route('iuran_bulanan') }}">Iuran Bulanan</a></li>
                             <li><a href="{{ route('tamrin') }}">Tamrin</a></li>
                         </ul>
@@ -50,11 +50,13 @@
                         <i class="ri-separator"></i><span>Master</span>
                     </li>
                     <li>
-                        <a href="{{ route('master_admin') }}" class="iq-waves-effect"><i class="ri-profile-line"></i><span>Master Admin</span>
+                        <a href="{{ route('master_admin') }}" class="iq-waves-effect"><i
+                                class="ri-profile-line"></i><span>Master Admin</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('master_guest') }}" class="iq-waves-effect"><i class="ri-pencil-ruler-line"></i><span>Master Guest</span>
+                        <a href="{{ route('master_guest') }}" class="iq-waves-effect"><i
+                                class="ri-pencil-ruler-line"></i><span>Master Guest</span>
                         </a>
                     </li>
                 </ul>
@@ -126,8 +128,8 @@
                                         <a href="#" class="iq-sub-card">
                                             <div class="media align-items-center">
                                                 <div class="">
-                                                    <img class="avatar-40 rounded" src="{{ asset('images/user/01.jpg') }}"
-                                                        alt="">
+                                                    <img class="avatar-40 rounded"
+                                                        src="{{ asset('images/user/01.jpg') }}" alt="">
                                                 </div>
                                                 <div class="media-body ml-3">
                                                     <h6 class="mb-0 ">Emma Watson Nik</h6>
@@ -139,8 +141,8 @@
                                         <a href="#" class="iq-sub-card">
                                             <div class="media align-items-center">
                                                 <div class="">
-                                                    <img class="avatar-40 rounded" src="{{ asset('images/user/02.jpg') }}"
-                                                        alt="">
+                                                    <img class="avatar-40 rounded"
+                                                        src="{{ asset('images/user/02.jpg') }}" alt="">
                                                 </div>
                                                 <div class="media-body ml-3">
                                                     <h6 class="mb-0 ">New customer is join</h6>
@@ -295,10 +297,11 @@
                             </select>
                         </div>
                         <hr>
-                            <div class="mt-2">
-                                <button type="submit" class="btn btn-primary">Simpan</button>
-                                <a type="button" href="{{ route('iuran_bulanan') }}" class="btn iq-bg-secondary">Kembali</a>
-                            </div>
+                        <div class="mt-2">
+                            <button type="submit" class="btn btn-primary">Simpan</button>
+                            <a type="button" href="{{ route('iuran_bulanan') }}"
+                                class="btn iq-bg-secondary">Kembali</a>
+                        </div>
                     </form>
                 </div>
             </div>

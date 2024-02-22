@@ -24,8 +24,7 @@ use App\Http\Controllers\LaporanKeuanganController;
 |
 */
 Route::middleware(['guest'])->group(function () {
-    Route::get('/beranda/guest', [GuestController::class,'index']);
-    Route::get('/', [AuthController::class,'index'])->name('login');
+    Route::get('/', [GuestController::class,'index'])->name('login');
     Route::post('/login', [AuthController::class,'login_action']);
 
 });

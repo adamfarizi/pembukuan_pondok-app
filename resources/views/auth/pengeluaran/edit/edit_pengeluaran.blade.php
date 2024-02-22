@@ -1,4 +1,4 @@
-@extends('app')
+@extends('auth/app_auth')
 @section('sidebar')
     <!-- Sidebar  -->
     <div class="iq-sidebar">
@@ -18,7 +18,7 @@
                             <i class="ri-home-4-line"></i><span>Beranda</span>
                         </a>
                     </li>
-                    <li >
+                    <li>
                         <a href="#pembayaran" class="iq-waves-effect collapsed" data-toggle="collapse"
                             aria-expanded="false"><i class="ri-chat-check-line"></i><span>Pembayaran</span>
                             <i class="ri-arrow-right-s-line iq-arrow-right"></i>
@@ -45,16 +45,18 @@
                                 class="ri-user-line"></i><span>Santri</span>
                         </a>
                     </li>
-                     {{-- Tambahan Menu --}}
-                     <li class="iq-menu-title">
+                    {{-- Tambahan Menu --}}
+                    <li class="iq-menu-title">
                         <i class="ri-separator"></i><span>Master</span>
                     </li>
                     <li>
-                        <a href="{{ route('master_admin') }}" class="iq-waves-effect"><i class="ri-profile-line"></i><span>Master Admin</span>
+                        <a href="{{ route('master_admin') }}" class="iq-waves-effect"><i
+                                class="ri-profile-line"></i><span>Master Admin</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('master_guest') }}" class="iq-waves-effect"><i class="ri-pencil-ruler-line"></i><span>Master Guest</span>
+                        <a href="{{ route('master_guest') }}" class="iq-waves-effect"><i
+                                class="ri-pencil-ruler-line"></i><span>Master Guest</span>
                         </a>
                     </li>
                 </ul>
@@ -138,8 +140,8 @@
                                         <a href="#" class="iq-sub-card">
                                             <div class="media align-items-center">
                                                 <div class="">
-                                                    <img class="avatar-40 rounded" src="{{ asset('images/user/02.jpg') }}"
-                                                        alt="">
+                                                    <img class="avatar-40 rounded"
+                                                        src="{{ asset('images/user/02.jpg') }}" alt="">
                                                 </div>
                                                 <div class="media-body ml-3">
                                                     <h6 class="mb-0 ">New customer is join</h6>
@@ -257,8 +259,7 @@
                 </div>
                 <div class="iq-card-body">
                     <p>Lengkapi dan ubah form dibawah untuk mengubah data.</p>
-                    <form action="{{ url('/pengeluaran/edit/'. $pengeluaran->id_pengeluaran) }}"
-                        method="post">
+                    <form action="{{ url('/pengeluaran/edit/' . $pengeluaran->id_pengeluaran) }}" method="post">
                         @csrf
                         @method('PUT')
                         <div class="form-group">

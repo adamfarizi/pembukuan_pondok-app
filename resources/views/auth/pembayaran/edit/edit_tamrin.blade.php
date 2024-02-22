@@ -1,4 +1,4 @@
-@extends('app')
+@extends('auth/app_auth')
 @section('sidebar')
     <!-- Sidebar  -->
     <div class="iq-sidebar">
@@ -45,18 +45,20 @@
                                 class="ri-user-line"></i><span>Santri</span>
                         </a>
                     </li>
-                   {{-- Tambahan Menu --}}
-                   <li class="iq-menu-title">
-                    <i class="ri-separator"></i><span>Master</span>
-                </li>
-                <li>
-                    <a href="{{ route('master_admin') }}" class="iq-waves-effect"><i class="ri-profile-line"></i><span>Master Admin</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ route('master_guest') }}" class="iq-waves-effect"><i class="ri-pencil-ruler-line"></i><span>Master Guest</span>
-                    </a>
-                </li>
+                    {{-- Tambahan Menu --}}
+                    <li class="iq-menu-title">
+                        <i class="ri-separator"></i><span>Master</span>
+                    </li>
+                    <li>
+                        <a href="{{ route('master_admin') }}" class="iq-waves-effect"><i
+                                class="ri-profile-line"></i><span>Master Admin</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('master_guest') }}" class="iq-waves-effect"><i
+                                class="ri-pencil-ruler-line"></i><span>Master Guest</span>
+                        </a>
+                    </li>
                 </ul>
             </nav>
             <div class="p-3"></div>
@@ -126,8 +128,8 @@
                                         <a href="#" class="iq-sub-card">
                                             <div class="media align-items-center">
                                                 <div class="">
-                                                    <img class="avatar-40 rounded" src="{{ asset('images/user/01.jpg') }}"
-                                                        alt="">
+                                                    <img class="avatar-40 rounded"
+                                                        src="{{ asset('images/user/01.jpg') }}" alt="">
                                                 </div>
                                                 <div class="media-body ml-3">
                                                     <h6 class="mb-0 ">Emma Watson Nik</h6>
@@ -139,8 +141,8 @@
                                         <a href="#" class="iq-sub-card">
                                             <div class="media align-items-center">
                                                 <div class="">
-                                                    <img class="avatar-40 rounded" src="{{ asset('images/user/02.jpg') }}"
-                                                        alt="">
+                                                    <img class="avatar-40 rounded"
+                                                        src="{{ asset('images/user/02.jpg') }}" alt="">
                                                 </div>
                                                 <div class="media-body ml-3">
                                                     <h6 class="mb-0 ">New customer is join</h6>

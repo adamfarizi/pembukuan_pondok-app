@@ -15,7 +15,10 @@ class DaftarUlangController extends Controller
         $data['title'] = 'Daftar Ulang';
 
         if ($request->ajax()) {
+            $filterBulan = $request->filterBulan;
+
             $data = Pembayaran::where('jenis_pembayaran','daftar_ulang')
+            ->whereDate('tanggal_pembayaran', 'like', $filterBulan . '%')
             ->orderBy('tanggal_pembayaran', 'desc')
             ->with(['santri', 'admin'])            
             ->get();
@@ -71,7 +74,7 @@ class DaftarUlangController extends Controller
         } catch (\Exception $e) {
             return redirect()->back()->withErrors(['error' => 'Error: ' . $e->getMessage()]);
         }
-             
+            
     }
 
     public function get_edit_data($id_pembayaran)

@@ -385,13 +385,19 @@
     </div>
 @endsection
 @section('js')
+    {{-- Data Tabel --}}
     <script>
         $(document).ready(function() {
-            $('#tablePemasukan').DataTable({
+            var tablePemasukan = $('#tablePemasukan').DataTable({
                 processing: true,
                 serverSide: true,
                 ajax: {
                     url: "{{ route('get_pemasukan') }}",
+                    data: function(d) {
+                        // Mengambil nilai bulan dari input tanggal
+                        var filterBulan = $('#filterBulanPemasukan').val();
+                        d.filterBulan = filterBulan;
+                    }
                 },
                 columns: [
                     // Kolom nomor urut
@@ -454,16 +460,34 @@
                             }
                         }
                     },
+                ],
+                lengthMenu: [
+                    [10, 25, 50, 100, -1], // Jumlah entries per halaman, -1 untuk Tampilkan Semua Data
+                    ['10', '25', '50', '100', 'Semua']
                 ]
+            });
+
+            // Membuat input bulan di samping kotak pencarian
+            $('<span class="ml-4"><label>Filter: <input type="month" id="filterBulanPemasukan" class="form-control"></label></span>')
+            .appendTo('#tablePemasukan_filter');
+    
+            // Menambahkan event listener untuk filter per bulan
+            $('#filterBulanPemasukan').on('change', function() {
+                tablePemasukan.ajax.reload();
             });
         });
 
         $(document).ready(function() {
-            $('#tablePengeluaran').DataTable({
+            var tablePengeluaran = $('#tablePengeluaran').DataTable({
                 processing: true,
                 serverSide: true,
                 ajax: {
                     url: "{{ route('get_pengeluaran') }}",
+                    data: function(d) {
+                        // Mengambil nilai bulan dari input tanggal
+                        var filterBulan = $('#filterBulanPengeluaran').val();
+                        d.filterBulan = filterBulan;
+                    }
                 },
                 columns: [
                     // Kolom nomor urut
@@ -512,7 +536,20 @@
                         data: 'nama_pengeluar',
                         name: 'nama_pengeluar'
                     },
+                ],
+                lengthMenu: [
+                    [10, 25, 50, 100, -1], // Jumlah entries per halaman, -1 untuk Tampilkan Semua Data
+                    ['10', '25', '50', '100', 'Semua']
                 ]
+            });
+
+            // Membuat input bulan di samping kotak pencarian
+            $('<span class="ml-4"><label>Filter: <input type="month" id="filterBulanPengeluaran" class="form-control"></label></span>')
+            .appendTo('#tablePengeluaran_filter');
+    
+            // Menambahkan event listener untuk filter per bulan
+            $('#filterBulanPengeluaran').on('change', function() {
+                tablePengeluaran.ajax.reload();
             });
         });
     </script>
@@ -567,12 +604,12 @@
                             });
                         return `${namaBulan} ${item.tahun}`;
                     });
-    
+
                     // Memutar array bulanTahun agar data terbaru berada di awal
                     bulanTahun.reverse();
                     pemasukan.reverse();
                     pengeluaran.reverse();
-    
+
                     // Konfigurasi chart
                     const chartKeuangan = {
                         chart: {
@@ -640,7 +677,7 @@
                             borderColor: '#f1f1f1',
                         }
                     };
-    
+
                     // Render chart
                     const chartKeuanganInstance = new ApexCharts(document.querySelector("#chart_keuangan"),
                         chartKeuangan);
@@ -648,7 +685,6 @@
                 });
         });
     </script>
-        
 
     <script>
         // Autoclose success alert after 3000 milliseconds (3 seconds)

@@ -18,7 +18,11 @@ class PengeluaranController extends Controller
         $admins = User::all();
 
         if ($request->ajax()) {
-            $data = Pengeluaran::orderBy('tanggal_pengeluaran', 'desc')->get();
+            $filterBulan = $request->filterBulan;
+
+            $data = Pengeluaran::whereDate('tanggal_pengeluaran', 'like', $filterBulan . '%')
+            ->orderBy('tanggal_pengeluaran', 'desc')
+            ->get();
             return DataTables::of($data)
                 ->make(true);
         }

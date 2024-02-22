@@ -94,8 +94,12 @@ class LaporanKeuanganController extends Controller
     public function get_pemasukan(Request $request)
     {
         if ($request->ajax()) {
-            $pemasukan = Pembayaran::orderBy('tanggal_pembayaran', 'desc')->with(['santri', 'admin'])
-                ->get();
+            $filterBulan = $request->filterBulan;
+
+            $pemasukan = Pembayaran::whereDate('tanggal_pembayaran', 'like', $filterBulan . '%')
+            ->orderBy('tanggal_pembayaran', 'desc')
+            ->with(['santri', 'admin'])
+            ->get();
             return DataTables::of($pemasukan)->make(true);
         }
     }
@@ -103,7 +107,11 @@ class LaporanKeuanganController extends Controller
     public function get_pengeluaran(Request $request)
     {
         if ($request->ajax()) {
-            $pengeluaran = Pengeluaran::orderBy('tanggal_pengeluaran', 'desc')->get();
+            $filterBulan = $request->filterBulan;
+
+            $pengeluaran = Pengeluaran::whereDate('tanggal_pengeluaran', 'like', $filterBulan . '%')
+            ->orderBy('tanggal_pengeluaran', 'desc')
+            ->get();
             return DataTables::of($pengeluaran)->make(true);
         }
     }

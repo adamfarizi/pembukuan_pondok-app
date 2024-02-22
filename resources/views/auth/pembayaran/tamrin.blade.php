@@ -50,11 +50,13 @@
                         <i class="ri-separator"></i><span>Master</span>
                     </li>
                     <li>
-                        <a href="{{ route('master_admin') }}" class="iq-waves-effect"><i class="ri-profile-line"></i><span>Master Admin</span>
+                        <a href="{{ route('master_admin') }}" class="iq-waves-effect"><i
+                                class="ri-profile-line"></i><span>Master Admin</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('master_guest') }}" class="iq-waves-effect"><i class="ri-pencil-ruler-line"></i><span>Master Guest</span>
+                        <a href="{{ route('master_guest') }}" class="iq-waves-effect"><i
+                                class="ri-pencil-ruler-line"></i><span>Master Guest</span>
                         </a>
                     </li>
                 </ul>
@@ -138,8 +140,8 @@
                                         <a href="#" class="iq-sub-card">
                                             <div class="media align-items-center">
                                                 <div class="">
-                                                    <img class="avatar-40 rounded" src="{{ asset('images/user/02.jpg') }}"
-                                                        alt="">
+                                                    <img class="avatar-40 rounded"
+                                                        src="{{ asset('images/user/02.jpg') }}" alt="">
                                                 </div>
                                                 <div class="media-body ml-3">
                                                     <h6 class="mb-0 ">New customer is join</h6>
@@ -251,6 +253,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-12">
+                    {{-- Tabel Belum Lunas --}}
                     <div class="iq-card">
                         <div class="iq-card-header d-flex justify-content-between">
                             <div class="iq-header-title">
@@ -268,7 +271,7 @@
                             <div class="table-responsive mb-3">
                                 <table id="tableTamrin_belum_lunas" class="table" role="grid"
                                     aria-describedby="user-list-page-info" style="width: 100%; min-height: 100px;">
-                                    <thead class="sticky-top bg-white z-index-1">
+                                    <thead>
                                         <tr>
                                             <th>#</th>
                                             <th>Tanggal Pembayaran</th>
@@ -280,12 +283,13 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
+
+                    {{-- Tabel Lunas --}}
                     <div class="iq-card">
                         <div class="iq-card-header d-flex justify-content-between">
                             <div class="iq-header-title">
@@ -297,7 +301,7 @@
                             <div class="table-responsive mb-3">
                                 <table id="tableTamrin" class="table" role="grid"
                                     aria-describedby="user-list-page-info" style="width: 100%; min-height: 500px;">
-                                    <thead class="sticky-top bg-white z-index-1">
+                                    <thead>
                                         <tr>
                                             <th>#</th>
                                             <th>Tanggal Pembayaran</th>
@@ -309,7 +313,6 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-
                                     </tbody>
                                 </table>
                             </div>
@@ -385,8 +388,10 @@
     @endforeach
 @endsection
 @section('js')
+    {{-- Data Tabel --}}
     <script>
         $(document).ready(function() {
+            // Inisialisasi DataTable untuk tabel #tableTamrin_belum_lunas
             $('#tableTamrin_belum_lunas').DataTable({
                 processing: true,
                 serverSide: true,
@@ -410,7 +415,7 @@
                             var tanggal_pembayaran = full.tanggal_pembayaran.split(' ');
                             var tanggal = tanggal_pembayaran[0];
                             var jam = tanggal_pembayaran[1];
-
+    
                             return '<p class="mb-0">' +
                                 tanggal +
                                 '</p>' +
@@ -431,7 +436,6 @@
                             return 'Rp. ' + data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                         }
                     },
-
                     // Kolom nama penerima
                     {
                         data: 'admin.nama',
@@ -469,13 +473,24 @@
                                 '</div>';
                         }
                     }
+                ],
+                lengthMenu: [
+                    [10, 25, 50, 100, -1], // Jumlah entries per halaman, -1 untuk Tampilkan Semua Data
+                    ['10', '25', '50', '100', 'Semua']
                 ]
             });
-            $('#tableTamrin').DataTable({
+    
+            // Inisialisasi DataTable untuk tabel #tableTamrin
+            var table = $('#tableTamrin').DataTable({
                 processing: true,
                 serverSide: true,
                 ajax: {
                     url: "{{ route('tamrin') }}",
+                    data: function(d) {
+                        // Mengambil nilai bulan dari input tanggal
+                        var filterBulan = $('#filterBulan').val();
+                        d.filterBulan = filterBulan;
+                    }
                 },
                 columns: [
                     // Kolom nomor urut
@@ -494,7 +509,7 @@
                             var tanggal_pembayaran = full.tanggal_pembayaran.split(' ');
                             var tanggal = tanggal_pembayaran[0];
                             var jam = tanggal_pembayaran[1];
-
+    
                             return '<p class="mb-0">' +
                                 tanggal +
                                 '</p>' +
@@ -515,7 +530,6 @@
                             return 'Rp. ' + data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                         }
                     },
-
                     // Kolom nama penerima
                     {
                         data: 'admin.nama',
@@ -553,10 +567,24 @@
                                 '</div>';
                         }
                     }
+                ],
+                lengthMenu: [
+                    [10, 25, 50, 100, -1], // Jumlah entries per halaman, -1 untuk Tampilkan Semua Data
+                    ['10', '25', '50', '100', 'Semua']
                 ]
+            });
+    
+            // Membuat input bulan di samping kotak pencarian pada tabel #tableTamrin
+            $('<span class="ml-4"><label>Filter: <input type="month" id="filterBulan" class="form-control"></label></span>')
+            .appendTo('#tableTamrin_filter');
+    
+            // Menambahkan event listener untuk filter per bulan pada tabel #tableTamrin
+            $('#filterBulan').on('change', function() {
+                table.ajax.reload();
             });
         });
     </script>
+    
 
     <script>
         // Autoclose success alert after 3000 milliseconds (3 seconds)

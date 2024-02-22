@@ -50,11 +50,13 @@
                         <i class="ri-separator"></i><span>Master</span>
                     </li>
                     <li>
-                        <a href="{{ route('master_admin') }}" class="iq-waves-effect"><i class="ri-profile-line"></i><span>Master Admin</span>
+                        <a href="{{ route('master_admin') }}" class="iq-waves-effect"><i
+                                class="ri-profile-line"></i><span>Master Admin</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('master_guest') }}" class="iq-waves-effect"><i class="ri-pencil-ruler-line"></i><span>Master Guest</span>
+                        <a href="{{ route('master_guest') }}" class="iq-waves-effect"><i
+                                class="ri-pencil-ruler-line"></i><span>Master Guest</span>
                         </a>
                     </li>
                 </ul>
@@ -137,8 +139,8 @@
                                         <a href="#" class="iq-sub-card">
                                             <div class="media align-items-center">
                                                 <div class="">
-                                                    <img class="avatar-40 rounded" src="{{ asset('images/user/02.jpg') }}"
-                                                        alt="">
+                                                    <img class="avatar-40 rounded"
+                                                        src="{{ asset('images/user/02.jpg') }}" alt="">
                                                 </div>
                                                 <div class="media-body ml-3">
                                                     <h6 class="mb-0 ">New customer is join</h6>
@@ -352,12 +354,16 @@
                                 <h6 class="mb-2">KTP Santri:</h6>
                                 @if ($santri->ktp_santri === null)
                                     <div class="bg-light" style="width: 440px; border-radius:20px;">
-                                        <p class="text-center text-secondary" style="padding-top: 100px; padding-bottom:100px;">Gambar tidak ada.</p>
+                                        <p class="text-center text-secondary"
+                                            style="padding-top: 100px; padding-bottom:100px;">Gambar tidak ada.</p>
                                     </div>
                                 @else
                                     <div class="text-center">
-                                        <img src="{{ asset('berkas_santri/ktp_santri/' . $santri->ktp_santri) }}" alt="" style="max-width: 440px; border-radius: 20px;">
-                                        <p class="mt-2"><a href="{{ asset('berkas_santri/ktp_santri/' . $santri->ktp_santri) }}" download>Download KTP</a></p>
+                                        <img src="{{ asset('berkas_santri/ktp_santri/' . $santri->ktp_santri) }}"
+                                            alt="" style="max-width: 440px; border-radius: 20px;">
+                                        <p class="mt-2"><a
+                                                href="{{ asset('berkas_santri/ktp_santri/' . $santri->ktp_santri) }}"
+                                                download>Download KTP</a></p>
                                     </div>
                                 @endif
                             </div>
@@ -365,16 +371,20 @@
                                 <h6 class="mb-2">KK Santri:</h6>
                                 @if ($santri->kk_santri === null)
                                     <div class="bg-light" style="width: 440px; border-radius:20px;">
-                                        <p class="text-center text-secondary" style="padding-top: 100px; padding-bottom:100px;">Gambar tidak ada.</p>
+                                        <p class="text-center text-secondary"
+                                            style="padding-top: 100px; padding-bottom:100px;">Gambar tidak ada.</p>
                                     </div>
                                 @else
                                     <div class="text-center">
-                                        <img src="{{ asset('berkas_santri/kk_santri/' . $santri->kk_santri) }}" alt="" style="max-width: 440px; border-radius: 20px;">
-                                        <p class="mt-2"><a href="{{ asset('berkas_santri/kk_santri/' . $santri->kk_santri) }}" download>Download KK</a></p>
+                                        <img src="{{ asset('berkas_santri/kk_santri/' . $santri->kk_santri) }}"
+                                            alt="" style="max-width: 440px; border-radius: 20px;">
+                                        <p class="mt-2"><a
+                                                href="{{ asset('berkas_santri/kk_santri/' . $santri->kk_santri) }}"
+                                                download>Download KK</a></p>
                                     </div>
                                 @endif
-                            </div> 
-                        </div>                                           
+                            </div>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
@@ -386,8 +396,8 @@
 
     <!-- Modal Delete -->
     @foreach ($santris as $santri)
-        <div class="modal fade" id="deleteModal{{ $santri->id_santri }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle{{ $santri->id_santri }}"
-            aria-hidden="true">
+        <div class="modal fade" id="deleteModal{{ $santri->id_santri }}" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenterTitle{{ $santri->id_santri }}" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -471,17 +481,23 @@
                                 .id_santri + '">' +
                                 '<i class="ri-information-line"></i>' +
                                 '</a>' +
-                                '<a data-placement="top" title="Edit" href="/santri/' + full.id_santri + '">' +
+                                '<a data-placement="top" title="Edit" href="/santri/' + full
+                                .id_santri + '">' +
                                 '<i class="ri-pencil-line"></i>' +
                                 '</a>' +
-                                '<a data-placement="top" title="Delete" href="#" data-target="#deleteModal' + 
-                                full.id_santri + '" data-toggle="modal" data-id="' + full.id_santri + '">' +
+                                '<a data-placement="top" title="Delete" href="#" data-target="#deleteModal' +
+                                full.id_santri + '" data-toggle="modal" data-id="' + full
+                                .id_santri + '">' +
                                 '<i class="ri-delete-bin-line"></i>' +
                                 '</a>' +
                                 '</div>' +
                                 '</td>';
                         }
                     }
+                ],
+                lengthMenu: [
+                    [10, 25, 50, 100, -1], // Jumlah entries per halaman, -1 untuk Tampilkan Semua Data
+                    ['10', '25', '50', '100', 'Semua']
                 ]
             });
 

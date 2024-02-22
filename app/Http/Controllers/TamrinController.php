@@ -17,7 +17,10 @@ class TamrinController extends Controller
 
         
         if ($request->ajax()) {
+            $filterBulan = $request->filterBulan;
+            
             $lunas = Pembayaran::where('jenis_pembayaran','tamrin')
+            ->whereDate('tanggal_pembayaran', 'like', $filterBulan . '%')
             ->where('status_pembayaran', 'lunas')
             ->orderBy('tanggal_pembayaran', 'desc')
             ->with(['santri', 'admin'])           

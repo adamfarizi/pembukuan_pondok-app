@@ -270,7 +270,7 @@
                             </div>
                             <span class="float-right line-height-6">Total Santri</span>
                             <div class="text-center mt-3">
-                                <h2 class="mb-5"><span class="me-2">{{ $totalsantri }}</span><span>santri</span>
+                                <h2 class="mb-5"><span class="me-2">{{ $totalsantri }}</span><span> santri</span>
                                 </h2>
                             </div>
                         </div>

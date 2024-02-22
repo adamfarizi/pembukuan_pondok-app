@@ -50,11 +50,13 @@
                         <i class="ri-separator"></i><span>Master</span>
                     </li>
                     <li>
-                        <a href="{{ route('master_admin') }}" class="iq-waves-effect"><i class="ri-profile-line"></i><span>Master Admin</span>
+                        <a href="{{ route('master_admin') }}" class="iq-waves-effect"><i
+                                class="ri-profile-line"></i><span>Master Admin</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('master_guest') }}" class="iq-waves-effect"><i class="ri-pencil-ruler-line"></i><span>Master Guest</span>
+                        <a href="{{ route('master_guest') }}" class="iq-waves-effect"><i
+                                class="ri-pencil-ruler-line"></i><span>Master Guest</span>
                         </a>
                     </li>
                 </ul>
@@ -138,8 +140,8 @@
                                         <a href="#" class="iq-sub-card">
                                             <div class="media align-items-center">
                                                 <div class="">
-                                                    <img class="avatar-40 rounded" src="{{ asset('images/user/02.jpg') }}"
-                                                        alt="">
+                                                    <img class="avatar-40 rounded"
+                                                        src="{{ asset('images/user/02.jpg') }}" alt="">
                                                 </div>
                                                 <div class="media-body ml-3">
                                                     <h6 class="mb-0 ">New customer is join</h6>
@@ -265,9 +267,9 @@
                         </div>
                         <div class="iq-card-body">
                             <div class="table-responsive mb-3">
-                                <table id="tableDaftarUlang" class="table" role="grid"
-                                    aria-describedby="user-list-page-info" style="width: 100%; min-height: 500px;">
-                                    <thead class="sticky-top bg-white z-index-1">
+                                <table id="tableDaftarUlang" class="table" role="grid" aria-describedby="user-list-page-info"
+                                    style="width: 100%; min-height: 500px;">
+                                    <thead>
                                         <tr>
                                             <th>#</th>
                                             <th>Tanggal Pembayaran</th>
@@ -279,9 +281,9 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                       
                                     </tbody>
                                 </table>
+                                
                             </div>
                         </div>
                     </div>
@@ -324,18 +326,19 @@
     </div>
 
     <!-- Modal Delete -->
-    @foreach ($daftar_ulangs as $daftar_ulang)        
-        <div class="modal fade" id="deleteModal{{$daftar_ulang->id_pembayaran}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle{{$daftar_ulang->id_pembayaran}}"
-            aria-hidden="true">
+    @foreach ($daftar_ulangs as $daftar_ulang)
+        <div class="modal fade" id="deleteModal{{ $daftar_ulang->id_pembayaran }}" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenterTitle{{ $daftar_ulang->id_pembayaran }}" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                     </div>
-                    <form action="{{url('/pembayaran/daftar_ulang/delete/' . $daftar_ulang->id_pembayaran)}}" id="deleteForm" method="post">
+                    <form action="{{ url('/pembayaran/daftar_ulang/delete/' . $daftar_ulang->id_pembayaran) }}"
+                        id="deleteForm" method="post">
                         @csrf
                         @method('DELETE')
                         <div class="modal-body text-center">
-                            <img src="{{ asset('images/local/danger.png') }}" width="80px" alt="">                        
+                            <img src="{{ asset('images/local/danger.png') }}" width="80px" alt="">
                             <h3 class="mt-4">Anda yakin ingin hapus data ini?</h3>
                         </div>
                         <div class="modal-footer">
@@ -349,94 +352,113 @@
     @endforeach
 @endsection
 @section('js')
-<script>
-    $(document).ready(function() {
-        $('#tableDaftarUlang').DataTable({
-            processing: true,
-            serverSide: true,
-            ajax: {
-                url: "{{ route('daftar_ulang') }}",
-            },
-            columns: [
-                // Kolom nomor urut
-                {
-                    data: null,
-                    searchable: false,
-                    orderable: false,
-                    render: function(data, type, row, meta) {
-                        return meta.row + meta.settings._iDisplayStart + 1;
+    {{-- Data Table --}}
+    <script>
+        $(document).ready(function() {
+            var table = $('#tableDaftarUlang').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    url: "{{ route('daftar_ulang') }}",
+                    data: function(d) {
+                        // Mengambil nilai bulan dari input tanggal
+                        var filterBulan = $('#filterBulan').val();
+                        d.filterBulan = filterBulan;
                     }
                 },
-                // Kolom tanggal dan jam pembayaran
-                {
-                    data: 'tanggal_pembayaran',
-                    render: function(data, type, full, meta) {
-                        var tanggal_pembayaran = full.tanggal_pembayaran.split(' ');
-                        var tanggal = tanggal_pembayaran[0];
-                        var jam = tanggal_pembayaran[1];
-
-                        return '<p class="mb-0">' +
-                            tanggal +
-                            '</p>' +
-                            '<p class="mb-0">Jam: ' +
-                            jam +
-                            '</p>';
-                    }
-                },
-                 // Kolom nama santri
-                 {
-                    data: 'santri.nama_santri',
-                    name: 'santri.nama_santri'
-                },
-                // Kolom jumlah pembayaran
-                {
-                    data: 'jumlah_pembayaran',
-                    render: function(data, type, full, meta) {
-                        return 'Rp. ' + data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                    }
-                },
-               
-                // Kolom nama penerima
-                {
-                    data: 'admin.nama',
-                    name: 'admin.nama'
-                },
-                // Kolom Status pembayaran
-                {
+                columns: [
+                    // Kolom nomor urut
+                    {
+                        data: null,
+                        searchable: false,
+                        orderable: false,
+                        render: function(data, type, row, meta) {
+                            return meta.row + meta.settings._iDisplayStart + 1;
+                        }
+                    },
+                    // Kolom tanggal dan jam pembayaran
+                    {
+                        data: 'tanggal_pembayaran',
+                        render: function(data, type, full, meta) {
+                            var tanggal_pembayaran = full.tanggal_pembayaran.split(' ');
+                            var tanggal = tanggal_pembayaran[0];
+                            var jam = tanggal_pembayaran[1];
+    
+                            return '<p class="mb-0">' +
+                                tanggal +
+                                '</p>' +
+                                '<p class="mb-0">Jam: ' +
+                                jam +
+                                '</p>';
+                        }
+                    },
+                    // Kolom nama santri
+                    {
+                        data: 'santri.nama_santri',
+                        name: 'santri.nama_santri'
+                    },
+                    // Kolom jumlah pembayaran
+                    {
+                        data: 'jumlah_pembayaran',
+                        render: function(data, type, full, meta) {
+                            return 'Rp. ' + data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                        }
+                    },
+                    // Kolom nama penerima
+                    {
+                        data: 'admin.nama',
+                        name: 'admin.nama'
+                    },
+                    // Kolom Status pembayaran
+                    {
                         data: 'status_pembayaran',
                         name: 'status_pembayaran',
                         render: function(data, type, full, meta) {
                             if (data === 'lunas') {
                                 return '<span class="badge badge-pill badge-success">Lunas</span>';
-                            }  else {
+                            } else {
                                 return '<span class="badge badge-pill badge-warning">Belum Lunas</span>';
                             }
                         }
                     },
-                // Kolom aksi (tombol Edit, Delete)
-                {
-                    data: 'id_pembayaran',
-                    searchable: false,
-                    orderable: false,
-                    render: function(data, type, full, meta) {
-                        return '<div class="d-flex align-items-center list-user-action">' +
-                            '<a data-placement="top" title="Edit" href="' +
-                            '/pembayaran/daftar_ulang/' + full.id_pembayaran + '">' +
-                            '<i class="ri-pencil-line"></i>' +
-                            '</a>' +
-                            '<a data-placement="top" title="Delete" href="#" ' +
-                            'data-target="#deleteModal' + full.id_pembayaran +
-                            '" data-toggle="modal" ' +
-                            'data-id="' + full.id_pembayaran + '">' +
-                            '<i class="ri-delete-bin-line"></i>' +
-                            '</a>' +
-                            '</div>';
+                    // Kolom aksi (tombol Edit, Delete)
+                    {
+                        data: 'id_pembayaran',
+                        searchable: false,
+                        orderable: false,
+                        render: function(data, type, full, meta) {
+                            return '<div class="d-flex align-items-center list-user-action">' +
+                                '<a data-placement="top" title="Edit" href="' +
+                                '/pembayaran/daftar_ulang/' + full.id_pembayaran + '">' +
+                                '<i class="ri-pencil-line"></i>' +
+                                '</a>' +
+                                '<a data-placement="top" title="Delete" href="#" ' +
+                                'data-target="#deleteModal' + full.id_pembayaran +
+                                '" data-toggle="modal" ' +
+                                'data-id="' + full.id_pembayaran + '">' +
+                                '<i class="ri-delete-bin-line"></i>' +
+                                '</a>' +
+                                '</div>';
+                        }
                     }
-                }
-            ]
+                ],
+                lengthMenu: [
+                    [10, 25, 50, 100, -1], // Jumlah entries per halaman, -1 untuk Tampilkan Semua Data
+                    ['10', '25', '50', '100', 'Semua']
+                ]
+            });
+
+            // Membuat input bulan di samping kotak pencarian
+            $('<span class="ml-4"><label>Filter: <input type="month" id="filterBulan" class="form-control"></label></span>')
+            .appendTo('.dataTables_filter');
+    
+            // Menambahkan event listener untuk filter per bulan
+            $('#filterBulan').on('change', function() {
+                table.ajax.reload();
+            });
         });
-    });
-</script>
+    </script>
+    
 
     <script>
         // Autoclose success alert after 3000 milliseconds (3 seconds)

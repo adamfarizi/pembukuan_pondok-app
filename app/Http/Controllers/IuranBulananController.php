@@ -14,16 +14,19 @@ class IuranBulananController extends Controller
     {
         $data['title'] = 'Iuran Bulanan';
 
-       if ($request->ajax()){
-            $data = Pembayaran::where('jenis_pembayaran','iuran_bulanan')
-            ->orderBy('tanggal_pembayaran', 'desc')
-            ->with(['santri', 'admin'])            
-            ->get();
+        if ($request->ajax()) {
+            $filterBulan = $request->filterBulan;
+
+            $data = Pembayaran::where('jenis_pembayaran', 'iuran_bulanan')
+                ->whereDate('tanggal_pembayaran', 'like', $filterBulan . '%')
+                ->orderBy('tanggal_pembayaran', 'desc')
+                ->with(['santri', 'admin'])
+                ->get();
             return DataTables::of($data)
                 ->make(true);
         }
 
-        $iuran_bulanans = Pembayaran::where('jenis_pembayaran','iuran_bulanan')->get();
+        $iuran_bulanans = Pembayaran::where('jenis_pembayaran', 'iuran_bulanan')->get();
         $santris = Santri::all();
         $admins = User::all();
 
@@ -73,9 +76,9 @@ class IuranBulananController extends Controller
         } catch (\Exception $e) {
             return redirect()->back()->withErrors(['error' => 'Error: ' . $e->getMessage()]);
         }
-        
+
     }
-    
+
     public function get_edit_data($id_pembayaran)
     {
         $data['title'] = 'Edit Pembayaran Iuran Bulanan';
@@ -94,7 +97,7 @@ class IuranBulananController extends Controller
             'admins' => $admins,
         ], $data);
     }
-    
+
     public function edit_data(Request $request, $id_pembayaran)
     {
         try {
@@ -106,14 +109,14 @@ class IuranBulananController extends Controller
                 'nama_santri.required' => 'Pilih santri terlebih dahulu!',
                 'nama_admin.required' => 'Pilih admin terlebih dahulu!',
             ]);
-    
+
             $nama_santri = $request->input('nama_santri');
             $nama_admin = $request->input('nama_admin');
-    
+
             // Cari data santri berdasarkan nama
             $santri = Santri::where('nama_santri', $nama_santri)->first();
             $admin = User::where('nama', $nama_admin)->first();
-    
+
             // Pastikan santri dan admin ditemukan
             if (!$santri) {
                 throw new \Exception('Santri tidak ditemukan.');
@@ -121,14 +124,14 @@ class IuranBulananController extends Controller
             if (!$admin) {
                 throw new \Exception('Admin tidak ditemukan.');
             }
-    
+
             // Buat data pembayaran
             Pembayaran::where('id_pembayaran', $id_pembayaran)->update([
                 'id_santri' => $santri->id_santri,
                 'id_admin' => $admin->id_admin,
                 'updated_at' => now(),
             ]);
-    
+
             return redirect()->route('iuran_bulanan')->with('success', 'Pembayaran berhasil diubah.');
         } catch (\Exception $e) {
             return redirect()->back()->withErrors(['error' => 'Error: ' . $e->getMessage()]);
@@ -139,7 +142,7 @@ class IuranBulananController extends Controller
     {
         try {
             // Temukan data pembayaran berdasarkan ID
-            $pembayaran = Pembayaran::where('id_pembayaran',$id_pembayaran);
+            $pembayaran = Pembayaran::where('id_pembayaran', $id_pembayaran);
 
             // Pastikan pembayaran ditemukan
             if (!$pembayaran) {
@@ -153,6 +156,6 @@ class IuranBulananController extends Controller
         } catch (\Exception $e) {
             return redirect()->back()->withErrors(['error' => 'Error: ' . $e->getMessage()]);
         }
-    } 
+    }
 
 }

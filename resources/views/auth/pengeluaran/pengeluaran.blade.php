@@ -50,11 +50,13 @@
                         <i class="ri-separator"></i><span>Master</span>
                     </li>
                     <li>
-                        <a href="{{ route('master_admin') }}" class="iq-waves-effect"><i class="ri-profile-line"></i><span>Master Admin</span>
+                        <a href="{{ route('master_admin') }}" class="iq-waves-effect"><i
+                                class="ri-profile-line"></i><span>Master Admin</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('master_guest') }}" class="iq-waves-effect"><i class="ri-pencil-ruler-line"></i><span>Master Guest</span>
+                        <a href="{{ route('master_guest') }}" class="iq-waves-effect"><i
+                                class="ri-pencil-ruler-line"></i><span>Master Guest</span>
                         </a>
                     </li>
                 </ul>
@@ -137,8 +139,8 @@
                                         <a href="#" class="iq-sub-card">
                                             <div class="media align-items-center">
                                                 <div class="">
-                                                    <img class="avatar-40 rounded" src="{{ asset('images/user/02.jpg') }}"
-                                                        alt="">
+                                                    <img class="avatar-40 rounded"
+                                                        src="{{ asset('images/user/02.jpg') }}" alt="">
                                                 </div>
                                                 <div class="media-body ml-3">
                                                     <h6 class="mb-0 ">New customer is join</h6>
@@ -352,13 +354,19 @@
     @endforeach
 @endsection
 @section('js')
+    {{-- Data Tabel --}}
     <script>
         $(document).ready(function() {
-            $('#tablePengeluaran').DataTable({
+            var table = $('#tablePengeluaran').DataTable({
                 processing: true,
                 serverSide: true,
                 ajax: {
                     url: "{{ route('pengeluaran') }}",
+                    data: function(d) {
+                        // Mengambil nilai bulan dari input tanggal
+                        var filterBulan = $('#filterBulan').val();
+                        d.filterBulan = filterBulan;
+                    }
                 },
                 columns: [
                     // Kolom nomor urut
@@ -423,7 +431,20 @@
                                 '</div>';
                         }
                     }
+                ],
+                lengthMenu: [
+                    [10, 25, 50, 100, -1], // Jumlah entries per halaman, -1 untuk Tampilkan Semua Data
+                    ['10', '25', '50', '100', 'Semua']
                 ]
+            });
+
+            // Membuat input bulan di samping kotak pencarian
+            $('<span class="ml-4"><label>Filter: <input type="month" id="filterBulan" class="form-control"></label></span>')
+                .appendTo('.dataTables_wrapper .dataTables_filter');
+
+            // Menambahkan event listener untuk filter per bulan
+            $('#filterBulan').on('change', function() {
+                table.ajax.reload();
             });
         });
     </script>

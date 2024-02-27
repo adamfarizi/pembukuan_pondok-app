@@ -221,8 +221,8 @@
 @section('content')
     <!-- Page Content  -->
     <div id="content-page" class="content-page">
-        <!-- Card -->
         <div class="container-fluid">
+            <!-- Card -->
             <div class="row">
                 <div class="col-md-6 col-lg-3">
                     <div class="iq-card iq-card-block iq-card-stretch iq-card-height overflow-hidden">

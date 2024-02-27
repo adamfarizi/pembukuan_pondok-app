@@ -32,11 +32,13 @@ class TamrinController extends Controller
         $tamrins = Pembayaran::where('jenis_pembayaran','tamrin')->get();
         $santris = Santri::all();
         $admins = User::all();
+        $nominal_tamrin = MasterAdmin::first()->pluck('pembayaran_tamrin')->first();
 
         return view('auth.pembayaran.tamrin', [
             'tamrins' => $tamrins,
             'santris' => $santris,
             'admins' => $admins,
+            'nominal_tamrin' => $nominal_tamrin,
         ], $data);
     }
 

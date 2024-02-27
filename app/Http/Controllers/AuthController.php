@@ -24,7 +24,9 @@ class AuthController extends Controller
             'password' => $request->password,
         ];
 
-        if (Auth::attempt($infologin)) {
+        $remember = $request->has('remember') ? true : false;
+
+        if (Auth::attempt($infologin, $remember)) {
             $request->session()->regenerate();
             return redirect('beranda');
         } else {

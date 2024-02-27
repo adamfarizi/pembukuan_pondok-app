@@ -11,7 +11,7 @@
             <nav class="iq-sidebar-menu">
                 <ul id="iq-sidebar-toggle" class="iq-menu">
                     <li class="iq-menu-title">
-                        <i class="ri-separator"></i><span>Master</span>
+                        <i class="ri-separator"></i><span>Main</span>
                     </li>
                     <li>
                         <a href="{{ route('beranda') }}" class="iq-waves-effect">

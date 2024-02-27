@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMasterAdminsTable extends Migration
+class CreateMasterAdminTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class CreateMasterAdminsTable extends Migration
      */
     public function up()
     {
-        Schema::create('master_admins', function (Blueprint $table) {
-            $table->id('id_master_admins');
+        Schema::create('master_admin', function (Blueprint $table) {
+            $table->id('id_master_admin');
             $table->decimal('pembayaran_daftar_ulang', 50, 0);
             $table->decimal('pembayaran_tamrin', 50, 0);
             $table->timestamps();

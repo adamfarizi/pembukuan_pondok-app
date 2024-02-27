@@ -15,15 +15,40 @@ class PembayaranFactory extends Factory
     {
         $jenisPembayaran = $this->faker->randomElement(['daftar_ulang', 'iuran_bulanan', 'tamrin']);
 
+        $jumlahPembayaran = 0;
+        $jenisIuran = null; // Inisialisasi variabel jenisIuran di luar blok if
+
+        if ($jenisPembayaran == 'tamrin') {
+            $jumlahPembayaran = 80000;
+        } elseif ($jenisPembayaran == 'daftar_ulang') {
+            $jumlahPembayaran = 50000;
+        } elseif ($jenisPembayaran == 'iuran_bulanan') {
+            $jenisIuran = $this->faker->randomElement([1, 2, 3, 4, 5, 6]);
+            if ($jenisIuran == 1) {
+                $jumlahPembayaran = 50000;
+            } elseif ($jenisIuran == 2 || $jenisIuran == 3) {
+                $jumlahPembayaran = 20000;
+            } elseif ($jenisIuran == 4) {
+                $jumlahPembayaran = 150000;
+            } else {
+                $jumlahPembayaran = 50000;
+            }
+        } else {
+            $jumlahPembayaran = $this->faker->numberBetween(1000, 99999);
+        }
+
         return [
             'tanggal_pembayaran' => $this->faker->dateTimeBetween('-6 months', 'now'),
-            'jumlah_pembayaran' => ($jenisPembayaran == 'tamrin') ? 80000 : ($jenisPembayaran == 'daftar_ulang' ? 50000 : $this->faker->numberBetween(1000, 99999)),
+            'jumlah_pembayaran' => $jumlahPembayaran,
             'jenis_pembayaran' => $jenisPembayaran,
+            'id_jenis_iuran' => ($jenisPembayaran == 'iuran_bulanan') ? $jenisIuran : null,
             'status_pembayaran' => 'lunas',
-            'id_admin' => 1, // Sesuaikan dengan rentang yang diinginkan
-            'id_santri' => $this->faker->numberBetween(1, 60), // Sesuaikan dengan id_santri yang ada di database
+            'id_admin' => 1, 
+            'id_santri' => $this->faker->numberBetween(1, 60),
             'created_at' => $this->faker->dateTimeBetween('-1 year', 'now'),
             'updated_at' => $this->faker->dateTimeBetween('-1 year', 'now'),
         ];
+
+
     }
 }

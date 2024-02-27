@@ -223,7 +223,7 @@
     <div id="content-page" class="content-page">
         <!-- Card -->
         <div class="container-fluid">
-            <div class="d-flex">
+            <div class="row">
                 <div class="col-md-6 col-lg-4">
                     <div class="iq-card iq-card-block iq-card-stretch iq-card-height overflow-hidden">
                         <div class="iq-card-body pb-0">

@@ -270,7 +270,7 @@
                         <div class="iq-card-body">
                             <div class="table-responsive mb-3">
                                 <table id="tableTamrin_belum_lunas" class="table" role="grid"
-                                    aria-describedby="user-list-page-info" style="width: 100%; min-height: 100px;">
+                                    aria-describedby="user-list-page-info" style="width: 100%; min-height: 150px;">
                                     <thead>
                                         <tr>
                                             <th>#</th>
@@ -349,7 +349,7 @@
                         <div class="form-group">
                             <label for="jumlah_pembayaran">Jumlah Pembayaran <span class="text-danger">*</span></label>
                             <input type="number" class="form-control" id="jumlah_pembayaran" name="jumlah_pembayaran"
-                                value="80000">
+                                value="{{ $nominal_tamrin }}">
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -585,7 +585,6 @@
         });
     </script>
     
-
     <script>
         // Autoclose success alert after 3000 milliseconds (3 seconds)
         setTimeout(function() {

@@ -8,8 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class MasterAdmin extends Model
 {
     use HasFactory;
-    protected $table = 'master_admins';
-    protected $primaryKey = 'id_master_admins';
+    protected $table = 'master_admin';
+    protected $primaryKey = 'id_master_admin';
     protected $fillable = [
         'pembayaran_daftar_ulang',
         'pembayaran_tamrin',

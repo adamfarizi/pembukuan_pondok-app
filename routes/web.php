@@ -42,6 +42,7 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/pembayaran/daftar_ulang/delete/{id}', [DaftarUlangController::class, 'delete_data']);
     
     Route::get('/pembayaran/iuran_bulanan', [IuranBulananController::class, 'index'])->name('iuran_bulanan');
+    Route::get('/pembayaran/iuran_bulanan/belum_lunas', [IuranBulananController::class, 'index_belum_lunas'])->name('iuran_bulanan_belum_lunas');
     Route::post('/pembayaran/iuran_bulanan/create', [IuranBulananController::class, 'create_data']);
     Route::get('/pembayaran/iuran_bulanan/{id}', [IuranBulananController::class, 'get_edit_data']);
     Route::put('/pembayaran/iuran_bulanan/edit/{id}', [IuranBulananController::class, 'edit_data']);
@@ -74,6 +75,8 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/santri/delete/{id}', [SantriController::class, 'delete_data']);
 
     Route::get('/master/master_admin', [MasterAdminController::class, 'index'])->name('master_admin');
+    Route::put('/master/master_admin', [MasterAdminController::class, 'edit_data']);
+    Route::post('/master/master_admin', [MasterAdminController::class, 'create_data']);
 
     Route::get('/master/master_guest', [MasterGuestController::class, 'index'])->name('master_guest');
 

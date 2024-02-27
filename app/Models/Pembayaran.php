@@ -13,11 +13,17 @@ class Pembayaran extends Model
     protected $fillable = [
         'tanggal_pembayaran', 
         'jumlah_pembayaran', 
-        'jenis_pembayaran', 
+        'jenis_pembayaran',
+        'id_jenis_iuran',
         'status_pembayaran',
         'id_admin',
         'id_santri',
     ];
+
+    public function jenis_iuran()
+    {
+        return $this->belongsTo(JenisIuran::class, 'id_jenis_iuran');
+    }
 
     public function admin()
     {

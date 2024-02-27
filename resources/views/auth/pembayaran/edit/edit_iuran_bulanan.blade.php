@@ -275,7 +275,7 @@
                                 value="{{ date('H:i:s', strtotime($iuran_bulanan->tanggal_pembayaran)) }}">
                         </div>
                         <div class="form-group">
-                            <label for="exampleFormControlSelect1">Nama Santri</label>
+                            <label for="exampleFormControlSelect1">Nama Santri <span class="text-danger">*</span></label>
                             <select class="form-control" name="nama_santri" id="nama_santri">
                                 <option selected="" value="{{ $santri->nama_santri }}">{{ $santri->nama_santri }}
                                 </option>
@@ -288,7 +288,16 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="exampleFormControlSelect1">Diterima Oleh</label>
+                            <label for="exampleInputDisabled1">Jenis Iuran</label>
+                            <input type="text" class="form-control" id="jenis_iuran" name="jenis_iuran" readonly=""
+                                value="{{ $iuran_bulanan->jenis_iuran->jenis_iuran }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="daftar_ulang">Jumlah Pembayaran <span class="text-danger">*</span></label>
+                            <input type="number" class="form-control" id="jumlah_pembayaran" name="jumlah_pembayaran" value="{{ $iuran_bulanan->jumlah_pembayaran }}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlSelect1">Diterima Oleh <span class="text-danger">*</span></label>
                             <select class="form-control" name="nama_admin" id="nama_admin">
                                 <option selected="" value="{{ $admin->nama }}">{{ $admin->nama }}</option>
                                 @foreach ($admins as $a)

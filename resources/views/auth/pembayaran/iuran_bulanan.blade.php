@@ -253,16 +253,49 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-12">
+                    {{-- Tabel Belum Lunas --}}
                     <div class="iq-card">
                         <div class="iq-card-header d-flex justify-content-between">
                             <div class="iq-header-title">
                                 <h4 class="card-title">Pembayaran Iuran Bulanan</h4>
+                                <h6 class="card-title">Belum Lunas</h6>
                             </div>
                             <div class="text-right">
                                 <button type="button" class="btn btn-primary mt-1" data-toggle="modal"
                                     data-target="#exampleModalCenter">
                                     Tambah Pembayaran
                                 </button>
+                            </div>
+                        </div>
+                        <div class="iq-card-body">
+                            <div class="table-responsive mb-3">
+                                <table id="tableiuran_belum_lunas" class="table" role="grid"
+                                    aria-describedby="user-list-page-info" style="width: 100%; min-height: 150px;">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Tanggal Pembayaran</th>
+                                            <th>Nama Santri</th>
+                                            <th>Jenis Iuran</th>
+                                            <th>Jumlah Pembayaran</th>
+                                            <th>Diterima Oleh</th>
+                                            <th>Status</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- Tabel Lunas --}}
+                    <div class="iq-card">
+                        <div class="iq-card-header d-flex justify-content-between">
+                            <div class="iq-header-title">
+                                <h4 class="card-title">Pembayaran Iuran Bulanan</h4>
+                                <h6 class="card-title">Lunas</h6>
                             </div>
                         </div>
                         <div class="iq-card-body">
@@ -274,6 +307,7 @@
                                             <th>#</th>
                                             <th>Tanggal Pembayaran</th>
                                             <th>Nama Santri</th>
+                                            <th>Jenis Iuran</th>
                                             <th>Jumlah Pembayaran</th>
                                             <th>Diterima Oleh</th>
                                             <th>Status</th>
@@ -315,9 +349,20 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="jumlah_pembayaran">Jumlah Pembayaran <span class="text-danger">*</span></label>
+                            <label for="jenis_iuran">Jenis Iuran <span class="text-danger">*</span></label>
+                            <select class="form-control" name="jenis_iuran" id="jenis_iuran">
+                                <option value="Jenis Iuran">Jenis Iuran</option>
+                                @foreach ($jenis_iurans as $jenis_iuran)
+                                    <option value="{{ $jenis_iuran->id_jenis_iuran }}"
+                                        data-nominal="{{ $jenis_iuran->pembayaran_jenis_iuran }}">
+                                        {{ $jenis_iuran->jenis_iuran }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="daftar_ulang">Jumlah Pembayaran <span class="text-danger">*</span></label>
                             <input type="number" class="form-control" id="jumlah_pembayaran" name="jumlah_pembayaran"
-                                value="" required>
+                                value="{{ $jenis_iurans[0]->pembayaran_jenis_iuran }}" required>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -359,16 +404,12 @@
     {{-- Data Tables --}}
     <script>
         $(document).ready(function() {
-            var table = $('#tableIuranBulanan').DataTable({
+            // Inisialisasi DataTable untuk tabel #tableTamrin_belum_lunas
+            $('#tableiuran_belum_lunas').DataTable({
                 processing: true,
                 serverSide: true,
                 ajax: {
-                    url: "{{ route('iuran_bulanan') }}",
-                    data: function(d) {
-                        // Mengambil nilai bulan dari input tanggal
-                        var filterBulan = $('#filterBulan').val();
-                        d.filterBulan = filterBulan;
-                    }
+                    url: "{{ route('iuran_bulanan_belum_lunas') }}",
                 },
                 columns: [
                     // Kolom nomor urut
@@ -400,6 +441,14 @@
                     {
                         data: 'santri.nama_santri',
                         name: 'santri.nama_santri'
+                    },
+                    // Kolom Jenis Iuran
+                    {
+                        data: 'jenis_iuran.jenis_iuran',
+                        name: 'jenis_iuran.jenis_iuran',
+                        render: function(data, type, full, meta) {
+                            return '<span class="badge badge-secondary">' + data + '</span>';
+                        }
                     },
                     // Kolom jumlah pembayaran
                     {
@@ -450,6 +499,104 @@
                 lengthMenu: [
                     [10, 25, 50, 100, -1], // Jumlah entries per halaman, -1 untuk Tampilkan Semua Data
                     ['10', '25', '50', '100', 'Semua']
+                ]
+            });
+
+            var table = $('#tableIuranBulanan').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    url: "{{ route('iuran_bulanan') }}",
+                    data: function(d) {
+                        // Mengambil nilai bulan dari input tanggal
+                        var filterBulan = $('#filterBulan').val();
+                        d.filterBulan = filterBulan;
+                    }
+                },
+                columns: [
+                    // Kolom nomor urut
+                    {
+                        data: null,
+                        searchable: false,
+                        orderable: false,
+                        render: function(data, type, row, meta) {
+                            return meta.row + meta.settings._iDisplayStart + 1;
+                        }
+                    },
+                    // Kolom tanggal dan jam pembayaran
+                    {
+                        data: 'tanggal_pembayaran',
+                        render: function(data, type, full, meta) {
+                            var tanggal_pembayaran = full.tanggal_pembayaran.split(' ');
+                            var tanggal = tanggal_pembayaran[0];
+                            var jam = tanggal_pembayaran[1];
+
+                            return '<p class="mb-0">' +
+                                tanggal +
+                                '</p>' +
+                                '<p class="mb-0">Jam: ' +
+                                jam +
+                                '</p>';
+                        }
+                    },
+                    // Kolom nama santri
+                    {
+                        data: 'santri.nama_santri',
+                        name: 'santri.nama_santri'
+                    },
+                    // Kolom Jenis Iuran
+                    {
+                        data: 'jenis_iuran.jenis_iuran',
+                        name: 'jenis_iuran.jenis_iuran',
+                        render: function(data, type, full, meta) {
+                            return '<span class="badge badge-secondary">' + data + '</span>';
+                        }
+                    },
+                    // Kolom jumlah pembayaran
+                    {
+                        data: 'jumlah_pembayaran',
+                        render: function(data, type, full, meta) {
+                            return 'Rp. ' + data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                        }
+                    },
+
+                    // Kolom nama penerima
+                    {
+                        data: 'admin.nama',
+                        name: 'admin.nama'
+                    },
+                    // Kolom Status pembayaran
+                    {
+                        data: 'status_pembayaran',
+                        name: 'status_pembayaran',
+                        render: function(data, type, full, meta) {
+                            if (data === 'lunas') {
+                                return '<span class="badge badge-pill badge-success">Lunas</span>';
+                            } else {
+                                return '<span class="badge badge-pill badge-warning">Belum Lunas</span>';
+                            }
+                        }
+                    },
+                    // Kolom aksi (tombol Edit, Delete)
+                    {
+                        data: 'id_pembayaran',
+                        searchable: false,
+                        orderable: false,
+                        render: function(data, type, full, meta) {
+                            return '<div class="d-flex align-items-center list-user-action">' +
+                                '<a data-placement="top" title="Edit" href="' +
+                                '/pembayaran/iuran_bulanan/' + full.id_pembayaran + '">' +
+                                '<i class="ri-pencil-line"></i>' +
+                                '</a>' +
+                                '<a data-placement="top" title="Delete" href="#" ' +
+                                'data-target="#deleteModal' + full.id_pembayaran +
+                                '" data-toggle="modal" ' +
+                                'data-id="' + full.id_pembayaran + '">' +
+                                '<i class="ri-delete-bin-line"></i>' +
+                                '</a>' +
+                                '</div>';
+                        }
+                    }
                 ],
                 lengthMenu: [
                     [10, 25, 50, 100, -1], // Jumlah entries per halaman, -1 untuk Tampilkan Semua Data
@@ -459,12 +606,20 @@
 
             // Membuat input bulan di samping kotak pencarian
             $('<span class="ml-4"><label>Filter: <input type="month" id="filterBulan" class="form-control"></label></span>')
-            .appendTo('.dataTables_filter');
-    
+                .appendTo('#tableIuranBulanan_filter');
+
             // Menambahkan event listener untuk filter per bulan
             $('#filterBulan').on('change', function() {
                 table.ajax.reload();
             });
+        });
+    </script>
+
+    <script>
+        document.getElementById('jenis_iuran').addEventListener('change', function() {
+            var selectedOption = this.options[this.selectedIndex];
+            var nominal = selectedOption.getAttribute('data-nominal');
+            document.getElementById('jumlah_pembayaran').value = nominal;
         });
     </script>
 

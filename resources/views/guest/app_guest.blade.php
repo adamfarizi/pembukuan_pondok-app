@@ -134,6 +134,9 @@
                             <input type="password" class="form-control mb-0" id="exampleInputPassword1" name="password"
                                 placeholder="Masukkan Password">
                         </div>
+                        <div class="checkbox mt-3">
+                            <label><input type="checkbox" name="remember" value="true"> Remember me</label>
+                        </div>
                         <div class="d-grid mt-3">
                             <button type="submit" class="btn btn-primary btn-block">Masuk</button>
                         </div>

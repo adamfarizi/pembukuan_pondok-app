@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\MasterAdmin;
 use App\Models\Pembayaran;
 use App\Models\Santri;
 use App\Models\User;
@@ -57,11 +58,12 @@ class DaftarUlangController extends Controller
             if (!$santri) {
                 throw new \Exception('Santri tidak ditemukan.');
             }
-        
+
+            $jumlah_pembayaran_master = MasterAdmin::pluck('pembayaran_daftar_ulang')->first();
             // Buat data pembayaran
             $pembayaran = Pembayaran::create([
                 'tanggal_pembayaran' => now(),
-                'jumlah_pembayaran' => 50000,
+                'jumlah_pembayaran' => $jumlah_pembayaran_master,
                 'jenis_pembayaran' => 'daftar_ulang',
                 'status_pembayaran' => 'lunas',
                 'id_admin' => auth()->user()->id_admin,

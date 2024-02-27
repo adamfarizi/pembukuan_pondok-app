@@ -18,11 +18,13 @@ class CreatePembayaranTable extends Migration
             $table->dateTime('tanggal_pembayaran');
             $table->decimal('jumlah_pembayaran', 50, 0);
             $table->enum('jenis_pembayaran',['daftar_ulang', 'iuran_bulanan', 'tamrin']);
+            $table->unsignedBigInteger('id_jenis_iuran')->nullable();
             $table->enum('status_pembayaran', ['lunas', 'belum_lunas'])->default('belum_lunas');
             $table->unsignedBigInteger('id_admin');
             $table->unsignedBigInteger('id_santri');
             $table->timestamps();
 
+            $table->foreign('id_jenis_iuran')->references('id_jenis_iuran')->on('jenis_iuran');
             $table->foreign('id_admin')->references('id_admin')->on('admin');
             $table->foreign('id_santri')->references('id_santri')->on('santri');
         });

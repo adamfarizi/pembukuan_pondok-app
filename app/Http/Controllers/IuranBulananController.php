@@ -17,15 +17,30 @@ class IuranBulananController extends Controller
 
         if ($request->ajax()) {
             $filterBulan = $request->filterBulan;
+            $filterSantri = $request->filterSantri;
+            $filterJenisIuran = $request->filterJenisIuran;
+            $filterBulanIuran = $request->filterBulanIuran;
 
-            $data = Pembayaran::where('jenis_pembayaran', 'iuran_bulanan')
+            $query = Pembayaran::where('jenis_pembayaran', 'iuran_bulanan')
                 ->whereDate('tanggal_pembayaran', 'like', $filterBulan . '%')
                 ->where('status_pembayaran', 'lunas')
-                ->orderBy('tanggal_pembayaran', 'desc')
-                ->with(['santri', 'admin', 'jenis_iuran'])
-                ->get();
-            return DataTables::of($data)
-                ->make(true);
+                ->with(['admin', 'jenis_iuran', 'santri']);
+
+            if ($filterSantri) {
+                $query->where('id_santri', $filterSantri);
+            }
+
+            if ($filterJenisIuran) {
+                $query->where('id_jenis_iuran', $filterJenisIuran);
+            }
+
+            if ($filterBulanIuran) {
+                $query->where('bulan_iuran', $filterBulanIuran);
+            }
+            
+            $data = $query->orderBy('tanggal_pembayaran', 'desc')->get();
+
+            return DataTables::of($data)->make(true);
         }
 
         $iuran_bulanans = Pembayaran::where('jenis_pembayaran', 'iuran_bulanan')->get();
@@ -44,11 +59,11 @@ class IuranBulananController extends Controller
     public function index_belum_lunas(Request $request)
     {
         if ($request->ajax()) {
-            $belum_lunas = Pembayaran::where('jenis_pembayaran','iuran_bulanan')
-            ->where('status_pembayaran', 'belum_lunas')
-            ->orderBy('tanggal_pembayaran', 'desc')
-            ->with(['santri', 'admin', 'jenis_iuran'])           
-            ->get();
+            $belum_lunas = Pembayaran::where('jenis_pembayaran', 'iuran_bulanan')
+                ->where('status_pembayaran', 'belum_lunas')
+                ->orderBy('tanggal_pembayaran', 'desc')
+                ->with(['santri', 'admin', 'jenis_iuran'])
+                ->get();
             return DataTables::of($belum_lunas)
                 ->make(true);
         }
@@ -61,15 +76,18 @@ class IuranBulananController extends Controller
             $this->validate($request, [
                 'nama_santri' => 'required|not_in:Nama Santri', // Menyatakan bahwa nama_santri tidak boleh kosong atau memiliki nilai "Nama Santri"
                 'jenis_iuran' => 'required|not_in:Jenis Iuran',
+                'bulan_iuran' => 'required',
                 'jumlah_pembayaran' => 'required',
             ], [
                 'jenis_iuran.not_in' => 'Pilih jenis iuran terlebih dahulu!',
                 'nama_santri.required' => 'Pilih santri terlebih dahulu!',
                 'nama_santri.not_in' => 'Pilih santri terlebih dahulu!',
                 'jumlah_pembayaran.required' => 'Masukkan jumlah pembayaran terlebih dahulu!',
+                'bulan_iuran.required' => 'Masukkan bulan iuran terlebih dahulu!',
             ]);
 
             $nama_santri = $request->input('nama_santri');
+            $bulan_iuran = $request->input('bulan_iuran');
 
             // Cari data santri berdasarkan nama
             $santri = Santri::where('nama_santri', $nama_santri)->first();
@@ -88,23 +106,25 @@ class IuranBulananController extends Controller
                     'tanggal_pembayaran' => now(), // Sesuaikan dengan tanggal pembayaran yang diinginkan
                     'jumlah_pembayaran' => $jenis_iuran->pembayaran_jenis_iuran,
                     'jenis_pembayaran' => 'iuran_bulanan', // Sesuaikan dengan jenis pembayaran yang diinginkan
-                    'id_jenis_iuran' => $jenis_iuran->id_jenis_iuran, 
+                    'id_jenis_iuran' => $jenis_iuran->id_jenis_iuran,
+                    'bulan_iuran' => $bulan_iuran,
                     'status_pembayaran' => 'lunas',
                     'id_admin' => auth()->user()->id_admin, // Sesuaikan dengan id_admin yang sedang login
                     'id_santri' => $santri->id_santri,
                 ]);
-            } else{
+            } else {
                 $pembayaran = Pembayaran::create([
                     'tanggal_pembayaran' => now(), // Sesuaikan dengan tanggal pembayaran yang diinginkan
                     'jumlah_pembayaran' => $request->input('jumlah_pembayaran'),
                     'jenis_pembayaran' => 'iuran_bulanan', // Sesuaikan dengan jenis pembayaran yang diinginkan
-                    'id_jenis_iuran' => $jenis_iuran->id_jenis_iuran, 
+                    'id_jenis_iuran' => $jenis_iuran->id_jenis_iuran,
+                    'bulan_iuran' => $bulan_iuran,
                     'status_pembayaran' => 'belum_lunas',
                     'id_admin' => auth()->user()->id_admin, // Sesuaikan dengan id_admin yang sedang login
                     'id_santri' => $santri->id_santri,
                 ]);
             }
-            
+
             return redirect()->back()->with('success', 'Pembayaran berhasil ditambahkan.');
         } catch (\Illuminate\Validation\ValidationException $e) {
             return redirect()->back()->withErrors($e->errors());

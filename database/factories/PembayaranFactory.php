@@ -37,18 +37,21 @@ class PembayaranFactory extends Factory
             $jumlahPembayaran = $this->faker->numberBetween(1000, 99999);
         }
 
+        // Menentukan bulan iuran
+        $bulanIuran = $this->faker->dateTimeBetween(date('Y').'-01-01', 'now')->format('Y-m');
+
         return [
             'tanggal_pembayaran' => $this->faker->dateTimeBetween('-6 months', 'now'),
             'jumlah_pembayaran' => $jumlahPembayaran,
             'jenis_pembayaran' => $jenisPembayaran,
             'id_jenis_iuran' => ($jenisPembayaran == 'iuran_bulanan') ? $jenisIuran : null,
+            'bulan_iuran' => ($jenisPembayaran == 'iuran_bulanan') ? $bulanIuran : null,
             'status_pembayaran' => 'lunas',
-            'id_admin' => 1, 
+            'id_admin' => 1,
             'id_santri' => $this->faker->numberBetween(1, 60),
             'created_at' => $this->faker->dateTimeBetween('-1 year', 'now'),
             'updated_at' => $this->faker->dateTimeBetween('-1 year', 'now'),
         ];
-
-
     }
+
 }

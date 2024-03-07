@@ -277,6 +277,7 @@
                                             <th>Tanggal Pembayaran</th>
                                             <th>Nama Santri</th>
                                             <th>Jenis Iuran</th>
+                                            <th>Iuran Bulan</th>
                                             <th>Jumlah Pembayaran</th>
                                             <th>Diterima Oleh</th>
                                             <th>Status</th>
@@ -299,6 +300,32 @@
                             </div>
                         </div>
                         <div class="iq-card-body">
+                            <div class="mb-3 row">
+                                <div class="col">
+                                    <label for="filterSantri">Pilih Santri:</label>
+                                    <select id="filterSantri" class="form-control">
+                                        <option value="">Semua Santri</option>
+                                        @foreach ($santris as $santri)
+                                            <option value="{{ $santri->id_santri }}">{{ $santri->nama_santri }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col">
+                                    <label for="filterJenisIuran">Jenis Iuran:</label>
+                                    <select class="form-control" name="filterJenisIuran" id="filterJenisIuran">
+                                        <option value="">Jenis Iuran</option>
+                                        @foreach ($jenis_iurans as $jenis_iuran)
+                                            <option value="{{ $jenis_iuran->id_jenis_iuran }}">
+                                                {{ $jenis_iuran->jenis_iuran }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col">
+                                    <label for="filterBulanIuran">Bulan Iuran:</label>
+                                    <input type="month" id="filterBulanIuran" class="form-control">
+                                </div>
+                            </div>
                             <div class="table-responsive mb-3">
                                 <table id="tableIuranBulanan" class="table" role="grid"
                                     aria-describedby="user-list-page-info" style="width: 100%; min-height: 500px;">
@@ -308,6 +335,7 @@
                                             <th>Tanggal Pembayaran</th>
                                             <th>Nama Santri</th>
                                             <th>Jenis Iuran</th>
+                                            <th>Iuran Bulan</th>
                                             <th>Jumlah Pembayaran</th>
                                             <th>Diterima Oleh</th>
                                             <th>Status</th>
@@ -358,6 +386,10 @@
                                         {{ $jenis_iuran->jenis_iuran }}</option>
                                 @endforeach
                             </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="bulan_iuran">Bulan Iuran <span class="text-danger">*</span></label>
+                            <input type="month" id="bulan_iuran" name="bulan_iuran" class="form-control" required>
                         </div>
                         <div class="form-group">
                             <label for="daftar_ulang">Jumlah Pembayaran <span class="text-danger">*</span></label>
@@ -450,6 +482,25 @@
                             return '<span class="badge badge-secondary">' + data + '</span>';
                         }
                     },
+                    {
+                        data: 'bulan_iuran',
+                        name: 'bulan_iuran',
+                        render: function(data, type, full, meta) {
+                            // Split tanggal menjadi bagian bulan dan tahun
+                            var parts = data.split('-');
+                            // Ubah bagian bulan menjadi nama bulan
+                            var month = new Date(data + '-01').toLocaleString('default', {
+                                month: 'long'
+                            });
+                            // Gabungkan nama bulan dan tahun
+                            return '<p class="mb-0">' +
+                                month +
+                                '</p>' +
+                                '<p class="mb-0">' +
+                                parts[0] +
+                                '</p>';
+                        }
+                    },
                     // Kolom jumlah pembayaran
                     {
                         data: 'jumlah_pembayaran',
@@ -508,9 +559,10 @@
                 ajax: {
                     url: "{{ route('iuran_bulanan') }}",
                     data: function(d) {
-                        // Mengambil nilai bulan dari input tanggal
-                        var filterBulan = $('#filterBulan').val();
-                        d.filterBulan = filterBulan;
+                        d.filterBulan = $('#filterBulan').val();
+                        d.filterSantri = $('#filterSantri').val();
+                        d.filterJenisIuran = $('#filterJenisIuran').val();
+                        d.filterBulanIuran = $('#filterBulanIuran').val();
                     }
                 },
                 columns: [
@@ -550,6 +602,25 @@
                         name: 'jenis_iuran.jenis_iuran',
                         render: function(data, type, full, meta) {
                             return '<span class="badge badge-secondary">' + data + '</span>';
+                        }
+                    },
+                    {
+                        data: 'bulan_iuran',
+                        name: 'bulan_iuran',
+                        render: function(data, type, full, meta) {
+                            // Split tanggal menjadi bagian bulan dan tahun
+                            var parts = data.split('-');
+                            // Ubah bagian bulan menjadi nama bulan
+                            var month = new Date(data + '-01').toLocaleString('default', {
+                                month: 'long'
+                            });
+                            // Gabungkan nama bulan dan tahun
+                            return '<p class="mb-0">' +
+                                month +
+                                '</p>' +
+                                '<p class="mb-0">' +
+                                parts[0] +
+                                '</p>';
                         }
                     },
                     // Kolom jumlah pembayaran
@@ -604,14 +675,24 @@
                 ]
             });
 
-            // Membuat input bulan di samping kotak pencarian
             $('<span class="ml-4"><label>Filter: <input type="month" id="filterBulan" class="form-control"></label></span>')
-                .appendTo('#tableIuranBulanan_filter');
+                .appendTo('#tableIuranBulanan_filter')
+                .on('change', function() {
+                    table.ajax.reload();
+                });
 
-            // Menambahkan event listener untuk filter per bulan
-            $('#filterBulan').on('change', function() {
+            $('#filterSantri').on('change', function() {
                 table.ajax.reload();
             });
+
+            $('#filterJenisIuran').on('change', function() {
+                table.ajax.reload();
+            });
+
+            $('#filterBulanIuran').on('change', function() {
+                table.ajax.reload();
+            });
+
         });
     </script>
 

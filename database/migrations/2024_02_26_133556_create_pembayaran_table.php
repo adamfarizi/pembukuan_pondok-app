@@ -19,6 +19,7 @@ class CreatePembayaranTable extends Migration
             $table->decimal('jumlah_pembayaran', 50, 0);
             $table->enum('jenis_pembayaran',['daftar_ulang', 'iuran_bulanan', 'tamrin']);
             $table->unsignedBigInteger('id_jenis_iuran')->nullable();
+            $table->string('bulan_iuran')->nullable();
             $table->enum('status_pembayaran', ['lunas', 'belum_lunas'])->default('belum_lunas');
             $table->unsignedBigInteger('id_admin');
             $table->unsignedBigInteger('id_santri');

@@ -9,11 +9,9 @@
             </a>
         </div>
         <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-            <li><a href="#" class="nav-link px-2 ">Home</a></li>
-            <li><a href="#" class="nav-link px-2 link-secondary">Features</a></li>
-            <li><a href="#" class="nav-link px-2 link-secondary">Pricing</a></li>
-            <li><a href="#" class="nav-link px-2 link-secondary">FAQs</a></li>
-            <li><a href="#" class="nav-link px-2 link-secondary">About</a></li>
+            <li><a href="#" class="nav-link px-2 ">Beranda</a></li>
+            <li><a href="#" class="nav-link px-2 link-secondary">Galeri</a></li>
+            <li><a href="#" class="nav-link px-2 link-secondary">Kontak</a></li>
         </ul>
     </header>
 @endsection
@@ -28,10 +26,10 @@
         </div>
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"
-                    aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false">
+                <img class="bd-placeholder-img" width="100%" height="100%" src="{{asset('images/pondok/pondok_area2.png')}}"
+                    aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false" style="object-fit: cover;">
                     <rect width="100%" height="100%" fill="var(--bs-secondary-color)" />
-                </svg>
+            </img>
                 <div class="container">
                     <div class="carousel-caption text-start">
                         <h1>Example headline.</h1>
@@ -42,10 +40,10 @@
                 </div>
             </div>
             <div class="carousel-item">
-                <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"
-                    aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false">
+                <img class="bd-placeholder-img" width="100%" height="100%" src="{{asset('images/pondok/pondok_area4.png')}}"
+                    aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false" style="object-fit: cover;">
                     <rect width="100%" height="100%" fill="var(--bs-secondary-color)" />
-                </svg>
+            </img>
                 <div class="container">
                     <div class="carousel-caption">
                         <h1>Another example headline.</h1>
@@ -55,10 +53,10 @@
                 </div>
             </div>
             <div class="carousel-item">
-                <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"
-                    aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false">
+                <img class="bd-placeholder-img" width="100%" height="100%" src="{{asset('images/pondok/pondok1.png')}}"
+                    aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false" style="object-fit: cover;">
                     <rect width="100%" height="100%" fill="var(--bs-secondary-color)" />
-                </svg>
+            </img>
                 <div class="container">
                     <div class="carousel-caption text-end">
                         <h1>One more for good measure.</h1>
@@ -123,18 +121,20 @@
 
         <div class="row featurette">
             <div class="col-md-7">
-                <h2 class="featurette-heading fw-normal lh-1">First featurette heading. <span
-                        class="text-body-secondary">It’ll blow your mind.</span></h2>
-                <p class="lead">Some great placeholder content for the first featurette here. Imagine some
-                    exciting prose here.</p>
+                <h2 class="featurette-heading fw-normal lh-1">Pondok Pesantren Al Huda <span
+                        class="text-body-secondary"</span></h2>
+                <p class="lead">Pondok Pesantren Al Huda adalah lembaga pendidikan Islam yang memiliki 
+                    komitmen kuat untuk memberikan pendidikan berkualitas dan pembinaan karakter kepada santri. 
+                    Dengan didasarkan pada nilai-nilai keislaman, pesantren kami bertujuan membentuk generasi penerus 
+                    yang tidak hanya cerdas secara akademis, tetapi juga berakhlak mulia.</p>
             </div>
             <div class="col-md-5">
-                <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500"
-                    height="500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 500x500"
-                    preserveAspectRatio="xMidYMid slice" focusable="false">
+                <img class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500"
+                    height="500" src="images/pondok/pondok_area2.png" role="img" aria-label="Placeholder: 500x500"
+                    preserveAspectRatio="xMidYMid slice" focusable="false" style="object-fit: cover;">
                     <title>Placeholder</title>
                     <rect width="100%" height="100%" fill="var(--bs-secondary-bg)" /><text x="50%" y="50%"
-                        fill="var(--bs-secondary-color)" dy=".3em">500x500</text>
+                        fill="var(--bs-secondary-color)" dy=".3em"></text>
                 </svg>
             </div>
         </div>
@@ -143,19 +143,21 @@
 
         <div class="row featurette">
             <div class="col-md-7 order-md-2">
-                <h2 class="featurette-heading fw-normal lh-1">Oh yeah, it’s that good. <span
-                        class="text-body-secondary">See for yourself.</span></h2>
-                <p class="lead">Another featurette? Of course. More placeholder content here to give you an idea
-                    of how this layout would work with some actual real-world content in place.</p>
+                <h2 class="featurette-heading fw-normal lh-1">Visi Misi<span
+                        class="text-body-secondary"></span></h2>
+                <p class="lead">Visi kami adalah menjadi pusat pendidikan Islam unggul yang menghasilkan 
+                    santri yang berkompeten, berkarakter, dan mampu berkontribusi positif untuk masyarakat. 
+                    Misi kami melibatkan penyelenggaraan pendidikan yang holistik, pengembangan potensi akademik 
+                    dan non-akademik, serta pembentukan kepribadian yang kuat sesuai dengan ajaran Islam.</p>
             </div>
             <div class="col-md-5 order-md-1">
-                <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500"
-                    height="500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 500x500"
-                    preserveAspectRatio="xMidYMid slice" focusable="false">
+                <img class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500"
+                    height="500" src="images/pondok/alquran.png" role="img" aria-label="Placeholder: 500x500"
+                    preserveAspectRatio="xMidYMid slice" focusable="false" style="object-fit: cover;">
                     <title>Placeholder</title>
                     <rect width="100%" height="100%" fill="var(--bs-secondary-bg)" /><text x="50%" y="50%"
-                        fill="var(--bs-secondary-color)" dy=".3em">500x500</text>
-                </svg>
+                        fill="var(--bs-secondary-color)" dy=".3em"></text>
+            </img>
             </div>
         </div>
 
@@ -172,7 +174,7 @@
             <div class="col-md-5">
                 <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500"
                     height="500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 500x500"
-                    preserveAspectRatio="xMidYMid slice" focusable="false">
+                    preserveAspectRatio="xMidYMid slice" focusable="false" style="object-fit: cover;">>
                     <title>Placeholder</title>
                     <rect width="100%" height="100%" fill="var(--bs-secondary-bg)" /><text x="50%" y="50%"
                         fill="var(--bs-secondary-color)" dy=".3em">500x500</text>

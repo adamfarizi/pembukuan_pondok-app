@@ -1,189 +1,296 @@
 @extends('guest/app_guest')
 @section('header')
     {{-- Header --}}
-    <header
-        class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 px-3">
-        <div class="col-md-3 mb-2 mb-md-0">
-            <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none ps-3 text-primary">
-                <h4>Pondok Pesantren Al-Huda</h4>
+    <div class="container">
+        <header class="d-flex py-3 mb-4 px-5">
+            <a href="/"
+                class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+                <img src="{{ asset('images/pondok/logo.png') }}" alt="" class="bi me-2" width="50">
+                {{-- <span class="fs-4"><h4 class="mt-2">Pondok Pesantren Al-Huda</h4></span> --}}
             </a>
-        </div>
-        <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-            <li><a href="#" class="nav-link px-2 ">Beranda</a></li>
-            <li><a href="#" class="nav-link px-2 link-secondary">Galeri</a></li>
-            <li><a href="#" class="nav-link px-2 link-secondary">Kontak</a></li>
-        </ul>
-    </header>
+            <ul class="nav nav-pills text-right">
+                <li class="nav-item"><a href="#" class="nav-link text-primary" aria-current="page">Beranda</a></li>
+                <li class="nav-item"><a href="#tentangpondok" class="nav-link text-secondary">Tentang Pondok</a></li>
+                <li class="nav-item"><a href="#areapondok" class="nav-link text-secondary">Area Pondok</a></li>
+                <li class="nav-item"><a href="#kontak" class="nav-link text-secondary">Kontak Kami</a></li>
+            </ul>
+        </header>
+    </div>
 @endsection
 @section('content')
     {{-- Content --}}
-    <div id="myCarousel" class="carousel slide mb-6" data-bs-ride="carousel">
-        <div class="carousel-indicators">
-            <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true"
-                aria-label="Slide 1"></button>
-            <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-            <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
-        </div>
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img class="bd-placeholder-img" width="100%" height="100%" src="{{asset('images/pondok/pondok_area2.png')}}"
-                    aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false" style="object-fit: cover;">
-                    <rect width="100%" height="100%" fill="var(--bs-secondary-color)" />
-            </img>
-                <div class="container">
-                    <div class="carousel-caption text-start">
-                        <h1>Example headline.</h1>
-                        <p class="opacity-75">Some representative placeholder content for the first slide of the
-                            carousel.</p>
-                        <p><a class="btn btn-lg btn-primary" href="#">Sign up today</a></p>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="px-5 pt-5 p-navy">
+                    <h1 class="fw-bold p-black" style="font-size: 50px;">Layanan Informasi Pondok Pesantren</h1>
+                    <h1 class="fw-bold p-black" style="font-size: 50px;">"Al-Huda"</h1>
+                </div>
+                <div class="px-5 mt-5 mb-5">
+                    <h6 class="">Layanan Informasi Pondok Pesantren Al-Huda adalah sebuah platform atau situs web yang
+                        bertujuan untuk
+                        menyediakan informasi terkait dengan Pondok Pesantren Al-Huda.
+                    </h6>
+                </div>
+                <div class="row px-5">
+                    <div class="col-lg-6">
+                        <button class="btn btn-primary d-inline-flex align-items-center" type="button">
+                            Tanya Admin
+                            <span class="ms-3"><i class="bi bi-chevron-right"></i></span>
+                        </button>
+                    </div>
+                    <div class="col-lg-6">
+                        <a class="icon-link icon-link-hover" href="#formlogin">
+                            Login Petugas
+                            <span class="ms-3"><i class="bi bi-chevron-right"></i></span>
+                        </a>
                     </div>
                 </div>
             </div>
-            <div class="carousel-item">
-                <img class="bd-placeholder-img" width="100%" height="100%" src="{{asset('images/pondok/pondok_area4.png')}}"
-                    aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false" style="object-fit: cover;">
-                    <rect width="100%" height="100%" fill="var(--bs-secondary-color)" />
-            </img>
-                <div class="container">
-                    <div class="carousel-caption">
-                        <h1>Another example headline.</h1>
-                        <p>Some representative placeholder content for the second slide of the carousel.</p>
-                        <p><a class="btn btn-lg btn-primary" href="#">Learn more</a></p>
-                    </div>
-                </div>
-            </div>
-            <div class="carousel-item">
-                <img class="bd-placeholder-img" width="100%" height="100%" src="{{asset('images/pondok/pondok1.png')}}"
-                    aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false" style="object-fit: cover;">
-                    <rect width="100%" height="100%" fill="var(--bs-secondary-color)" />
-            </img>
-                <div class="container">
-                    <div class="carousel-caption text-end">
-                        <h1>One more for good measure.</h1>
-                        <p>Some representative placeholder content for the third slide of this carousel.</p>
-                        <p><a class="btn btn-lg btn-primary" href="#">Browse gallery</a></p>
-                    </div>
+            <div class="col-lg-6">
+                <div>
+                    <img src="{{ asset('images/pondok/asset1.png') }}" alt="" width="90%">
                 </div>
             </div>
         </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
     </div>
     <div class="container marketing">
-        <!-- Three columns of text below the carousel -->
-        <div class="row">
-            <div class="col-lg-4">
-                <svg class="bd-placeholder-img rounded-circle" width="140" height="140"
-                    xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder"
-                    preserveAspectRatio="xMidYMid slice" focusable="false">
-                    <title>Placeholder</title>
-                    <rect width="100%" height="100%" fill="var(--bs-secondary-color)" />
-                </svg>
-                <h2 class="fw-normal">Heading</h2>
-                <p>Some representative placeholder content for the three columns of text below the carousel. This is
-                    the first column.</p>
-                <p><a class="btn btn-secondary" href="#">View details &raquo;</a></p>
+        {{-- Tentang Pondok --}}
+        <div id="tentangpondok" class="container mt-5 row p-5 align-items-center">
+            <div class="col-md-6">
+                <h1 class="fw-bold p-black p-navy">Pondok Pesantren Al-Huda</h1>
+                <p class="mt-3">Pondok Pesantren Al Huda adalah lembaga pendidikan Islam yang memiliki
+                    komitmen kuat untuk memberikan pendidikan berkualitas dan pembinaan karakter kepada santri.
+                    Dengan didasarkan pada nilai-nilai keislaman, pesantren kami bertujuan membentuk generasi penerus
+                    yang tidak hanya cerdas secara akademis, tetapi juga berakhlak mulia.
+                </p>
+                <div class="row mt-5">
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-body p-navy pb-0">
+                                <h3 class="fw-bold">{{ $total_santri }} <span class="ms-2"><i
+                                            class="bi bi-people-fill"></i></span></h3>
+                                <p>Santri dan Santriwati</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-body p-navy pb-0">
+                                <h3 class="fw-bold">100 <span class="ms-2"><i class="bi bi-people-fill"></i></span></h3>
+                                <p>Tenaga Pendidik</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="col-lg-4">
-                <svg class="bd-placeholder-img rounded-circle" width="140" height="140"
-                    xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder"
-                    preserveAspectRatio="xMidYMid slice" focusable="false">
-                    <title>Placeholder</title>
-                    <rect width="100%" height="100%" fill="var(--bs-secondary-color)" />
-                </svg>
-                <h2 class="fw-normal">Heading</h2>
-                <p>Another exciting bit of representative placeholder content. This time, we've moved on to the
-                    second column.</p>
-                <p><a class="btn btn-secondary" href="#">View details &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <svg class="bd-placeholder-img rounded-circle" width="140" height="140"
-                    xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder"
-                    preserveAspectRatio="xMidYMid slice" focusable="false">
-                    <title>Placeholder</title>
-                    <rect width="100%" height="100%" fill="var(--bs-secondary-color)" />
-                </svg>
-                <h2 class="fw-normal">Heading</h2>
-                <p>And lastly this, the third column of representative placeholder content.</p>
-                <p><a class="btn btn-secondary" href="#">View details &raquo;</a></p>
+            <div class="col-md-6">
+                <img class="" width="600" height="400" src="images/pondok/pondok_area2.png" role="img"
+                    style="object-fit: cover; border-radius: 15px;">
             </div>
         </div>
-
-        <!-- START THE FEATURETTES -->
-
-        <hr class="featurette-divider">
-
-        <div class="row featurette">
-            <div class="col-md-7">
-                <h2 class="featurette-heading fw-normal lh-1">Pondok Pesantren Al Huda <span
-                        class="text-body-secondary"</span></h2>
-                <p class="lead">Pondok Pesantren Al Huda adalah lembaga pendidikan Islam yang memiliki 
-                    komitmen kuat untuk memberikan pendidikan berkualitas dan pembinaan karakter kepada santri. 
-                    Dengan didasarkan pada nilai-nilai keislaman, pesantren kami bertujuan membentuk generasi penerus 
-                    yang tidak hanya cerdas secara akademis, tetapi juga berakhlak mulia.</p>
+        {{-- Visi Misi --}}
+        <div class="container mt-5">
+            <div class="card border-light mb-3 mx-4 px-5 py-4" style="background-color: #dbeefc; border-radius:15px;">
+                <div class="card-body p-navy">
+                    <div class="row align-items-center">
+                        <div class="col-lg-5">
+                            <h1 class="fw-bold p-black">Visi Pondok</h1>
+                        </div>
+                        <div class="col-lg-7">
+                            <ul>
+                                <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. </li>
+                                <li>Dolorem necessitatibus rerum tempora minus nemo repudiandae.</li>
+                                <li>Saepe aliquid, a nam reprehenderit dolore ab cum. Placeat aut magni tempora neque, odit
+                                    impedit!
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="col-md-5">
-                <img class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500"
-                    height="500" src="images/pondok/pondok_area2.png" role="img" aria-label="Placeholder: 500x500"
-                    preserveAspectRatio="xMidYMid slice" focusable="false" style="object-fit: cover;">
-                    <title>Placeholder</title>
-                    <rect width="100%" height="100%" fill="var(--bs-secondary-bg)" /><text x="50%" y="50%"
-                        fill="var(--bs-secondary-color)" dy=".3em"></text>
-                </svg>
-            </div>
-        </div>
-
-        <hr class="featurette-divider">
-
-        <div class="row featurette">
-            <div class="col-md-7 order-md-2">
-                <h2 class="featurette-heading fw-normal lh-1">Visi Misi<span
-                        class="text-body-secondary"></span></h2>
-                <p class="lead">Visi kami adalah menjadi pusat pendidikan Islam unggul yang menghasilkan 
-                    santri yang berkompeten, berkarakter, dan mampu berkontribusi positif untuk masyarakat. 
-                    Misi kami melibatkan penyelenggaraan pendidikan yang holistik, pengembangan potensi akademik 
-                    dan non-akademik, serta pembentukan kepribadian yang kuat sesuai dengan ajaran Islam.</p>
-            </div>
-            <div class="col-md-5 order-md-1">
-                <img class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500"
-                    height="500" src="images/pondok/alquran.png" role="img" aria-label="Placeholder: 500x500"
-                    preserveAspectRatio="xMidYMid slice" focusable="false" style="object-fit: cover;">
-                    <title>Placeholder</title>
-                    <rect width="100%" height="100%" fill="var(--bs-secondary-bg)" /><text x="50%" y="50%"
-                        fill="var(--bs-secondary-color)" dy=".3em"></text>
-            </img>
+            <div class="card border-light mb-3 mx-4 px-5 py-4" style="background-color: #dbeefc; border-radius:15px;">
+                <div class="card-body p-navy">
+                    <div class="row align-items-center">
+                        <div class="col-lg-5">
+                            <h1 class="fw-bold p-black">Misi Pondok</h1>
+                        </div>
+                        <div class="col-lg-7">
+                            <ul>
+                                <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. </li>
+                                <li>Dolorem necessitatibus rerum tempora minus nemo repudiandae.</li>
+                                <li>Saepe aliquid, a nam reprehenderit dolore ab cum. Placeat aut magni tempora neque, odit
+                                    impedit!
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-
-        <hr class="featurette-divider">
-
-        <div class="row featurette">
-            <div class="col-md-7">
-                <h2 class="featurette-heading fw-normal lh-1">And lastly, this one. <span
-                        class="text-body-secondary">Checkmate.</span></h2>
-                <p class="lead">And yes, this is the last block of representative placeholder content. Again, not
-                    really intended to be actually read, simply here to give you a better view of what this would
-                    look like with some actual content. Your content.</p>
+        <div class="container mt-5 p-5 pb-0">
+            <h1 class="col-8 fw-bold p-black p-navy mb-4">Apasih manfaat belajar di Pondok Pesantren Al-Huda ?</h1>
+            <div class="row p-navy mb-4">
+                <div class="col">
+                    <div class="row p-3" style="background-color: #dbeefc; border-radius:15px;">
+                        <div class="col-2 text-center align-self-center">
+                            <img src="{{ asset('images/pondok/koran.png') }}" alt="" width="80">
+                        </div>
+                        <div class="col">
+                            <h4 class="fw-bold">Pendidikan Agama yang Mendalam</h4>
+                            <p>Pondok pesantren merupakan lembaga pendidikan yang fokus pada pendalaman ilmu agama Islam.
+                                Para santri diajarkan Al-Qur'an, hadis, fiqh, akhlak, dan berbagai cabang ilmu agama
+                                lainnya. Hal ini memungkinkan para santri untuk mendapatkan pemahaman yang mendalam tentang
+                                ajaran Islam dan menerapkannya dalam kehidupan sehari-hari.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="col-md-5">
-                <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500"
-                    height="500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 500x500"
-                    preserveAspectRatio="xMidYMid slice" focusable="false" style="object-fit: cover;">>
-                    <title>Placeholder</title>
-                    <rect width="100%" height="100%" fill="var(--bs-secondary-bg)" /><text x="50%" y="50%"
-                        fill="var(--bs-secondary-color)" dy=".3em">500x500</text>
-                </svg>
+            <div class="row p-navy mb-4 justify-content-between">
+                <div class="col me-2">
+                    <div class="row p-3" style="background-color: #dbeefc; border-radius:15px;">
+                        <div class="col-4 text-center align-self-center">
+                            <img src="{{ asset('images/pondok/opportunity.png') }}" alt="" width="80">
+                        </div>
+                        <div class="col">
+                            <h4 class="fw-bold">Pengembangan Kemandirian</h4>
+                            <p>Di pondok pesantren, para santri tinggal dan belajar secara mandiri di lingkungan yang
+                                terstruktur, mengembangkan kemandirian, tanggung jawab, dan kepemimpinan melalui kegiatan
+                                sehari-hari.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col ms-2">
+                    <div class="row p-3" style="background-color: #dbeefc; border-radius:15px;">
+                        <div class="col-4 text-center align-self-center">
+                            <img src="{{ asset('images/pondok/agreement.png') }}" alt="" width="80">
+                        </div>
+                        <div class="col">
+                            <h4 class="fw-bold">Pendidikan Karakter dan Etika</h4>
+                            <p>Pondok pesantren menanamkan nilai-nilai moral dan etika yang tinggi kepada para santrinya,
+                                membentuk individu yang jujur, disiplin, bertanggung jawab, dan menghormati sesama manusia.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row p-navy mb-4 justify-content-between">
+                <div class="col me-2">
+                    <div class="row p-3" style="background-color: #dbeefc; border-radius:15px;">
+                        <div class="col-4 text-center align-self-center">
+                            <img src="{{ asset('images/pondok/content-writing.png') }}" alt="" width="80">
+                        </div>
+                        <div class="col">
+                            <h4 class="fw-bold">Pengembangan Keterampilan Hidup</h4>
+                            <p>Selain ilmu agama, pondok pesantren memberikan pelatihan keterampilan praktis seperti
+                                pertanian, tata boga, kerajinan tangan, dan lainnya.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col ms-2">
+                    <div class="row p-3" style="background-color: #dbeefc; border-radius:15px;">
+                        <div class="col-4 text-center align-self-center">
+                            <img src="{{ asset('images/pondok/mountain.png') }}" alt="" width="80">
+                        </div>
+                        <div class="col">
+                            <h4 class="fw-bold">Pembentukan Kepribadian yang Kokoh</h4>
+                            <p>Belajar di pondok pesantren membentuk kepribadian yang kokoh dan kuat dengan mengajarkan
+                                kesabaran, ketekunan, dan keuletan dalam menghadapi cobaan.
+                            </p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-
-        <hr class="featurette-divider">
-
-        <!-- /END THE FEATURETTES -->
+        {{-- Gallery --}}
+        <div id="areapondok" class="container mt-5 p-5">
+            <h1 class="fw-bold p-black p-navy mb-4">Area Pondok</h1>
+            <div id="carouselExample" class="carousel slide carousel-fade mb-0" data-bs-ride="carousel"
+                data-bs-interval="3000">
+                <div class="carousel-inner" style="border-radius: 15px;">
+                    @foreach ($imageNames as $index => $imageName)
+                        <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
+                            <img src="{{ asset('images/pondok/area_pondok/' . $imageName) }}" class="d-block w-100 "
+                                alt="{{ $imageName }}" style="object-fit: cover;">
+                        </div>
+                    @endforeach
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample"
+                    data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExample"
+                    data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+        {{-- Kontak --}}
+        <div id="kontak" class="container mt-5 p-5">
+            <div class="row align-items-center">
+                <div class="col-8">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3948.357019913914!2d111.47367157477133!3d-8.267217041766779!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e793f8702ac8951%3A0x58518eb6ffb8d3d7!2sPONDOK%20PESANTREN%20AL%20HUDA%20BANJAR%20PANGGUL!5e0!3m2!1sen!2sid!4v1709801452881!5m2!1sen!2sid"
+                        width="100%" height="450" style="border:0; object-fit: cover; border-radius:15px;"
+                        allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+                <div class="col">
+                    <h1 class="fw-bold p-black p-navy">Kontak Kami</h1>
+                    <div class="row mb-2">
+                        <div class="col row">
+                            <div class="col-1 p-navy"><i class="bi bi-geo-alt-fill"></i></div>
+                            <div class="col">RT.011/RW.002, Pagersari, Banjar, Panggul, Trenggalek Regency, East Java
+                                66364</div>
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col row">
+                            <div class="col-1 p-navy"><i class="bi bi-telephone-fill"></i></div>
+                            <div class="col">081234xxxxx</div>
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col row">
+                            <div class="col-1 p-navy">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                    fill="currentColor" class="bi bi-envelope-fill" viewBox="0 0 16 16">
+                                    <path
+                                        d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414zM0 4.697v7.104l5.803-3.558zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586zm3.436-.586L16 11.801V4.697z" />
+                                </svg>
+                            </div>
+                            <div class="col">pondokAlHuda@gmail.com</div>
+                        </div>
+                    </div>
+                    <div class="row mt-4 mb-2">
+                        <h5 class="fw-bold p-navy">Sosial Media Kami</h5>
+                        <div class="col-2 row">
+                            <div class="col">
+                                <a class="icon-link p-navy" href="#" style="font-size: 25px">
+                                    <i class="bi bi-instagram"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-2 row">
+                            <div class="col">
+                                <a class="icon-link p-navy" href="#" style="font-size: 25px">
+                                    <i class="bi bi-youtube"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-2 row">
+                            <div class="col">
+                                <a class="icon-link p-navy" href="#" style="font-size: 25px">
+                                    <i class="bi bi-facebook"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection

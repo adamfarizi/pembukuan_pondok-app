@@ -3,7 +3,8 @@
     {{-- Header --}}
     <div class="container">
         <header class="d-flex py-3 mb-4 px-5">
-            <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+            <a href="/"
+                class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
                 <img src="{{ asset('images/pondok/logo.png') }}" alt="" class="bi me-2" width="50">
                 {{-- <span class="fs-4"><h4 class="mt-2">Pondok Pesantren Al-Huda</h4></span> --}}
             </a>
@@ -67,7 +68,8 @@
                     <div class="col">
                         <div class="card">
                             <div class="card-body p-navy pb-0">
-                                <h3 class="fw-bold">{{ $total_santri }} <span class="ms-2"><i class="bi bi-people-fill"></i></span></h3>
+                                <h3 class="fw-bold">{{ $total_santri }} <span class="ms-2"><i
+                                            class="bi bi-people-fill"></i></span></h3>
                                 <p>Santri dan Santriwati</p>
                             </div>
                         </div>
@@ -83,7 +85,8 @@
                 </div>
             </div>
             <div class="col-md-6">
-                <img class="img-fluid" src="images/pondok/pondok_area2.png" role="img" style="object-fit: cover; border-radius: 15px;">
+                <img class="img-fluid" src="images/pondok/pondok_area2.png" role="img"
+                    style="object-fit: cover; border-radius: 15px;">
             </div>
         </div>
         {{-- Visi Misi --}}
@@ -209,8 +212,8 @@
                 <div class="carousel-inner" style="border-radius: 15px;">
                     @foreach ($imageNames as $index => $imageName)
                         <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
-                            <img src="{{ asset('images/pondok/area_pondok/' . $imageName) }}" class="d-block w-100 img-fluid"
-                                alt="{{ $imageName }}" style="object-fit: cover;">
+                            <img src="{{ asset('images/pondok/area_pondok/' . $imageName) }}"
+                                class="d-block w-100 img-fluid" alt="{{ $imageName }}" style="object-fit: cover;">
                         </div>
                     @endforeach
                 </div>
@@ -256,22 +259,34 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                     fill="currentColor" class="bi bi-envelope-fill" viewBox="0 0 16 16">
                                     <path
-                                        d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.25.05 3.555zm0 9.89A2 2 0 0 0 2 14h12a2 2 0 0 0 1.95-1.555L8 9.75.05 13.445z" />
+                                        d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414zM0 4.697v7.104l5.803-3.558zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586zm3.436-.586L16 11.801V4.697z" />
                                 </svg>
                             </div>
                             <div class="col">pondokpesantrenalhuda@gmail.com</div>
                         </div>
                     </div>
-                    <div class="row mb-2">
-                        <div class="col row">
-                            <div class="col-1 p-navy">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                    fill="currentColor" class="bi bi-globe2" viewBox="0 0 16 16">
-                                    <path
-                                        d="M8 1a7 7 0 0 1 5.05 12A7 7 0 0 1 2.95 1 7 7 0 0 1 8 1zm-.214 1.693a5.5 5.5 0 0 0-4.702 4.69L5.5 7H4.978a6 6 0 0 0 9.043 3.457l.98.981A6 6 0 0 0 10.457 4.978l-.98-.981A5.966 5.966 0 0 0 8 2.693zM3.5 8a6 6 0 0 0 9 5.192v-1.521a4.5 4.5 0 0 1-8.598-1.974L3.5 8zm9-3a4.5 4.5 0 0 1-7.83 2.999l-.872-.872A4.5 4.5 0 0 1 12.5 5H12V4h.5a.5.5 0 0 1 .5.5v.5z" />
-                                </svg>
+                    <div class="row mt-4 mb-2">
+                        <h5 class="fw-bold p-navy">Sosial Media Kami</h5>
+                        <div class="col-2 row">
+                            <div class="col">
+                                <a class="icon-link p-navy" href="#" style="font-size: 25px">
+                                    <i class="bi bi-instagram"></i>
+                                </a>
                             </div>
-                            <div class="col">www.pondokpesantren-alhuda.com</div>
+                        </div>
+                        <div class="col-2 row">
+                            <div class="col">
+                                <a class="icon-link p-navy" href="#" style="font-size: 25px">
+                                    <i class="bi bi-youtube"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-2 row">
+                            <div class="col">
+                                <a class="icon-link p-navy" href="#" style="font-size: 25px">
+                                    <i class="bi bi-facebook"></i>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
